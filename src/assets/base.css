@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #0084FF;
+  --color-warning: #FFA704;
+  --color-success: #008E77;
+  --color-danger: #FF6565;
+  --color-secondary: #031a55;
+
+  --color-blue-0: #F5F9FD;
+  --color-blue-1: #ecf1ff;
+  --color-blue-2: #d1deff;
+  --color-blue-3: #acc3ff;
+  --color-blue-4: #85a7fe;
+  --color-blue-5: #618dfe;
+  --color-blue-7: #3563d8;
+  --color-blue-8: #2c52b4;
+  --color-blue-9: #234291;
+  --color-blue-10: #1c3472;
+
+  --color-dark-blue-1: #e9ebf1;
+  --color-dark-blue-2: #cbd0dd;
+  --color-dark-blue-3: #a1abc3;
+  --color-dark-blue-4: #7684a7;
+  --color-dark-blue-5: #4c5e8c;
+  --color-dark-blue-6: #253b73;
+  --color-dark-blue-7: #1f3262;
+  --color-dark-blue-8: #1A2A52;
+  --color-dark-blue-9: #152242;
+  --color-dark-blue-10: #111b34;
+
+  --default-font-family: "Yekan Bakh FaNum";
+}
+
+:root {
+  --section-gap: 160px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  /*color: var(--color-text);*/
+  /*background: var(--color-background);*/
+  transition:
+    color 0.5s,
+    background-color 0.5s;
+  line-height: 1.6;
+  font-family: sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
