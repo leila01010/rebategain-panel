@@ -143,4 +143,4 @@ const handleUrlClick = function (event) {
   </component>
 </template>
 
-<style lang="css" src="./IrButton.css" />
+<style lang="scss" src="./IrButton.scss" />

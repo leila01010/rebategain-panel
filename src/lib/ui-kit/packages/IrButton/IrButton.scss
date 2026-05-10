@@ -10,39 +10,39 @@
   transition: all 0.2s ease;
   cursor: pointer;
 
-  .ir-button__text {
+  &__text {
     white-space: nowrap;
   }
 
-  .ir-button__prepend-icon,
-  .ir-button__append-icon {
+  &__prepend-icon,
+  &__append-icon {
     display: inline-block;
   }
 
-  .ir-button__loading {
+  &__loading {
     display: flex;
     align-items: center;
     column-gap: 8px;
   }
 
-  .ir-button__loading-spin {
+  &__loading-spin {
     border: 1px solid var(--color-white);
     border-bottom-color: transparent;
     border-radius: 50%;
     animation: spin 1s infinite linear;
   }
 
-  &.ir-button--block {
+  &--block {
     width: 100%;
   }
 
-  &.ir-button--loading {
+  &--loading {
     user-select: none;
     cursor: not-allowed;
   }
 
   /* Size */
-  &.ir-button--lg {
+  &--lg {
     height: 48px;
     line-height: 48px;
     font-size: 16px;
@@ -50,7 +50,7 @@
     padding: 0 16px;
     column-gap: 8px;
 
-    &.ir-button--icon {
+    .ir-button--icon {
       font-size: 24px;
       padding: 12px;
     }
@@ -69,7 +69,7 @@
     }
   }
 
-  &.ir-button--md {
+  &--md {
     height: 40px;
     line-height: 40px;
     font-size: 14px;
@@ -77,7 +77,7 @@
     padding: 0 16px;
     column-gap: 8px;
 
-    &.ir-button--icon {
+    .ir-button--icon {
       font-size: 20px;
       padding: 10px;
     }
@@ -96,7 +96,7 @@
     }
   }
 
-  &.ir-button--sm {
+  &--sm {
     height: 32px;
     font-size: 14px;
     line-height: 32px;
@@ -104,7 +104,7 @@
     border-radius: 8px;
     column-gap: 8px;
 
-    &.ir-button--icon {
+    .ir-button--icon {
       font-size: 16px;
       padding: 8px;
     }
@@ -129,11 +129,11 @@
   }
 
   /* Variant Fill */
-  &.ir-button--fill {
+  &--fill {
     color: var(--color-white);
   }
 
-  &.ir-button--fill--primary {
+  &--fill--primary {
     background-color: var(--color-primary);
     &:disabled {
       cursor: not-allowed;
@@ -142,12 +142,12 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--fill--primary:not(:disabled):hover {
+    &--fill--primary:not(:disabled):hover {
       background-color: var(--color-blue-600);
     }
   }
 
-  &.ir-button--fill--secondary {
+  &--fill--secondary {
     background-color: var(--color-secondary);
     &:disabled {
       background-color: var(--color-dark-blue-200);
@@ -155,12 +155,12 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--fill-secondary:not(:disabled):hover {
+    &--fill-secondary:not(:disabled):hover {
       background-color: var(--color-dark-blue-600);
     }
   }
 
-  &.ir-button--fill--success {
+  &--fill--success {
     background-color: var(--color-success);
     &:disabled {
       background-color: var(--color-success);
@@ -168,12 +168,12 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--fill-success:not(:disabled):hover {
+    &--fill-success:not(:disabled):hover {
       background-color: #059669;
     }
   }
 
-  &.ir-button--fill--danger {
+  &--fill--danger {
     background-color: var(--color-danger);
     &:disabled {
       background-color: var(--color-danger);
@@ -181,12 +181,12 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--fill-danger:not(:disabled):hover {
+    &--fill-danger:not(:disabled):hover {
       background-color: #B91C1C;
     }
   }
 
-  &.ir-button--fill--warning {
+  &--fill--warning {
     background-color: var(--color-warning);
     &:disabled {
       background-color: var(--color-warning);
@@ -194,17 +194,17 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--fill-warning:not(:disabled):hover {
+    &--fill-warning:not(:disabled):hover {
       background-color: #E46D12;
     }
   }
 
   /* Variant Outline */
-  &.ir-button--outline {
+  &--outline {
     background-color: white;
   }
 
-  &.ir-button--outline--primary {
+  &--outline--primary {
     color: var(--color-primary);
     border-color: var(--color-primary);
     &:disabled {
@@ -218,14 +218,14 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--outline--primary:not(:disabled):hover {
+    &--outline--primary:not(:disabled):hover {
       background-color: white;
       border-color: var(--color-blue-600);
       color: var(--color-blue-600);
     }
   }
 
-  &.ir-button--outline--secondary {
+  &--outline--secondary {
     color: var(--color-secondary);
     border-color: var(--color-secondary);
     &:disabled {
@@ -239,14 +239,14 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--outline--secondary:not(:disabled):hover {
+    &--outline--secondary:not(:disabled):hover {
       background-color: white;
       border-color: var(--color-dark-blue-600);
       color: var(--color-dark-blue-600);
     }
   }
 
-  &.ir-button--outline--danger {
+  &--outline--danger {
     color: var(--color-danger);
     border-color: var(--color-danger);
     .ir-button__loading-spin {
@@ -256,7 +256,7 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--outline--danger:not(:disabled):hover {
+    &--outline--danger:not(:disabled):hover {
       background-color: white;
       border-color: var(--color-danger);
       color: var(--color-danger);
@@ -264,11 +264,11 @@
   }
 
   /* Variant Text */
-  &.ir-button--text {
+  &--text {
     background-color: transparent;
   }
 
-  &.ir-button--text--primary {
+  &--text--primary {
     color: var(--color-primary);
     &:disabled {
       color: var(--color-dark-blue-200);
@@ -280,13 +280,13 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--text--primary:not(:disabled):hover {
+    &--text--primary:not(:disabled):hover {
       /*background-color: var(--color-blue-1);*/
       color: var(--color-blue-600);
     }
   }
 
-  &.ir-button--text--secondary {
+  &--text--secondary {
     color: var(--color-secondary);
     &:disabled {
       color: var(--color-dark-blue-200);
@@ -298,13 +298,13 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--text--secondary:not(:disabled):hover {
+    &--text--secondary:not(:disabled):hover {
       /*background-color: var(--color-dark-blue-1);*/
       color: var(--color-dark-blue-600);
     }
   }
 
-  &.ir-button--text--danger {
+  &--text--danger {
     color: var(--color-danger);
     &:disabled {
       color: var(--color-danger);
@@ -316,14 +316,14 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--text--danger:not(:disabled):hover {
+    &--text--danger:not(:disabled):hover {
       background-color: #FFF2F2;
       color: var(--color-danger);
     }
   }
 
   /* Variant Plain */
-  &.ir-button--plain {
+  &--plain {
     padding: 0;
     height: auto;
     border: none;
@@ -332,7 +332,7 @@
     background-color: transparent !important;
   }
 
-  &.ir-button--plain--primary {
+  &--plain--primary {
     color: var(--color-primary);
     &:disabled {
       color: var(--color-dark-blue-200);
@@ -344,12 +344,12 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--plain--primary:not(:disabled):hover {
+    &--plain--primary:not(:disabled):hover {
       color: var(--color-blue-600);
     }
   }
 
-  &.ir-button--plain--secondary {
+  &--plain--secondary {
     color: var(--color-secondary);
     &:disabled {
       color: var(--color-dark-blue-200);
@@ -361,12 +361,12 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--plain--secondary:not(:disabled):hover {
+    &--plain--secondary:not(:disabled):hover {
       color: var(--color-dark-blue-600);
     }
   }
 
-  &.ir-button--plain--danger {
+  &--plain--danger {
     color: var(--color-danger);
     &:disabled {
       color: var(--color-danger);
@@ -378,7 +378,7 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
-    &.ir-button--plain--danger:not(:disabled):hover {
+    &--plain--danger:not(:disabled):hover {
       color: var(--color-danger);
     }
   }
