@@ -1,0 +1,40 @@
+.ir-card {
+  width: auto;
+  background-color: #ffffff;;
+  border: 1px solid var(--color-dark-blue-50);
+  border-radius: 16px;
+  overflow: hidden;
+
+  &__header {
+    width: 100%;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid var(--color-dark-blue-50);
+  }
+
+  &__title {
+    font-size: 16px;
+    color: var(--color-dark-blue-600);
+    font-weight: 600;
+  }
+
+  &__body {
+    padding: 16px;
+  }
+
+  &__footer {
+    width: 100%;
+    min-height: 48px;
+    padding: 16px;
+    border-top: 1px solid var(--color-dark-blue-50);
+  }
+
+  &--flush {
+    .ir-card__body {
+      padding: 0;
+    }
+  }
+}
