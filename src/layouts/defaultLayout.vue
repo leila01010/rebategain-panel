@@ -29,8 +29,11 @@ import AppHeader from '@/components/layout/AppHeader.vue'
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
   min-width: 0;
+}
+
+.main {
+  overflow: auto;
 }
 
 .main__content {
