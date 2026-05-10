@@ -2,6 +2,7 @@ import IrIcon from '@/lib/ui-kit/packages/IrIcon/IrIcon.vue'
 import IrButton from '@/lib/ui-kit/packages/IrButton/IrButton.vue'
 import IrCard from './packages/IrCard/IrCard.vue'
 import IrChip from './packages/IrChip/IrChip.vue'
+import IrModal from './packages/IrModal/IrModal.vue'
 
 
 export {
@@ -9,4 +10,5 @@ export {
   IrButton,
   IrCard,
   IrChip,
+  IrModal,
 }
