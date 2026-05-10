@@ -5,6 +5,7 @@ import IrChip from './packages/IrChip/IrChip.vue'
 import IrModal from './packages/IrModal/IrModal.vue'
 import IrTable from './packages/IrTable/IrTable.vue'
 import IrInput from './packages/IrInput/IrInput.vue'
+import { message } from './packages/IrMessage'
 
 
 export {
@@ -15,4 +16,5 @@ export {
   IrModal,
   IrTable,
   IrInput,
+  message,
 }
