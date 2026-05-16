@@ -25,10 +25,6 @@ watch(locale, (newLang) => {
 
 <template>
   <component :is="layout">
-    <RouterView v-slot="{ Component, route }">
-      <KeepAlive>
-        <component :is="Component" :key="route.name" />
-      </KeepAlive>
-    </RouterView>
+    <RouterView />
   </component>
 </template>

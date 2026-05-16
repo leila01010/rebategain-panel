@@ -34,6 +34,7 @@ import AppHeader from '@/components/layout/AppHeader.vue'
 
 .main {
   overflow: auto;
+  flex-grow: 1;
 }
 
 .main__content {

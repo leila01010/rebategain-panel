@@ -4,6 +4,7 @@
   --bg-base: #F6FAFD;
   --bg-sidebar: #ffffff;
   --sidebar-width: 240px;
+  --header-height: 68px;
   --sidebar-collapsed-width: 64px;
   --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 

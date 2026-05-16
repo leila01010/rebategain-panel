@@ -32,7 +32,7 @@ function setLanguage(lang) {
 
 <style>
 .topbar {
-  height: 68px;
+  height: var(--header-height);
   background: var(--bg-sidebar);
   border-bottom: 1px solid var(--color-blue-20);
   border-left: 1px solid var(--color-blue-20);
