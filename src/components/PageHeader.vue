@@ -29,6 +29,8 @@ const emit = defineEmits(['action'])
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 96px;
+  margin-bottom: 32px;
 
   &__title {
     font-size: 22px;
