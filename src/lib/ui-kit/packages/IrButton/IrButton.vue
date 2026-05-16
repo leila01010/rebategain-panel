@@ -131,7 +131,7 @@ const handleUrlClick = function (event) {
     <IrIcon v-if="icon" :name="icon" class="ir-button__icon" />
     <div v-else-if="loading && !disabled" class="ir-button__loading">
       <div class="ir-button__loading-spin" />
-      <span class="ir-button__loading-text" v-text="$t('common.sending')" />
+      <span class="ir-button__loading-text" v-text="$t('common.loading')" />
     </div>
     <template v-else>
       <IrIcon v-if="prependIcon" :name="prependIcon" class="ir-button__prepend-icon" />

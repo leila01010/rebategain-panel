@@ -1,4 +1,5 @@
 {
+  "loading": "Loading",
   "routes": {
     "overview": "Overview",
     "accounts": "Accounts"
