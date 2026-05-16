@@ -1,0 +1,111 @@
+@use 'sass:color';
+@use 'sass:map';
+$sapphire: #6c47e4 !default;
+$spruce: #595e72 !default;
+$blue: #70a1ff !default;
+$yellow: #ffc312 !default;
+$red: #e1304e !default;
+$green: #2ecc71 !default;
+$white: #ffffff !default;
+$black: #000000 !default;
+$gray-100: color.adjust(black, $lightness: 90%) !default;
+$gray-200: color.adjust(black, $lightness: 80%) !default;
+$gray-300: color.adjust(black, $lightness: 70%) !default;
+$gray-400: color.adjust(black, $lightness: 60%) !default;
+$gray-500: color.adjust(black, $lightness: 50%) !default;
+$gray-600: color.adjust(black, $lightness: 40%) !default;
+$gray-700: color.adjust(black, $lightness: 30%) !default;
+$gray-800: color.adjust(black, $lightness: 20%) !default;
+$gray-900: color.adjust(black, $lightness: 10%) !default;
+
+$colors: () !default;
+$colors: map.merge(
+  (
+    'sapphire': $sapphire,
+    'spruce': $spruce,
+    'blue': $blue,
+    'yellow': $yellow,
+    'red': $red,
+    'green': $green,
+  ),
+  $colors
+) !default;
+
+$primary: $sapphire !default;
+$secondary: $spruce !default;
+$info: $blue !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$error: $red !default;
+$success: $green !default;
+
+$theme-colors: () !default;
+$theme-colors: map.merge(
+  (
+    'primary': $primary,
+    'secondary': $secondary,
+    'info': $info,
+    'warning': $warning,
+    'danger': $danger,
+    'error': $error,
+    'success': $success,
+  ),
+  $theme-colors
+) !default;
+
+$font-family-base: YekanBakh, Tahoma, sans-serif !default;
+$input-border-radius: 7px !default;
+$input-border-color: #d8d9e3 !default;
+$input-border-width: 1px !default;
+$border-radius-modal: 10px !default;
+$zindex-modal: 80001 !default;
+
+$btn-font-size: 16px !default;
+$btn-font-weight: 700 !default;
+$btn-border-radius: 7px !default;
+
+// modals
+$modal-bg-color: $white;
+$modal-backdrop-bg: rgba(black, 0.7);
+$modal-backdrop-blur: 1px;
+$modal-z-index: 999999 !default;
+$modal-size-xs: 300px;
+$modal-size-sm: 464px;
+$modal-size-md: 600px;
+$modal-size-lg: 888px;
+$modal-size-xl: 1000px;
+
+// breakpoints
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+) !default;
+
+$font-16: 16px;
+
+$size-2: 2px;
+$size-4: 4px;
+$size-8: 8px;
+$size-10: 10px;
+$size-12: 12px;
+$size-14: 14px;
+$size-16: 16px;
+$font-18: 18px;
+$size-20: 20px;
+$size-24: 24px;
+$size-28: 28px;
+$size-32: 30px;
+$size-40: 40px;
+$size-48: 48px;
+$size-52: 52px;
+$size-56: 56px;
+
+$input-bg: #f5f5f5;
+$input-padding-x: 10px;
+$input-placeholder-color: #e4e5e6;
+$input-focus-border-color: #6c47e4;
+$primary-v: #6c47e4;

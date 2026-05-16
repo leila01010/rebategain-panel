@@ -1,6 +1,27 @@
+@import './font.css';
 @import './base.css';
 
 #app {
   background-color: var(--bg-base);
   font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  transition:
+    color 0.5s,
+    background-color 0.2s;
+}
+
+.center-wrapper {
+  min-height: calc(100vh - var(--header-height));
+  display: grid;
+  place-items: center;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease-in-out;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
 }
