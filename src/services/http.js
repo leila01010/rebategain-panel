@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { storage } from '@/services/storage.service.js'
 import { camelKeys, snakeKeys } from '@/utils'
+import { message } from '@/lib/ui-kit'
 
 const http = axios.create({
   baseURL: import.meta.env.VITE_APP_API,
@@ -26,7 +27,7 @@ http.interceptors.request.use(config => {
 
 http.interceptors.response.use(
   response => {
-    let data = response.data?.data ?? response.data
+    let data = response.data
 
     try {
       return camelKeys(data)
@@ -43,7 +44,7 @@ http.interceptors.response.use(
     const errorMessage = error.response?.data?.message ?? error.message
 
     if (status === 401) {
-      // handle auth globally
+      message.error('Unauthorized. Please login again')
     } else if (error) {
       // handle auth globally
     }
