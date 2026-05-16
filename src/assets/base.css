@@ -64,4 +64,6 @@
   --color-dark-blue-700: var(--color-blue-700);
   --color-dark-blue-800: var(--color-blue-800);
   --color-dark-blue-900: var(--color-blue-900);
+
+  --default-font-family: "Inter";
 }
