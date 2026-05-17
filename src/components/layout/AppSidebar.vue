@@ -1,9 +1,16 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { IrIcon } from '@/lib/ui-kit'
+import { IrButton } from '../../../.claude/worktrees/amazing-cerf-50b54f/src/lib/ui-kit/index.js'
 
 const { t } = useI18n()
+
+const props = defineProps({
+  showSidebar: { type: Boolean, default: false },
+})
+
+const emit = defineEmits(['close'])
 
 const NAV = [
   {
@@ -23,10 +30,22 @@ const NAV = [
 ]
 
 const collapsed = ref(false)
+
+watch(() => props.showSidebar, () => {
+  collapsed.value = false
+})
+
+const sidebarClasses = computed(() => {
+  return [
+    'sidebar',
+    collapsed.value && 'sidebar--collapsed',
+    props.showSidebar && 'sidebar--mobile-open',
+  ]
+})
 </script>
 
 <template>
-  <aside :class="['sidebar', collapsed && 'sidebar--collapsed']">
+  <aside :class="sidebarClasses">
 
     <button class="sidebar__expand-pill" @click="collapsed = false" title="Expand">
       <IrIcon name="right" />
@@ -40,22 +59,37 @@ const collapsed = ref(false)
       <button class="sidebar__collapse-btn" @click="collapsed = true" title="Collapse">
         <IrIcon name="go-start" />
       </button>
+      <button class="sidebar__close-btn" @click="emit('close')" title="Close">
+        <IrIcon name="close" />
+      </button>
     </div>
 
     <nav class="sidebar__nav">
       <RouterLink
         v-for="item in NAV"
-        :key="item.id"
+        :key="item.key"
         class="sidebar__item"
         active-class="sidebar__item--active"
         :title="collapsed ? item.label : ''"
         :to="item.to"
+        @click="emit('close')"
       >
         <IrIcon :name="item.icon" class="sidebar__item-icon" />
         <span class="sidebar__item-text">{{ item.label }}</span>
         <span v-if="item.badge" class="sidebar__item-badge">{{ item.badge }}</span>
       </RouterLink>
     </nav>
+
+    <div v-if="!collapsed" class="sidebar__footer">
+      <IrButton
+        :text="$t('common.contactSupport')"
+        variant="outline"
+        size="lg"
+        prepend-icon="mail"
+        block
+        class="!border-dark-blue-50 !text-dark-blue-500"
+      />
+    </div>
   </aside>
 </template>
 
@@ -79,7 +113,7 @@ const collapsed = ref(false)
   align-items: center;
   justify-content: space-between;
   padding: 18px 24px;
-  min-height: 68px;
+  min-height: var(--header-height);
   flex-shrink: 0;
   overflow: hidden;
   transition: padding var(--transition), justify-content var(--transition);
@@ -122,7 +156,7 @@ const collapsed = ref(false)
 .sidebar__brand-text {
   font-size: 14px;
   font-weight: 600;
-  color: var(--color-dark-blue-10);
+  color: var(--color-dark-blue-900);
   line-height: 1.2;
   letter-spacing: 0.01em;
 }
@@ -206,7 +240,7 @@ const collapsed = ref(false)
 
 .sidebar__item-icon {
   flex-shrink: 0;
-  color: var(--color-dark-blue-5);
+  color: var(--color-dark-blue-400);
   transition: color 0.15s;
 }
 .sidebar__item:hover .sidebar__item-icon,
@@ -215,7 +249,7 @@ const collapsed = ref(false)
 .sidebar__item-text {
   font-size: 16px;
   font-weight: 400;
-  color: var(--color-dark-blue-5);
+  color: var(--color-dark-blue-400);
   white-space: nowrap;
   flex: 1;
   min-width: 0;
@@ -250,20 +284,74 @@ const collapsed = ref(false)
   padding: 0 3px;
 }
 
-/* — Footer — */
 .sidebar__footer {
-  padding: 14px 18px;
-  border-top: 1px solid #bcbcbc;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-  min-height: 56px;
+  height: 80px;
+  padding: 16px;
+  border-top: 1px solid var(--color-blue-20);
   overflow: hidden;
-  transition: padding var(--transition), justify-content var(--transition);
 }
 .sidebar--collapsed .sidebar__footer {
   padding: 14px 0;
   justify-content: center;
+}
+
+.sidebar__close-btn {
+  display: none;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  color: #221F1F;
+}
+
+@media (max-width: 767px) {
+  .sidebar {
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    z-index: 50;
+    width: var(--mobile-sidebar-width);
+    transform: translateX(-100%);
+    transition: transform var(--transition);
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+  }
+
+  .sidebar__header {
+    min-height: var(--mobile-header-height);
+    padding: 16px 18px;
+    box-shadow: 0 1px 0 0 #E9EBF1;
+  }
+
+  .sidebar__logo {
+    width: 28px;
+    height: 28px;
+  }
+
+  .sidebar__item-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  [dir='rtl'] .sidebar {
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+    transform: translateX(100%);
+  }
+
+  .sidebar--mobile-open {
+    transform: translateX(0);
+  }
+
+  .sidebar__expand-pill {
+    display: none;
+  }
+
+  .sidebar__collapse-btn {
+    display: none;
+  }
+
+  .sidebar__close-btn {
+    display: block;
+  }
 }
 </style>

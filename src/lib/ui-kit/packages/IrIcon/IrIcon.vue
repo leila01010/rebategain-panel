@@ -29,10 +29,10 @@ const size = computed(() => `${props.size}px`)
     class="ir-icon"
   />
 
-  <span v-else class="icon-missing"> ? </span>
+  <span v-else class="icon-missing">?</span>
 </template>
 
-<style>
+<style scoped>
 .ir-icon {
   width: v-bind(size);
   height: v-bind(size);

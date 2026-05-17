@@ -1,8 +1,11 @@
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { IrIcon } from '@/lib/ui-kit'
 
 const { locale } = useI18n()
+
+const emit = defineEmits(['toggle-sidebar'])
 
 const pageTitle = ref('login')
 
@@ -16,6 +19,10 @@ function setLanguage(lang) {
 
 <template>
   <header class="topbar">
+    <button class="topbar__menu-btn" @click="emit('toggle-sidebar')" aria-label="Toggle menu">
+      <IrIcon name="menu" />
+    </button>
+
     <div>
       <div class="topbar__breadcrumb">Dashboard / {{ pageTitle.toLowerCase() }}</div>
     </div>
@@ -44,6 +51,25 @@ function setLanguage(lang) {
   transition: background var(--transition);
 }
 
+.topbar__menu-btn {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-radius: 8px;
+  color: var(--color-dark-blue-5);
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+}
+.topbar__menu-btn:hover {
+  background: var(--color-blue-20);
+  color: var(--color-blue-900);
+}
+
 .topbar__breadcrumb {
   font-size: 11px;
   color: var(--color-secondary);
@@ -58,5 +84,18 @@ function setLanguage(lang) {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+@media (max-width: 767px) {
+  .topbar {
+    height: var(--mobile-header-height);
+    padding: 0 16px;
+    border-left: none;
+    box-shadow: 0 4px 8px 0 #7E8AA626;
+  }
+
+  .topbar__menu-btn {
+    display: flex;
+  }
 }
 </style>

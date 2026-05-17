@@ -1,5 +1,6 @@
 <script setup>
 import { IrButton, IrIcon } from '@/lib/ui-kit'
+import { useDevice } from '@/composables/useDevice.js'
 
 defineProps({
   title: { type: String, default: '' },
@@ -9,6 +10,8 @@ defineProps({
 })
 
 const emit = defineEmits(['action'])
+
+const { isPhone } = useDevice()
 </script>
 
 <template>
@@ -25,7 +28,7 @@ const emit = defineEmits(['action'])
       <IrButton
         :text="buttonText"
         prepend-icon="plus"
-        size="lg"
+        :size="isPhone ? 'md' : 'lg'"
         class="empty-state__button"
         @click="emit('action')"
       />
@@ -72,6 +75,25 @@ const emit = defineEmits(['action'])
     font-size: 12px;
     color: var(--color-dark-blue-300);
     margin-bottom: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .empty-state__icon {
+    width: 64px;
+    height: 64px;
+    .ir-icon {
+      width: 38px;
+      height: 38px;
+    }
+  }
+
+  .empty-state__title {
+    font-size: 18px;
+  }
+
+  .topbar__menu-btn {
+    display: flex;
   }
 }
 </style>

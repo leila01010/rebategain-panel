@@ -6,6 +6,7 @@
   "loading": "Loading",
   "loadingText": "Please wait...",
   "selectBroker": "Select a broker",
+  "contactSupport": "Contact Support",
   "broker": "Broker",
   "routes": {
     "overview": "Overview",

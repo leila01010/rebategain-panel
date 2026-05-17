@@ -10,7 +10,7 @@ defineProps({
 <template>
   <div class="center-wrapper">
     <div class="loading-state">
-      <IrIcon name="loading" size="28" class="loading-state__icon" />
+      <IrIcon name="loading" :size="50" class="loading-state__icon" />
 
       <h3 class="loading-state__title" v-text="$t('common.loading')" />
     </div>
