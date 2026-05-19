@@ -1,13 +1,33 @@
 <script setup>
+import { ref } from 'vue'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
+
+const showSidebar = ref(false)
+
+function toggleSidebar() {
+  showSidebar.value = !showSidebar.value
+}
+
+function closeSidebar() {
+  showSidebar.value = false
+}
 </script>
 
 <template>
   <div class="layout">
-    <AppSidebar />
+    <Transition name="sidebar-fade">
+      <div
+        v-if="showSidebar"
+        class="layout__overlay"
+        @click="closeSidebar"
+      />
+    </Transition>
+
+    <AppSidebar :show-sidebar="showSidebar" @close="closeSidebar" />
+
     <div class="layout__body">
-      <AppHeader />
+      <AppHeader @toggle-sidebar="toggleSidebar" />
 
       <main class="main">
         <div class="main__content">
@@ -42,5 +62,28 @@ import AppHeader from '@/components/layout/AppHeader.vue'
   margin: 0 auto;
   padding: 0 16px;
   box-sizing: content-box;
+}
+
+.layout__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 40;
+  display: none;
+}
+
+.sidebar-fade-enter-active,
+.sidebar-fade-leave-active {
+  transition: opacity 0.25s ease;
+}
+.sidebar-fade-enter-from,
+.sidebar-fade-leave-to {
+  opacity: 0;
+}
+
+@media (max-width: 767px) {
+  .layout__overlay {
+    display: block;
+  }
 }
 </style>

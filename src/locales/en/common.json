@@ -1,5 +1,13 @@
 {
+  "next": "Next",
+  "back": "Back",
+  "continue": "Continue",
+  "cancel": "Cancel",
   "loading": "Loading",
+  "loadingText": "Please wait...",
+  "selectBroker": "Select a broker",
+  "contactSupport": "Contact Support",
+  "broker": "Broker",
   "routes": {
     "overview": "Overview",
     "accounts": "Accounts"

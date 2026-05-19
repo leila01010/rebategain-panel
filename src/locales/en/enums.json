@@ -1,0 +1,7 @@
+{
+  "ACCOUNT_STATUS": {
+    "PENDING": "pending",
+    "ACTIVE": "active",
+    "ACTION_NEEDED": "action needed"
+  }
+}

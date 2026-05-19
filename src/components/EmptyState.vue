@@ -1,5 +1,6 @@
 <script setup>
 import { IrButton, IrIcon } from '@/lib/ui-kit'
+import { useDevice } from '@/composables/useDevice.js'
 
 defineProps({
   title: { type: String, default: '' },
@@ -9,25 +10,29 @@ defineProps({
 })
 
 const emit = defineEmits(['action'])
+
+const { isPhone } = useDevice()
 </script>
 
 <template>
-  <div class="empty-state">
-    <div class="empty-state__icon">
-      <IrIcon :name="icon" size="48" />
+  <div class="center-wrapper">
+    <div class="empty-state">
+      <div class="empty-state__icon">
+        <IrIcon :name="icon" size="48" />
+      </div>
+
+      <h3 class="empty-state__title">{{ title }}</h3>
+
+      <p class="empty-state__description">{{ description }}</p>
+
+      <IrButton
+        :text="buttonText"
+        prepend-icon="plus"
+        :size="isPhone ? 'md' : 'lg'"
+        class="empty-state__button"
+        @click="emit('action')"
+      />
     </div>
-
-    <h3 class="empty-state__title">{{ title }}</h3>
-
-    <p class="empty-state__description">{{ description }}</p>
-
-    <IrButton
-      :text="buttonText"
-      prepend-icon="plus"
-      size="lg"
-      class="empty-state__button"
-      @click="emit('action')"
-    />
   </div>
 </template>
 
@@ -42,7 +47,7 @@ const emit = defineEmits(['action'])
   padding: 32px;
   border-radius: 16px;
   background-color: #fff;
-  border: 2px dashed var(--color-dark-blue-50);
+  border: 1px dashed var(--color-dark-blue-50);
 
   &__icon {
     width: 80px;
@@ -70,6 +75,25 @@ const emit = defineEmits(['action'])
     font-size: 12px;
     color: var(--color-dark-blue-300);
     margin-bottom: 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .empty-state__icon {
+    width: 64px;
+    height: 64px;
+    .ir-icon {
+      width: 38px;
+      height: 38px;
+    }
+  }
+
+  .empty-state__title {
+    font-size: 18px;
+  }
+
+  .topbar__menu-btn {
+    display: flex;
   }
 }
 </style>
