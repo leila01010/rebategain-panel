@@ -1,16 +1,23 @@
 <script setup>
-import { ref } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { IrIcon } from '@/lib/ui-kit'
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { localize } from '@/lib/moment.js'
+import { useRoute } from 'vue-router'
 
+const route = useRoute()
 const { locale } = useI18n()
+const { t } = useI18n()
 
 const emit = defineEmits(['toggle-sidebar'])
 
-const pageTitle = ref('login')
+const PageTitle = computed(() => {
+  return t(`common.routes.${route.name}`)
+})
 
 function setLanguage(lang) {
   locale.value = lang
+  localize(lang)
   const dir = ['fa', 'ar', 'he'].includes(lang) ? 'rtl' : 'ltr'
   document.documentElement.setAttribute('dir', dir)
   document.documentElement.setAttribute('lang', lang)
@@ -19,13 +26,14 @@ function setLanguage(lang) {
 
 <template>
   <header class="topbar">
-    <button class="topbar__menu-btn" @click="emit('toggle-sidebar')" aria-label="Toggle menu">
+    <button
+      class="topbar__menu-btn"
+      @click="emit('toggle-sidebar')"
+      aria-label="Toggle menu"
+    >
       <IrIcon name="menu" />
     </button>
-
-    <div>
-      <div class="topbar__breadcrumb">Dashboard / {{ pageTitle.toLowerCase() }}</div>
-    </div>
+    <div class="topbar__title">{{ PageTitle }}</div>
     <div class="topbar__spacer" />
     <div class="topbar__actions">
       <button class="space-x-2 cursor-pointer">
@@ -51,6 +59,11 @@ function setLanguage(lang) {
   transition: background var(--transition);
 }
 
+.topbar__title {
+  font-size: 14px;
+  color: var(--color-dark-blue-500);
+}
+
 .topbar__menu-btn {
   display: none;
   align-items: center;
@@ -64,18 +77,6 @@ function setLanguage(lang) {
   color: var(--color-dark-blue-5);
   flex-shrink: 0;
   transition: background 0.15s, color 0.15s;
-}
-.topbar__menu-btn:hover {
-  background: var(--color-blue-20);
-  color: var(--color-blue-900);
-}
-
-.topbar__breadcrumb {
-  font-size: 11px;
-  color: var(--color-secondary);
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.04em;
-  margin-top: 2px;
 }
 
 .topbar__spacer { flex: 1; }
@@ -92,10 +93,6 @@ function setLanguage(lang) {
     padding: 0 16px;
     border-left: none;
     box-shadow: 0 4px 8px 0 #7E8AA626;
-  }
-
-  .topbar__menu-btn {
-    display: flex;
   }
 }
 </style>
