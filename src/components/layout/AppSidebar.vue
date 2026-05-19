@@ -1,8 +1,7 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
+import { IrIcon, IrButton } from '@/lib/ui-kit'
 import { useI18n } from 'vue-i18n'
-import { IrIcon } from '@/lib/ui-kit'
-import { IrButton } from '../../../.claude/worktrees/amazing-cerf-50b54f/src/lib/ui-kit/index.js'
 
 const { t } = useI18n()
 
@@ -27,6 +26,13 @@ const NAV = [
     badge: null,
     to: '/accounts',
   },
+  {
+    key: 'payment-methods',
+    label: t('common.routes.paymentMethods'),
+    icon: 'dollar',
+    badge: null,
+    to: '/payment-methods',
+  },
 ]
 
 const collapsed = ref(false)
@@ -46,7 +52,6 @@ const sidebarClasses = computed(() => {
 
 <template>
   <aside :class="sidebarClasses">
-
     <button class="sidebar__expand-pill" @click="collapsed = false" title="Expand">
       <IrIcon name="right" />
     </button>
@@ -107,7 +112,6 @@ const sidebarClasses = computed(() => {
   z-index: 10;
 }
 
-/* — Header — */
 .sidebar__header {
   display: flex;
   align-items: center;
@@ -202,7 +206,6 @@ const sidebarClasses = computed(() => {
 }
 .sidebar__expand-pill:hover { background: #f8f8f8; color: var(--color-primary); }
 
-/* — Nav — */
 .sidebar__nav {
   flex: 1;
   overflow-y: auto;

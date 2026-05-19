@@ -24,7 +24,8 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(21, 34, 66, 0.2);
+    backdrop-filter: blur(4px);
     z-index: 1;
   }
 
@@ -74,8 +75,8 @@
   &__header {
     height: 56px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 8px;
     background-color: var(--color-blue-10);
     padding: 16px;
     border-top-left-radius: 14px;
@@ -98,6 +99,7 @@
   &__header-text {
     display: flex;
     flex-direction: column;
+    flex-grow: 1;
     gap: 4px;
   }
 
@@ -119,9 +121,13 @@
   }
 
   &--full-screen {
+    .ir-modal__header {
+      height: 40px;
+      padding: 8px 16px;
+    }
     .ir-modal__container {
-      padding: 0;
       height: 100%;
+      padding: var(--mobile-header-height) 0 0 0;
     }
 
     .ir-modal__dialog {
@@ -143,7 +149,6 @@
     .ir-modal__body {
       overflow: auto;
       flex-grow: 1;
-      padding: 0;
       -ms-overflow-style: none;
       scrollbar-width: none;
     }
