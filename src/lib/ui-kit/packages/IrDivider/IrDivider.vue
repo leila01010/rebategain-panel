@@ -45,7 +45,8 @@ const dividerClasses = computed(() => {
   width: 100%;
   height: 1px;
   position: relative;
-  margin: 16px 0;
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
 .ir-divider--horizontal .ir-divider__label {
