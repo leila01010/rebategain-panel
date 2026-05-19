@@ -3,6 +3,7 @@ import common from './common'
 import enums from './enums'
 import uiKit from './uikit'
 import account from './account'
+import overview from './overview'
 import payment from './payment'
 
 export default {
@@ -11,5 +12,6 @@ export default {
   enums,
   uiKit,
   account,
+  overview,
   payment,
 }

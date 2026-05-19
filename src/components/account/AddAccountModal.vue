@@ -15,7 +15,7 @@ const selectedBroker = ref(null)
 const steps = reactive([
   { key: 'broker', cmp: markRaw(SelectBrokerStep), value: '' },
   { key: 'account-status', cmp: markRaw(AccountStatusStep), value: '' },
-  { key: 'add-account', cmp: AddAccountStep, value: '' },
+  { key: 'add-account', cmp: markRaw(AddAccountStep), value: '' },
 ])
 
 const activeStep = computed(() => {

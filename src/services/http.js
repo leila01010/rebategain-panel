@@ -46,6 +46,7 @@ http.interceptors.response.use(
     if (status === 401) {
       message.error('Unauthorized. Please login again')
     } else if (error) {
+      console.log(error)
       // handle auth globally
     }
 

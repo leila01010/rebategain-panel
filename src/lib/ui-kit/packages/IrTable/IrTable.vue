@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { IrIcon } from '@/lib/ui-kit'
+import { IrIcon, IrLoadingOverlay } from '@/lib/ui-kit'
+import { formatDate } from '@/utils/helpers.js'
 
 const props = defineProps({
   headers: { type: Array, default: () => [] },
@@ -120,25 +121,25 @@ function cellValue(item, path) {
                 :value="cellValue(item, header.key)"
                 :index="index"
               >
-              <!--<span
+                <span
                   v-if="header.type === 'date'"
-                  v-text="item[header.key] ? $moment(item[header.key]).format('jYYYY/jMM/jDD') : '-'"
+                  v-text="formatDate(item[header.key])"
                 />
                 <span
                   v-else-if="header.type === 'datetime'"
-                  v-text="item[header.key] ? $moment(item[header.key]).format('HH:mm jYYYY/jMM/jDD') : '-'"
+                  v-text="formatDate(item[header.key], 'HH:mm jYYYY/jMM/jDD')"
                 />
                 <span v-else-if="header.type === 'dateRange'">
-                  <span v-text="item.from_date ? $moment(item.from_date).format('jYYYY/jMM/jDD') : '-'" />
+                  <span v-text="formatDate(item.from_date, 'jYYYY/jMM/jDD')" />
                   <span class="px-1 text-dark-blue-4" v-text="$t('common.until')" />
-                  <span v-text="item.to_date ? $moment(item.to_date).format('jYYYY/jMM/jDD') : '-'" />
+                  <span v-text="formatDate(item.to_date, 'jYYYY/jMM/jDD')" />
                 </span>
                 <span
                   v-else-if="header.type === 'truncate'"
                   class="truncate"
                   v-text="cellValue(item, header.key)"
-                />-->
-                <div>
+                />
+                <div v-else>
                   <span v-text="cellValue(item, header.key)" />
                   <span v-if="header.suffix" class="mr-1">{{ header.suffix }}</span>
                 </div>
@@ -156,6 +157,11 @@ function cellValue(item, path) {
         </tbody>
       </table>
       <slot name="bottom" />
+      <IrLoadingOverlay
+        :visible="loading"
+        :message="$t('common.loadingText')"
+        class="ir-table__loading"
+      />
     </div>
   </div>
 </template>

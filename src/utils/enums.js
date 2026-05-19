@@ -6,6 +6,12 @@ export default {
     ACTIVE: 'active',
     ACTION_NEEDED: 'action_needed',
   },
+  INQUIRY_STATUS: {
+    ACCEPTED: 'accepted',
+    PENDING: 'pending',
+    REJECTED: 'rejected',
+    EXPIRED: 'expired',
+  },
 
   getArray(enumItem, start = 0) {
     const t = i18n.global.t

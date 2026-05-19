@@ -13,6 +13,10 @@ import IrAlert from './packages/IrAlert/IrAlert.vue'
 import IrProgress from './packages/IrProgress/IrProgress.vue'
 import IrRadioGroup from './packages/IrRadio/IrRadioGroup.vue'
 import IrRadio from './packages/IrRadio/IrRadio.vue'
+import IrLoadingOverlay from './packages/IrLoadingOverlay/IrLoadingOverlay.vue'
+import IrPagination from './packages/IrPagination/IrPagination.vue'
+import IrCheckbox from './packages/IrCheckbox/IrCheckbox.vue'
+import IrInfiniteLoading from './packages/IrInfiniteLoading/IrInfiniteLoading.vue'
 import { message } from './packages/IrMessage'
 
 
@@ -32,5 +36,9 @@ export {
   IrProgress,
   IrRadioGroup,
   IrRadio,
+  IrLoadingOverlay,
+  IrPagination,
+  IrCheckbox,
+  IrInfiniteLoading,
   message,
 }

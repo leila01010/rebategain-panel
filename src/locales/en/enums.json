@@ -3,5 +3,11 @@
     "PENDING": "pending",
     "ACTIVE": "active",
     "ACTION_NEEDED": "action needed"
+  },
+  "INQUIRY_STATUS": {
+    "ACCEPTED": "Accepted",
+    "PENDING": "Pending",
+    "REJECTED": "Rejected",
+    "EXPIRED": "Expired"
   }
 }

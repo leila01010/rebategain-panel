@@ -12,16 +12,18 @@ defineProps({
 <template>
   <div :class="['ir-card', { 'ir-card--flush': flush }]">
     <div v-if="$slots.header || title" :class="['ir-card__header', headerClass]">
-      <div class="ir-card__header-start">
-        <div class="ir-card__meta">
-          <h3 v-if="title" class="ir-card__title">{{ title }}</h3>
-          <p v-if="subtitle" class="ir-card__subtitle">{{ subtitle }}</p>
+      <slot name="header">
+        <div class="ir-card__header-start">
+          <div class="ir-card__meta">
+            <h3 v-if="title" class="ir-card__title">{{ title }}</h3>
+            <p v-if="subtitle" class="ir-card__subtitle">{{ subtitle }}</p>
+          </div>
         </div>
-      </div>
 
-      <div class="ir-card__header-end">
-        <slot name="header-actions" />
-      </div>
+        <div class="ir-card__header-end">
+          <slot name="header-actions" />
+        </div>
+      </slot>
     </div>
     <div :class="['ir-card__body', bodyClass]">
       <slot />
