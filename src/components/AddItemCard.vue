@@ -8,7 +8,7 @@ defineProps({
 </script>
 
 <template>
-  <div class="border border-dashed border-dark-blue-100 rounded-2xl p-8 flex flex-col items-center justify-center text-center cursor-pointer hover:bg-blue-20/50 transition-colors duration-100">
+  <div class="border border-dashed border-dark-blue-100 rounded-2xl p-8 hidden md:flex flex-col items-center justify-center text-center cursor-pointer hover:bg-blue-20/50 transition-colors duration-100">
     <div class="size-12 rounded-full bg-white border border-dark-blue-50 flex items-center justify-center mb-4">
       <IrIcon name="plus" class="text-dark-blue-300" />
     </div>
