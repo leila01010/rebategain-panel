@@ -16,7 +16,7 @@ const emit = defineEmits(['action'])
       <div class="page-header__title">{{ title }}</div>
       <p class="page-header__description">{{ description }}</p>
     </div>
-    <div v-if="buttonText || $slots.action" class="page-header__actions">
+    <div v-if="buttonText || $slots.action" class="page-header__action">
       <slot name="action">
         <IrButton :text="buttonText" color="secondary" prepend-icon="plus" @click="emit('action')" />
       </slot>
@@ -44,8 +44,22 @@ const emit = defineEmits(['action'])
     color: var(--color-dark-blue-300);
   }
 }
-</style>
 
-<style scoped lang="scss">
-
+@media (max-width: 767px) {
+  .page-header {
+    margin-top: 16px;
+    &__title {
+      font-size: 18px;
+    }
+    &__action {
+      position: absolute;
+      bottom: 20px;
+      left: 16px;
+      right: 16px;
+      .ir-button {
+        width: 100%;
+      }
+    }
+  }
+}
 </style>
