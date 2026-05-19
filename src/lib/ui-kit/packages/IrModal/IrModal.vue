@@ -2,6 +2,7 @@
 import { IrIcon } from '@/lib/ui-kit'
 import { ref, computed, watch, onBeforeUnmount, onMounted, useAttrs } from 'vue'
 import { popupManager } from '@/lib/ui-kit/src/utils/popup-manager'
+import { useDevice } from '@/composables/useDevice.js'
 
 const props = defineProps({
   title: { type: String, default: null },
@@ -13,7 +14,7 @@ const props = defineProps({
   plain: { type: Boolean, default: false },
   fullScreen: {
     type: [Boolean, String],
-    default: false,
+    default: 'phone',
     validator: (value) => [true, false, 'phone', 'desktop'].includes(value),
   },
   hasPopstate: { type: Boolean, default: true },
@@ -35,6 +36,7 @@ const props = defineProps({
 const emit = defineEmits(['close', 'update:show', 'body-scroll'])
 const slots = defineSlots()
 const $attrs = useAttrs()
+const { isPhone } = useDevice()
 
 const elRef = ref(null)
 const localZIndex = ref(0)
@@ -63,7 +65,11 @@ const hasFooter = computed(() => {
 })
 
 const isFullScreen = computed(() => {
-  return props.fullScreen === true || props.fullScreen === 'phone' || props.fullScreen === 'desktop'
+  return (
+    props.fullScreen === true ||
+    (props.fullScreen === 'phone' && isPhone.value) ||
+    (props.fullScreen === 'desktop' && !isPhone.value)
+  )
 })
 
 const modalClass = computed(() => [
@@ -230,13 +236,6 @@ function onBodyScroll(e) {
                     </div>
                     <slot name="header-prepend__action" />
                     <IrIcon
-                      v-if="showClose && fullScreen"
-                      :name="backIcon"
-                      role="button"
-                      class="ir-modal__back"
-                      @click.prevent="close"
-                    />
-                    <IrIcon
                       v-if="showClose"
                       :name="closeIcon"
                       role="button"
@@ -261,7 +260,7 @@ function onBodyScroll(e) {
 
         <Transition name="ir-modal-fade" appear>
           <div
-            v-if="isVisible"
+            v-if="isVisible && !isFullScreen"
             class="ir-modal__backdrop"
             @click="close"
           />

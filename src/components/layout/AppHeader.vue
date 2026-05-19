@@ -92,7 +92,7 @@ function setLanguage(lang) {
     height: var(--mobile-header-height);
     padding: 0 16px;
     border-left: none;
-    box-shadow: 0 4px 8px 0 #7E8AA626;
+    border-color: var(--color-dark-blue-50);
   }
 }
 </style>

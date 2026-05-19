@@ -3,6 +3,7 @@ import common from './common'
 import enums from './enums'
 import uiKit from './uikit'
 import account from './account'
+import payment from './payment'
 
 export default {
   auth,
@@ -10,4 +11,5 @@ export default {
   enums,
   uiKit,
   account,
+  payment,
 }

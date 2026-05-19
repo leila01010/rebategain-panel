@@ -10,6 +10,6 @@
   "broker": "Broker",
   "routes": {
     "overview": "Overview",
-    "accounts": "Accounts"
+    "paymentMethods": "Payment Methods"
   }
 }
