@@ -1,5 +1,10 @@
 <template>
-  <div class="ir-messages-holder" role="region" aria-label="Notifications">
+  <div
+    class="ir-messages-holder"
+    :style="{ zIndex }"
+    role="region"
+    aria-label="Notifications"
+  >
     <TransitionGroup name="ir-message" tag="ul" class="ir-messages">
       <li
         v-for="item in messages"
@@ -26,13 +31,27 @@
 </template>
 
 <script setup>
+import { ref, watch } from 'vue'
 import { IrIcon } from '@/lib/ui-kit'
+import { popupManager } from '@/lib/ui-kit/src/utils/popup-manager.js'
 
-defineProps({
+const props = defineProps({
   messages: { type: Array, default: () => [] },
 })
 
 defineEmits(['dismiss'])
+
+const zIndex = ref(null)
+
+// each time a new toast appears, lift the holder above every popup opened so
+// far (modals included) — popupManager.getNewZIndex() always returns a value
+// higher than the current ceiling.
+watch(
+  () => props.messages.length,
+  (length, prev) => {
+    if (length > prev) zIndex.value = popupManager.getNewZIndex()
+  },
+)
 </script>
 
 <style lang="scss" src="./IrMessage.scss" />
