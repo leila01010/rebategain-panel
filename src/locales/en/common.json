@@ -7,9 +7,17 @@
   "loadingText": "Please wait...",
   "selectBroker": "Select a broker",
   "contactSupport": "Contact Support",
+  "noData": "There is no Items",
+  "date": "Date",
   "broker": "Broker",
+  "amount": "Amount",
+  "status": "Status",
+  "statusPending": "Pending",
+  "statusCompleted": "Completed",
+  "statusRejected": "Rejected",
   "routes": {
     "overview": "Overview",
-    "paymentMethods": "Payment Methods"
+    "paymentMethods": "Payment Methods",
+    "accounts": "Accounts"
   }
 }

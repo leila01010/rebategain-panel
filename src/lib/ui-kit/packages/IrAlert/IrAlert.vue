@@ -38,10 +38,10 @@ const classes = computed(() => [
   <div :class="classes">
     <template v-if="size === 'sm'">
       <div class="ir-alert__inline">
-        <IrIcon :name="icon" class="ir-alert__icon" />
+        <IrIcon v-if="icon" :name="icon" class="ir-alert__icon" />
 
         <div class="ir-alert__content">
-          <p class="ir-alert__text">{{ description }}</p>
+          <p v-if="description" class="ir-alert__text">{{ description }}</p>
           <slot />
         </div>
       </div>
