@@ -27,6 +27,13 @@ const NAV = [
     to: '/accounts',
   },
   {
+    key: 'withdraws',
+    label: t('common.routes.withdraws'),
+    icon: 'upload',
+    badge: null,
+    to: '/withdraws',
+  },
+  {
     key: 'payment-methods',
     label: t('common.routes.paymentMethods'),
     icon: 'dollar',
@@ -242,6 +249,8 @@ const sidebarClasses = computed(() => {
 }
 
 .sidebar__item-icon {
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
   color: var(--color-dark-blue-400);
   transition: color 0.15s;

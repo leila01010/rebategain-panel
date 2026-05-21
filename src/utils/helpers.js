@@ -5,7 +5,7 @@ export function formatCurrency(value, locale = 'en-US', currency = 'USD') {
 
   const number = Number(value)
 
-  if (isNaN(number)) return ''
+  if (isNaN(number)) return '-'
 
   let options = {
     style: 'currency',
@@ -23,7 +23,13 @@ export function formatCurrency(value, locale = 'en-US', currency = 'USD') {
   return new Intl.NumberFormat(locale, options).format(value)
 }
 
-// Persian (06F0–06F9) and Arabic-Indic (0660–0669) digits → Latin
+export const maskString = (str, limit = 11) => {
+  if (str.length < limit) return str
+  const start = str.slice(0, 3)
+  const end = str.slice(-3)
+  return `${start}...${end}`
+}
+
 function toLatinDigits(str) {
   return str.replace(/[۰-۹٠-٩]/g, (d) => {
     const code = d.charCodeAt(0)

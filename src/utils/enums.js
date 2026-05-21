@@ -12,6 +12,11 @@ export default {
     REJECTED: 'rejected',
     EXPIRED: 'expired',
   },
+  WITHDRAWS_STATUS: {
+    PENDING: 'pending',
+    PAID: 'paid',
+    REJECTED: 'rejected',
+  },
 
   getArray(enumItem, start = 0) {
     const t = i18n.global.t

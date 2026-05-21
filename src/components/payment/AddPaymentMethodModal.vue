@@ -1,6 +1,16 @@
 <script setup>
 import { computed, reactive, ref, watch } from 'vue'
-import { IrModal, IrSelect, IrInput, IrAlert, IrButton, IrIcon, message, IrCheckbox, IrDivider } from '@/lib/ui-kit'
+import {
+  IrModal,
+  IrSelect,
+  IrInput,
+  IrAlert,
+  IrButton,
+  IrIcon,
+  message,
+  IrCheckbox,
+  IrDivider,
+} from '@/lib/ui-kit'
 import { useI18n } from 'vue-i18n'
 import http from '@/services/http.js'
 import api from '@/api/api-list.js'
@@ -21,7 +31,7 @@ const activeTab = ref('crypto')
 const currencyId = ref('')
 const assetNetworkId = ref('')
 const address = reactive({
-  walletAddress: ''
+  walletAddress: '',
 })
 const isDefault = ref(false)
 const loading = ref(false)
@@ -33,7 +43,7 @@ const canSubmit = computed(() => {
 })
 
 const selectedAsset = computed(() => {
-  return assets.value.find(asset => asset.id === currencyId.value)
+  return assets.value.find((asset) => asset.id === currencyId.value)
 })
 
 const networks = computed(() => {
@@ -47,7 +57,7 @@ watch(show, (value) => {
 async function pasteAddress() {
   try {
     address.walletAddress = await navigator.clipboard.readText()
-  } catch(e) {
+  } catch (e) {
     console.log('clipboard not available:', e)
   }
 }
@@ -56,14 +66,14 @@ async function submit() {
   if (!canSubmit.value || submitting.value) return
   submitting.value = true
   try {
-    await http.post(api.paymentMethods, {
+    const { data } = await http.post(api.paymentMethods, {
       type: activeTab.value,
       assetNetworkId: assetNetworkId.value,
       address: address,
       isDefault: isDefault.value,
     })
     message.success(t('payment.saved'))
-    emit('done')
+    emit('done', data)
     show.value = false
   } catch (e) {
     message.error(e?.error || t('payment.saveError'))
@@ -155,12 +165,7 @@ function reset() {
         </template>
       </IrInput>
 
-      <IrAlert
-        icon="info"
-        color="warning"
-        size="sm"
-        :description="$t('payment.networkWarning')"
-      />
+      <IrAlert icon="info" color="warning" size="sm" :description="$t('payment.networkWarning')" />
 
       <IrDivider class="!my-6" />
 
@@ -206,7 +211,10 @@ function reset() {
   background-color: transparent;
   border: 1px solid transparent;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
 }
 
 .payment-tabs__tab--active {
