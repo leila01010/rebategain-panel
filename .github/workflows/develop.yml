@@ -1,0 +1,40 @@
+name: Deploy Panel to Stage
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create .env
+        run: echo "BASE_URL=https://${{ secrets.PANEL_STAGE_API_DOMAIN }}/api/v1" > .env
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.15.0'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate static site
+        run: vite build
+
+      - name: Deploy via SFTP
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+          server: ${{ secrets.SFTP_PANEL_STAGE_SERVER }}
+          username: ${{ secrets.SFTP_PANEL_STAGE_USERNAME }}
+          password: ${{ secrets.SFTP_PANEL_STAGE_PASSWORD }}
+          port: 22
+          local_path: './dist/*'
+          remote_path: '/var/www/rgpanel/public_html'
+          delete_remote_files: true
+          ssh_private_key: ''
