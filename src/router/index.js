@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useUserStore } from '@/stores/user.js'
+import { getToken, redirectToSso, saveReturnTo } from '@/services/auth.service.js'
 
 const routes = [
   { path: '/', name: 'overview', component: () => import('../views/OverView.vue'), },
@@ -7,6 +8,7 @@ const routes = [
   { path: '/payment-methods', name: 'paymentMethods', component: () => import('../views/PaymentMethodsView.vue'), },
   { path: '/withdraws', name: 'withdraws', component: () => import('../views/WithdrawsView.vue'), },
   { path: '/profile', name: 'profile', component: () => import('../views/ProfileView.vue'), },
+  { path: '/sso', name: 'sso', meta: { layout: 'blank' }, component: () => import('../views/SsoView.vue'), },
 ]
 
 const router = createRouter({
@@ -15,6 +17,14 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to) => {
+  if (to.name === 'sso') return true
+
+  if (!getToken()) {
+    saveReturnTo(to.fullPath)
+    redirectToSso()
+    return false
+  }
+
   const userStore = useUserStore()
 
   if (userStore.isLoaded) return true

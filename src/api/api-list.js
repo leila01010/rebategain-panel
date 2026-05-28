@@ -3,6 +3,7 @@ const api = 'client'
 export default {
   user: 'auth/user',
   userAvatar: 'auth/user/avatar',
+  ssoExchange: 'auth/sso/exchange-code',
   accounts: api + '/accounts',
   brokers: api + '/brokers',
   inquiries: api + '/inquiries',

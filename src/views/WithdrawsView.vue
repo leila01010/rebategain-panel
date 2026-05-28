@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { IrCard, IrIcon, IrChip, IrButton } from '@/lib/ui-kit'
 import DataTable from '@/components/dataTable/DataTable.vue'
 import PageHeader from '@/components/PageHeader.vue'
@@ -24,7 +24,7 @@ function openDetails(item) {
   showDetails.value = true
 }
 
-const headers = [
+const headers = computed(() => [
   {
     key: 'dateID',
     title: t('withdraw.dateID'),
@@ -42,7 +42,7 @@ const headers = [
     key: 'status',
     title: t('common.status'),
   },
-]
+])
 
 const STATUS_CONFIG = {
   pending: { color: 'primary', icon: 'time' },
@@ -141,6 +141,7 @@ const assetNetwork = (item) => {
     <IrButton
       v-if="isPhone"
       :text="$t('withdraw.addNewWithdraw')"
+      color="secondary"
       class="withdraw-action absolute left-4 right-4 bottom-8"
       @click="showForm = true"
     />

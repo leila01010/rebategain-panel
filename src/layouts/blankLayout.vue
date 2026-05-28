@@ -3,3 +3,9 @@
     <slot />
   </div>
 </template>
+
+<style>
+.blank-layout {
+  height: 100vh;
+}
+</style>

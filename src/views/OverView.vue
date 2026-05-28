@@ -5,6 +5,7 @@ import RebateEstimateModal from '@/components/inquiry/RebateEstimateModal.vue'
 import PageHeader from '@/components/PageHeader.vue'
 import DataTable from '@/components/dataTable/DataTable.vue'
 import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { formatCurrency, formatDate } from '@/utils/helpers.js'
 import api from '@/api/api-list.js'
 import { useI18n } from 'vue-i18n'
@@ -16,7 +17,7 @@ const showForm = ref(false)
 const providerRef = ref(null)
 const tableRef = ref(null)
 
-const headers = [
+const headers = computed(() => [
   {
     key: 'createdAt',
     title: t('common.date'),
@@ -36,7 +37,7 @@ const headers = [
     title: t('common.status'),
     align: 'center',
   },
-]
+])
 
 const STATUS_CONFIG = {
   pending: { color: 'primary', icon: 'time' },

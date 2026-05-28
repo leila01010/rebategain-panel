@@ -2,6 +2,7 @@ import axios from 'axios'
 import { storage } from '@/services/storage.service.js'
 import { camelKeys, snakeKeys } from '@/utils'
 import { message } from '@/lib/ui-kit'
+import { redirectToSso, saveReturnTo } from '@/services/auth.service.js'
 import { i18n } from '@/i18n.js'
 
 const http = axios.create({
@@ -47,16 +48,31 @@ http.interceptors.response.use(
     }
 
     const status  = error?.status
-    const errorMessage = error.response?.data?.message ?? error.message
+    const isNetworkError = !error.response && (error.code === 'ERR_NETWORK' || error.message === 'Network Error' || !navigator.onLine)
+    const errors = error.response?.data?.errors ?? null
+    const fieldMessages = errors
+      ? Object.values(errors).flat().filter(Boolean)
+      : []
+    const topMessage = error.response?.data?.message ?? error.message
+    const errorMessage = isNetworkError
+      ? i18n.global.t('common.networkError')
+      : fieldMessages.length
+        ? fieldMessages.join('\n')
+        : topMessage
 
     if (status === 401) {
-      message.error('Unauthorized. Please login again')
+      message.error(i18n.global.t('common.unauthorizedError'))
+      saveReturnTo(window.location.pathname + window.location.search)
+      redirectToSso()
+    } else if (isNetworkError) {
+      message.error(errorMessage)
+    } else if (status >= 400 && status < 500) {
+      message.error(errorMessage)
     } else if (error) {
       console.log(error)
-      // handle auth globally
     }
 
-    return Promise.reject({ status, error: errorMessage, errors: error.response?.data?.errors ?? null })
+    return Promise.reject({ status, error: errorMessage, errors })
   }
 )
 
