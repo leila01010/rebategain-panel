@@ -1,0 +1,18 @@
+{
+  "ACCOUNT_STATUS": {
+    "PENDING": "قيد الانتظار",
+    "ACTIVE": "نشط",
+    "ACTION_NEEDED": "يتطلب إجراءً"
+  },
+  "INQUIRY_STATUS": {
+    "ACCEPTED": "مقبول",
+    "PENDING": "قيد الانتظار",
+    "REJECTED": "مرفوض",
+    "EXPIRED": "منتهي الصلاحية"
+  },
+  "WITHDRAWS_STATUS": {
+    "PENDING": "قيد الانتظار",
+    "PAID": "مدفوع",
+    "REJECTED": "مرفوض"
+  }
+}

@@ -18,7 +18,12 @@ const emit = defineEmits(['action'])
     </div>
     <div v-if="buttonText || $slots.action" class="page-header__action">
       <slot name="action">
-        <IrButton :text="buttonText" color="secondary" prepend-icon="plus" @click="emit('action')" />
+        <IrButton
+          :text="buttonText"
+          color="secondary"
+          prepend-icon="plus"
+          @click="emit('action')"
+        />
       </slot>
     </div>
   </div>

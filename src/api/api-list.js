@@ -1,6 +1,9 @@
 const api = 'client'
 
 export default {
+  user: 'auth/user',
+  userAvatar: 'auth/user/avatar',
+  ssoExchange: 'auth/sso/exchange-code',
   accounts: api + '/accounts',
   brokers: api + '/brokers',
   inquiries: api + '/inquiries',
@@ -10,4 +13,5 @@ export default {
   paymentMethodDefault: api + '/payment-methods/{id}/default',
   overview: api + '/dashboard/overview',
   withdraws: api + '/withdraws',
+  countries: 'public/countries',
 }

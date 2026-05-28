@@ -13,6 +13,6 @@ defineProps({
       <IrIcon name="plus" class="text-dark-blue-300" />
     </div>
     <div class="text-sm text-dark-blue-400 font-medium mb-1">{{ title }}</div>
-    <div class="text-xs text-dark-blue-300">{{ description }}</div>
+    <div class="text-xs text-dark-blue-300 text-center">{{ description }}</div>
   </div>
 </template>

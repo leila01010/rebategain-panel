@@ -44,7 +44,13 @@ function onAccountAdded() {
         <div class="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           <IrCard v-for="account in data" :key="account.id" class="min-h-[244px]">
             <div class="flex items-center gap-x-2">
-              <IrImg src="/img/broker-img.png" min-width="40" height="40" />
+              <IrImg
+                :src="account.broker.image"
+                :alt="account.broker.name"
+                :min-width="40"
+                :max-width="40"
+                :height="40"
+              />
               <div class="w-full">
                 <div class="flex items-center justify-between">
                   <h4 class="tet-sm font-bold text-dark-blue-600 leading-5 truncate w-28">{{ account?.broker?.name }}</h4>

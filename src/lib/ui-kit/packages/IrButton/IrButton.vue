@@ -134,11 +134,11 @@ const handleUrlClick = function (event) {
       <span class="ir-button__loading-text" v-text="$t('common.loading')" />
     </div>
     <template v-else>
-      <IrIcon v-if="prependIcon" :name="prependIcon" class="ir-button__prepend-icon" />
+      <IrIcon v-if="prependIcon" :name="prependIcon" class="ir-button__prepend-icon icon-flip-rtl" />
       <span v-if="text || $slots.default" class="ir-button__text">
         <slot>{{ text }}</slot>
       </span>
-      <IrIcon v-if="appendIcon" :name="appendIcon" class="ir-button__append-icon" />
+      <IrIcon v-if="appendIcon" :name="appendIcon" class="ir-button__append-icon icon-flip-rtl" />
     </template>
   </component>
 </template>

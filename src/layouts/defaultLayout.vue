@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
+import BottomNav from '@/components/layout/BottomNav.vue'
 
 const showSidebar = ref(false)
 
@@ -34,6 +35,8 @@ function closeSidebar() {
           <slot />
         </div>
       </main>
+
+      <BottomNav />
     </div>
   </div>
 </template>
@@ -64,10 +67,16 @@ function closeSidebar() {
   box-sizing: content-box;
 }
 
+@media (max-width: 767px) {
+  .main {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0));
+  }
+}
+
 .layout__overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(76, 94, 140, 0.25);
   z-index: 40;
   display: none;
 }
