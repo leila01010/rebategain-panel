@@ -74,6 +74,7 @@ const { isPhone } = useDevice()
   &__description {
     font-size: 12px;
     color: var(--color-dark-blue-300);
+    text-align: center;
     margin-bottom: 32px;
   }
 }
@@ -90,10 +91,6 @@ const { isPhone } = useDevice()
 
   .empty-state__title {
     font-size: 18px;
-  }
-
-  .topbar__menu-btn {
-    display: flex;
   }
 }
 </style>

@@ -6,6 +6,7 @@ import account from './account'
 import overview from './overview'
 import payment from './payment'
 import withdraw from './withdraw'
+import profile from './profile'
 
 export default {
   auth,
@@ -16,4 +17,5 @@ export default {
   overview,
   payment,
   withdraw,
+  profile,
 }

@@ -3,11 +3,16 @@
   "back": "Back",
   "continue": "Continue",
   "cancel": "Cancel",
+  "add": "Add",
   "loading": "Loading",
   "loadingText": "Please wait...",
   "selectBroker": "Select a broker",
   "contactSupport": "Contact Support",
   "noData": "There is no Items",
+  "rebateRequest": "Rebate Request",
+  "addAccount": "Add Account",
+  "networkError": "No internet connection. Please check your network and try again.",
+  "unauthorizedError": "Unauthorized. Please login again",
   "date": "Date",
   "broker": "Broker",
   "amount": "Amount",
@@ -16,10 +21,17 @@
   "statusCompleted": "Completed",
   "statusRejected": "Rejected",
   "details": "Details",
+  "you": "You",
+  "profile": {
+    "proAccount": "Pro Account",
+    "myDashboard": "My Dashboard",
+    "signOut": "Sign out"
+  },
   "routes": {
     "overview": "Overview",
     "paymentMethods": "Payment Methods",
     "accounts": "Accounts",
     "withdraws": "Withdraws",
+    "profile": "My Profile"
   }
 }

@@ -22,6 +22,8 @@ http.interceptors.request.use(config => {
 
   if (config.params) config.params = snakeKeys(config.params)
 
+  if (config.data instanceof FormData) delete config.headers['Content-Type']
+
   return config
 })
 

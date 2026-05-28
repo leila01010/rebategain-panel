@@ -17,6 +17,7 @@ import IrLoadingOverlay from './packages/IrLoadingOverlay/IrLoadingOverlay.vue'
 import IrPagination from './packages/IrPagination/IrPagination.vue'
 import IrCheckbox from './packages/IrCheckbox/IrCheckbox.vue'
 import IrInfiniteLoading from './packages/IrInfiniteLoading/IrInfiniteLoading.vue'
+import IrAvatar from './packages/IrAvatar/IrAvatar.vue'
 import { message } from './packages/IrMessage'
 
 
@@ -40,5 +41,6 @@ export {
   IrPagination,
   IrCheckbox,
   IrInfiniteLoading,
+  IrAvatar,
   message,
 }

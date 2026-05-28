@@ -200,6 +200,7 @@
   }
 
   &__popover {
+    max-height: 216px;
     position: fixed;
     top: 100%;
     left: 0;
@@ -217,6 +218,24 @@
 
     &.on-top {
       box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--color-blue-50);
+      border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-blue-500);
+      border-radius: 100px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-blue-400);
     }
   }
 
@@ -259,13 +278,8 @@
     transition: background-color 0.15s ease;
     outline: none;
 
-    &:focus {
-      background-color: rgba(var(--color-blue-1), 0.5);
-      outline: none;
-    }
-
     &:hover {
-      background-color: rgba(var(--color-blue-1), 0.5);
+      background-color: var(--color-blue-20);
     }
 
     &.ir-select__dropdown-item--disabled {
@@ -276,6 +290,7 @@
 
     &.selected {
       font-weight: 600;
+      background-color: var(--color-blue-20);
     }
   }
 

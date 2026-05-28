@@ -96,7 +96,7 @@ function onLoad() {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .ir-img {
   position: relative;
   &__loading {
@@ -104,6 +104,10 @@ function onLoad() {
     margin: auto;
     display: block;
     text-align: center;
+  }
+  &__image {
+    width: 100%;
+    height: 100%;
   }
 }
 </style>

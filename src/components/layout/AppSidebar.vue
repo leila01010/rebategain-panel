@@ -60,7 +60,7 @@ const sidebarClasses = computed(() => {
 <template>
   <aside :class="sidebarClasses">
     <button class="sidebar__expand-pill" @click="collapsed = false" title="Expand">
-      <IrIcon name="right" />
+      <IrIcon name="right" class="icon-flip-rtl" />
     </button>
 
     <div class="sidebar__header">
@@ -69,7 +69,7 @@ const sidebarClasses = computed(() => {
         <div class="sidebar__brand-text">RebateGain</div>
       </div>
       <button class="sidebar__collapse-btn" @click="collapsed = true" title="Collapse">
-        <IrIcon name="go-start" />
+        <IrIcon name="go-start" class="icon-flip-rtl" />
       </button>
       <button class="sidebar__close-btn" @click="emit('close')" title="Close">
         <IrIcon name="close" />

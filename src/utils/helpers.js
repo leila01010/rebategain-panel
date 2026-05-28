@@ -1,5 +1,14 @@
 import moment from '@/lib/moment.js'
 
+export const fullName = (data) => {
+  data = data || {}
+
+  return [data.firstName, data.lastName]
+    .filter(n => n)
+    .join(' ')
+    .trim()
+}
+
 export function formatCurrency(value, locale = 'en-US', currency = 'USD') {
   if (value == null) return '-'
 

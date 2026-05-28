@@ -1,45 +1,3 @@
-<template>
-  <div
-    ref="dropdownRef"
-    class="ir-dropdown"
-    :class="{
-      'ir-dropdown--open': isOpen,
-      'ir-dropdown--disabled': disabled,
-    }"
-  >
-    <button
-      ref="triggerRef"
-      type="button"
-      class="ir-dropdown__trigger"
-      :aria-expanded="isOpen"
-      :disabled="disabled"
-      @click="toggle"
-    >
-      <slot name="trigger">
-        <span class="ir-dropdown__label">{{ label }}</span>
-      </slot>
-      <IrIcon
-        name="arrow-down"
-        class="ir-dropdown__icon"
-        :class="{ 'ir-dropdown__icon--rotated': isOpen }"
-      />
-    </button>
-
-    <Teleport to="body">
-      <transition name="ir-dropdown-fade">
-        <div
-          v-if="isOpen"
-          ref="menuRef"
-          class="ir-dropdown__menu"
-          :style="menuStyles"
-        >
-          <slot name="content" :close="close" />
-        </div>
-      </transition>
-    </Teleport>
-  </div>
-</template>
-
 <script setup>
 import {
   ref,
@@ -56,18 +14,23 @@ const props = defineProps({
   minWidth: { type: [String, Number], default: null },
   maxWidth: { type: [String, Number], default: null },
   minHeight: { type: [String, Number], default: null },
-  maxHeight: { type: [String, Number], default: '300px' },
+  maxHeight: { type: [String, Number], default: '216px' },
+  align: {
+    type: String,
+    default: 'start',
+    validator: (v) => ['start', 'end'].includes(v),
+  },
+  offset: { type: Number, default: 8 },
+  viewportPadding: { type: Number, default: 8 },
 })
 
 const isOpen = ref(false)
 
-const dropdownRef = ref(null)
 const triggerRef = ref(null)
 const menuRef = ref(null)
 
 const position = ref({
   top: 0,
-  right: 0,
   left: 0,
   width: 0,
 })
@@ -88,14 +51,35 @@ const menuStyles = computed(() => ({
   overflowY: 'auto',
 }))
 
+const getDirection = () =>
+  document.documentElement.getAttribute('dir') === 'rtl' ? 'rtl' : 'ltr'
+
 const updatePosition = () => {
   if (!triggerRef.value) return
 
-  const rect = triggerRef.value.getBoundingClientRect()
+  const triggerRect = triggerRef.value.getBoundingClientRect()
+  const viewportWidth = document.documentElement.clientWidth
+  const padding = props.viewportPadding
+  const dir = getDirection()
+
+  const menuWidth = menuRef.value?.offsetWidth ?? triggerRect.width
+
+  const anchorEnd =
+    (props.align === 'end' && dir === 'ltr') ||
+    (props.align === 'start' && dir === 'rtl')
+
+  let left = anchorEnd
+    ? triggerRect.right - menuWidth
+    : triggerRect.left
+
+  const maxLeft = viewportWidth - menuWidth - padding
+  if (left > maxLeft) left = maxLeft
+  if (left < padding) left = padding
+
   position.value = {
-    top: rect.bottom + window.scrollY + 8,
-    left: rect.left + window.scrollX,
-    width: rect.width,
+    top: triggerRect.bottom + window.scrollY + props.offset,
+    left: left + window.scrollX,
+    width: triggerRect.width,
   }
 }
 
@@ -104,6 +88,8 @@ const open = async () => {
 
   await nextTick()
 
+  updatePosition()
+  await nextTick()
   updatePosition()
 }
 
@@ -161,4 +147,45 @@ defineExpose({
 })
 </script>
 
-<style lang="scss" src="./IrDropdown.scss" />
+<template>
+  <div
+    class="ir-dropdown"
+    :class="{
+      'ir-dropdown--open': isOpen,
+      'ir-dropdown--disabled': disabled,
+    }"
+  >
+    <button
+      ref="triggerRef"
+      type="button"
+      class="ir-dropdown__trigger"
+      :aria-expanded="isOpen"
+      :disabled="disabled"
+      @click="toggle"
+    >
+      <slot name="trigger">
+        <span class="ir-dropdown__label">{{ label }}</span>
+      </slot>
+      <IrIcon
+        name="arrow-down"
+        class="ir-dropdown__icon"
+        :class="{ 'ir-dropdown__icon--rotated': isOpen }"
+      />
+    </button>
+
+    <Teleport to="body">
+      <transition name="ir-dropdown-fade">
+        <div
+          v-if="isOpen"
+          ref="menuRef"
+          class="ir-dropdown__menu"
+          :style="menuStyles"
+        >
+          <slot name="content" :close="close" />
+        </div>
+      </transition>
+    </Teleport>
+  </div>
+</template>
+
+<style lang="scss" scoped src="./IrDropdown.scss" />
