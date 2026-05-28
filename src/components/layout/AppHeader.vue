@@ -1,16 +1,15 @@
 <script setup>
-import { IrIcon } from '@/lib/ui-kit'
+import { IrIcon, IrDivider } from '@/lib/ui-kit'
 import UserMenu from './UserMenu.vue'
+import LanguageSelect from './LanguageSelect.vue'
 import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
-import { localize } from '@/lib/moment.js'
 import { useRoute } from 'vue-router'
 import { useDevice } from '@/composables/useDevice.js'
 import { useUserStore } from '@/stores/user.js'
 
 const route = useRoute()
-const { locale } = useI18n()
 const { t } = useI18n()
 const { isPhone } = useDevice()
 const userStore = useUserStore()
@@ -21,14 +20,6 @@ const emit = defineEmits(['toggle-sidebar'])
 const PageTitle = computed(() => {
   return t(`common.routes.${route.name}`)
 })
-
-function setLanguage(lang) {
-  locale.value = lang
-  localize(lang)
-  const dir = ['fa', 'ar', 'he'].includes(lang) ? 'rtl' : 'ltr'
-  document.documentElement.setAttribute('dir', dir)
-  document.documentElement.setAttribute('lang', lang)
-}
 </script>
 
 <template>
@@ -43,11 +34,9 @@ function setLanguage(lang) {
     <div class="topbar__title">{{ PageTitle }}</div>
     <div class="topbar__spacer" />
     <div class="topbar__actions">
-      <button class="space-x-2 cursor-pointer">
-        <span @click="setLanguage('en')">En</span>
+      <LanguageSelect v-if="!isPhone" />
+      <IrDivider v-if="!isPhone && user" orientation="vertical" class="!h-9" />
       <UserMenu v-if="!isPhone && user" />
-        <span @click="setLanguage('fa')">Fa</span>
-      </button>
     </div>
   </header>
 </template>

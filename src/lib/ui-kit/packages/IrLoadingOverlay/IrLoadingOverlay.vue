@@ -11,7 +11,11 @@
     >
       <div class="flex items-center gap-2">
         <slot name="icon">
-          <IrIcon name="spinner" size="18" class="text-dark-blue-6 text-2xl" />
+          <IrIcon
+            name="spinner"
+            :size="fullscreen ? 30 : 18"
+            class="text-dark-blue-6"
+          />
         </slot>
         <slot>
           <span v-if="message" class="text-sm text-dark-blue-300" v-text="message" />

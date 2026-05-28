@@ -2,6 +2,7 @@ import axios from 'axios'
 import { storage } from '@/services/storage.service.js'
 import { camelKeys, snakeKeys } from '@/utils'
 import { message } from '@/lib/ui-kit'
+import { i18n } from '@/i18n.js'
 
 const http = axios.create({
   baseURL: import.meta.env.VITE_APP_API,
@@ -18,7 +19,10 @@ const http = axios.create({
 
 http.interceptors.request.use(config => {
   const token = storage.get('token')
+
   if (token) config.headers.Authorization = `Bearer ${token}`
+
+  config.headers['Accept-Language'] = i18n.global.locale.value
 
   if (config.params) config.params = snakeKeys(config.params)
 

@@ -11,36 +11,37 @@ const props = defineProps({
 
 const emit = defineEmits(['close'])
 
-const NAV = [
-  {
-    key: 'dashboard',
-    label: t('common.routes.overview'),
-    icon: 'dashboard',
-    badge: null,
-    to: '/',
-  },
-  {
-    key: 'accounts',
-    label: t('common.routes.accounts'),
-    icon: 'wallet',
-    badge: null,
-    to: '/accounts',
-  },
-  {
-    key: 'withdraws',
-    label: t('common.routes.withdraws'),
-    icon: 'upload',
-    badge: null,
-    to: '/withdraws',
-  },
-  {
-    key: 'payment-methods',
-    label: t('common.routes.paymentMethods'),
-    icon: 'dollar',
-    badge: null,
-    to: '/payment-methods',
-  },
-]
+const NAV = computed(() => [
+    {
+      key: 'dashboard',
+      label: t('common.routes.overview'),
+      icon: 'dashboard',
+      badge: null,
+      to: '/',
+    },
+    {
+      key: 'accounts',
+      label: t('common.routes.accounts'),
+      icon: 'wallet',
+      badge: null,
+      to: '/accounts',
+    },
+    {
+      key: 'withdraws',
+      label: t('common.routes.withdraws'),
+      icon: 'upload',
+      badge: null,
+      to: '/withdraws',
+    },
+    {
+      key: 'payment-methods',
+      label: t('common.routes.paymentMethods'),
+      icon: 'dollar',
+      badge: null,
+      to: '/payment-methods',
+    },
+  ]
+)
 
 const collapsed = ref(false)
 
@@ -324,8 +325,8 @@ const sidebarClasses = computed(() => {
     width: var(--mobile-sidebar-width);
     transform: translateX(-100%);
     transition: transform var(--transition);
-    border-top-right-radius: 16px;
-    border-bottom-right-radius: 16px;
+    border-start-end-radius: 16px;
+    border-end-end-radius: 16px;
   }
 
   .sidebar__header {
@@ -345,12 +346,10 @@ const sidebarClasses = computed(() => {
   }
 
   [dir='rtl'] .sidebar {
-    inset-inline-start: auto;
-    inset-inline-end: 0;
     transform: translateX(100%);
   }
 
-  .sidebar--mobile-open {
+  .sidebar.sidebar--mobile-open {
     transform: translateX(0);
   }
 
