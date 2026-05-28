@@ -51,6 +51,8 @@ async function submit() {
       <IrButton
         block
         :text="$t('account.openBrokerAccount', { broker: selectedBroker?.title })"
+        :url="selectedBroker?.link"
+        target="_blank"
         append-icon="share"
         size="sm"
         class="mt-4"
@@ -67,6 +69,8 @@ async function submit() {
       <IrButton
         block
         :text="$t('account.openBrokerAccount', { broker: selectedBroker?.title })"
+        :url="selectedBroker?.link"
+        target="_blank"
         append-icon="share"
         size="sm"
         class="mt-4"
