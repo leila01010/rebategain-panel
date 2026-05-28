@@ -71,6 +71,10 @@
   --default-font-family: "Inter";
 }
 
+:lang(ar) {
+  font-family: 'Vazirmatn', 'Inter', sans-serif;
+}
+
 [dir="rtl"] .icon-flip-rtl {
   transform: scaleX(-1);
 }
