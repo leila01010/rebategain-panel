@@ -24,7 +24,7 @@ function updateData() {
           :button-text="$t('payment.addNewMethod')"
           @action="showForm = true"
         />
-        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-12">
           <PaymentMethodCard
             v-for="method in data"
             :key="method.id"

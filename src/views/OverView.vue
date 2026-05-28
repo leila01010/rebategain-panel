@@ -4,7 +4,7 @@ import OverviewProvider from '@/components/overview/OverviewProvider.vue'
 import RebateEstimateModal from '@/components/inquiry/RebateEstimateModal.vue'
 import PageHeader from '@/components/PageHeader.vue'
 import DataTable from '@/components/dataTable/DataTable.vue'
-import { ref } from 'vue'
+import AddWithdrawModal from '@/components/withdraw/AddWithdrawModal.vue'
 import { computed, ref } from 'vue'
 import { formatCurrency, formatDate } from '@/utils/helpers.js'
 import api from '@/api/api-list.js'
@@ -13,9 +13,10 @@ import enums from '@/utils/enums.js'
 
 const { t } = useI18n()
 
-const showForm = ref(false)
-const providerRef = ref(null)
 const tableRef = ref(null)
+const providerRef = ref(null)
+const showForm = ref(false)
+const showWithdrawForm = ref(false)
 
 const headers = computed(() => [
   {
@@ -58,8 +59,8 @@ const STATUS_CONFIG = {
           :button-text="$t('overview.rebateEstimate')"
           @action="showForm = true"
         />
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 mb-8">
-          <IrCard class="col-span-2 md:col-span-1" body-class="!p-0">
+        <div class="grid grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8 mb-8">
+          <IrCard class="col-span-2 lg:col-span-1" body-class="!p-0">
             <div class="p-4">
               <div class="w-full flex items-center justify-between gap-2 mb-2">
                 <span v-text="$t('overview.availableBalance')" class="text-sm text-dark-blue-600" />
@@ -69,10 +70,16 @@ const STATUS_CONFIG = {
             </div>
             <IrDivider class="!m-0" />
             <div class="flex items-center justify-center p-4">
-              <IrButton :text="$t('overview.withdrawFunds')" size="sm" variant="plain" prepend-icon="upload" />
+              <IrButton
+                :text="$t('overview.withdrawFunds')"
+                size="sm"
+                variant="plain"
+                prepend-icon="upload"
+                @click="showWithdrawForm = true"
+              />
             </div>
           </IrCard>
-          <IrCard class="col-span-1 md:col-span-1">
+          <IrCard class="col-span-1 lg:col-span-1">
             <div class="w-full flex items-center justify-between gap-2 mb-2">
               <span v-text="$t('overview.totalRebateGained')" class="text-sm text-dark-blue-600" />
               <IrIcon name="dollar" size="20" class="text-dark-blue-300" />
@@ -83,7 +90,7 @@ const STATUS_CONFIG = {
               <span v-text="$t('overview.changeFromLastMonth', { value: `${data.rebateGained?.monthlyChangePercent}%` })" />
             </div>
           </IrCard>
-          <IrCard class="col-span-1 md:col-span-1">
+          <IrCard class="col-span-1 lg:col-span-1">
             <div class="w-full flex items-center justify-between gap-2 mb-2">
               <span v-text="$t('overview.totalWithdrawn')" class="text-sm text-dark-blue-600" />
               <IrIcon name="upload" size="20" class="text-dark-blue-300" />
@@ -105,6 +112,7 @@ const STATUS_CONFIG = {
           :url="api.inquiries"
           :headers
           :per-page="5"
+          class="mb-16 md:mb-8"
         >
           <template #item-status="{ data }">
             <IrChip
@@ -135,4 +143,6 @@ const STATUS_CONFIG = {
   </OverviewProvider>
 
   <RebateEstimateModal v-model:show="showForm" @done="tableRef?.fetch()" />
+
+  <AddWithdrawModal v-model:show="showWithdrawForm" @done="providerRef?.getData()" />
 </template>
