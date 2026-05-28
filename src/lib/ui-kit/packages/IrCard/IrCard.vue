@@ -4,13 +4,14 @@ defineProps({
   subtitle: { type: String, default: '' },
   flush: { type: Boolean, default: false },
   headerClass: { type: String, default: '' },
+  bgColor: { type: String, default: 'bg-white' },
   bodyClass: { type: String, default: '' },
   footerClass: { type: String, default: '' },
 })
 </script>
 
 <template>
-  <div :class="['ir-card', { 'ir-card--flush': flush }]">
+  <div :class="['ir-card', { 'ir-card--flush': flush }, bgColor]">
     <div v-if="$slots.header || title" :class="['ir-card__header', headerClass]">
       <slot name="header">
         <div class="ir-card__header-start">

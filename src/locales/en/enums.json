@@ -9,5 +9,10 @@
     "PENDING": "Pending",
     "REJECTED": "Rejected",
     "EXPIRED": "Expired"
+  },
+  "WITHDRAWS_STATUS": {
+    "PENDING": "Pending",
+    "PAID": "Paid",
+    "REJECTED": "Rejected"
   }
 }

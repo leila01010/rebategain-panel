@@ -9,4 +9,5 @@ export default {
   paymentMethods: api + '/payment-methods',
   paymentMethodDefault: api + '/payment-methods/{id}/default',
   overview: api + '/dashboard/overview',
+  withdraws: api + '/withdraws',
 }

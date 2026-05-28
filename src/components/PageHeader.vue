@@ -53,9 +53,10 @@ const emit = defineEmits(['action'])
     }
     &__action {
       position: absolute;
-      bottom: 20px;
+      bottom: calc(64px + 20px + env(safe-area-inset-bottom, 0px));
       left: 16px;
       right: 16px;
+      z-index: 20;
       .ir-button {
         width: 100%;
       }

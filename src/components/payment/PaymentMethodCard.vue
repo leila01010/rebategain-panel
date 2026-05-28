@@ -86,7 +86,6 @@ async function setDefault() {
         @click="setDefault"
       />
     </div>
-
   </IrCard>
 </template>
 
