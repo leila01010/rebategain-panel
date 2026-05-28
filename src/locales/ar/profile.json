@@ -1,0 +1,33 @@
+{
+  "myProfile": "ملفي الشخصي",
+  "myProfileText": "إدارة المعلومات الشخصية والأمان والتفضيلات.",
+  "tabs": {
+    "personalInformation": "المعلومات الشخصية",
+    "security": "الأمان"
+  },
+  "emailVerified": "تم التحقق من البريد الإلكتروني",
+  "memberSince": "عضو منذ:",
+  "activeAccounts": "الحسابات النشطة:",
+  "exchanges": "{count} منصة | {count} منصات",
+  "brokers": "{count} وسيط | {count} وسطاء",
+  "edit": "تعديل",
+  "cancel": "إلغاء",
+  "saveChanges": "حفظ التغييرات",
+  "fields": {
+    "name": "الاسم",
+    "lastName": "اسم العائلة",
+    "phoneNumber": "رقم الهاتف",
+    "countryRegion": "البلد/المنطقة"
+  },
+  "passwordManagement": "إدارة كلمة المرور",
+  "changePassword": "تغيير كلمة المرور",
+  "password": "كلمة المرور",
+  "updatePasswordText": "قم بتحديث كلمة المرور بانتظام للحفاظ على أمان عمولات التداول وبيانات حسابك.",
+  "errors": {
+    "nameRequired": "الاسم مطلوب",
+    "lastNameRequired": "اسم العائلة مطلوب",
+    "phoneRequired": "رقم الهاتف مطلوب"
+  },
+  "updateSuccess": "تم تحديث الملف الشخصي بنجاح",
+  "updateError": "تعذر تحديث الملف الشخصي"
+}
