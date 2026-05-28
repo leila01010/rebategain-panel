@@ -74,7 +74,10 @@ async function setDefault() {
 
     <IrAlert color="info" size="sm">
       <span class="text-xs text-dark-blue-300" v-text="$t('payment.walletAddress')" />
-      <p class="text-dark-blue-500 text-sm md:text-lg font-medium tracking-[4px] mt-1" v-text="method.address.walletAddress" />
+      <p
+        class="text-dark-blue-500 text-sm md:text-lg font-medium truncate tracking-[4px] mt-1 max-w-[350px]"
+        v-text="method.address.walletAddress"
+      />
     </IrAlert>
 
     <div v-if="!method.isDefault" class="flex justify-end mt-4">

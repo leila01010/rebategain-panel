@@ -43,6 +43,7 @@ const headers = computed(() => [
 const STATUS_CONFIG = {
   pending: { color: 'primary', icon: 'time' },
   accepted: { color: 'success', icon: 'check-circle' },
+  paid: { color: 'success', icon: 'check-circle' },
   rejected: { color: 'danger', icon: 'close-circle' },
   expired: { color: 'danger', icon: 'close-circle' },
 }

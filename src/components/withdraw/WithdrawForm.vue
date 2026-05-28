@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
-import { IrButton, IrInput, message, IrCard } from '@/lib/ui-kit'
+import { IrButton, IrInput, IrCard } from '@/lib/ui-kit'
 import PaymentMethodSelect from '@/components/select/PaymentMethodSelect.vue'
 import api from '@/api/api-list.js'
 import http from '@/services/http.js'
@@ -61,7 +61,7 @@ const submit = handleSubmit(async (values) => {
     await http.post(api.withdraws, data)
     emit('done')
   } catch (e) {
-    message.error(e?.error || t('overview.submitRebateError'))
+    console.log(e?.error)
   } finally {
     submitting.value = false
   }

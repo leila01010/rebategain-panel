@@ -1,5 +1,6 @@
 .ir-alert {
   width: 100%;
+  overflow: hidden;
 
   &__header {
     display: flex;
@@ -30,6 +31,7 @@
     display: flex;
     align-items: flex-start;
     gap: 10px;
+    overflow: hidden;
   }
 
   &--primary {
