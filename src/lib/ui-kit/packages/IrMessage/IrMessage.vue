@@ -1,7 +1,7 @@
 <template>
   <div
     class="ir-messages-holder"
-    :style="{ zIndex }"
+    :style="{ zIndex: zIndex }"
     role="region"
     aria-label="Notifications"
   >
@@ -43,15 +43,17 @@ defineEmits(['dismiss'])
 
 const zIndex = ref(null)
 
-// each time a new toast appears, lift the holder above every popup opened so
-// far (modals included) — popupManager.getNewZIndex() always returns a value
-// higher than the current ceiling.
-watch(
-  () => props.messages.length,
-  (length, prev) => {
-    if (length > prev) zIndex.value = popupManager.getNewZIndex()
-  },
-)
+function lift() {
+  if (props.messages.length) zIndex.value = popupManager.getNewZIndex()
+}
+
+watch(() => props.messages.length, (length, prev) => {
+  if (length > prev) lift()
+})
+
+watch(() => popupManager.maxZIndex, (next) => {
+  if (props.messages.length && next > (zIndex.value ?? 0)) lift()
+})
 </script>
 
 <style lang="scss" src="./IrMessage.scss" />

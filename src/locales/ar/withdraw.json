@@ -23,6 +23,7 @@
   "date": "التاريخ:",
   "amountLabel": "المبلغ:",
   "method": "الطريقة:",
+  "methodTitle": "الطريقة",
   "walletAddress": "عنوان المحفظة:",
   "description": "الوصف:"
 }

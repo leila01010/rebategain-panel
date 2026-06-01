@@ -7,7 +7,10 @@ export function getToken() {
 }
 
 export function saveReturnTo(path) {
-  if (path && path !== '/sso') storage.set(RETURN_TO_KEY, path)
+  if (!path) return
+  const base = import.meta.env.BASE_URL.replace(/\/$/, '')
+  const normalized = base && path.startsWith(base) ? path.slice(base.length) || '/' : path
+  if (normalized !== '/sso') storage.set(RETURN_TO_KEY, normalized)
 }
 
 export function consumeReturnTo() {

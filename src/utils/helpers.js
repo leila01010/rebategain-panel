@@ -32,11 +32,28 @@ export function formatCurrency(value, locale = 'en-US', currency = 'USD') {
   return new Intl.NumberFormat(locale, options).format(value)
 }
 
-export const maskString = (str, limit = 11) => {
-  if (str.length < limit) return str
-  const start = str.slice(0, 3)
-  const end = str.slice(-3)
-  return `${start}...${end}`
+/**
+ * Masks the middle of a string, keeping a prefix and suffix visible.
+ * Email-aware: preserves the `@domain` and masks only the local part.
+ *
+ * @param {string} str
+ * @param {{ charStart?: number, charEnd?: number, mask?: string }} [options]
+ * @returns {string}
+ */
+export const maskMiddle = (str, { charStart = 3, charEnd = 3, mask = '...' } = {}) => {
+  if (!str || typeof str !== 'string') return str || ''
+
+  const minMaskable = charStart + charEnd + mask.length
+  const atIndex = str.lastIndexOf('@')
+
+  if (atIndex > 0) {
+    const local = str.slice(0, atIndex)
+    if (local.length <= minMaskable) return str
+    return `${local.slice(0, charStart)}${mask}${local.slice(-charEnd)}${str.slice(atIndex)}`
+  }
+
+  if (str.length <= minMaskable) return str
+  return `${str.slice(0, charStart)}${mask}${str.slice(-charEnd)}`
 }
 
 function toLatinDigits(str) {

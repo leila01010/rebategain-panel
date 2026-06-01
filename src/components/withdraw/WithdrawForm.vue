@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
-import { IrButton, IrInput, IrCard } from '@/lib/ui-kit'
+import { IrButton, IrInput, IrCard, message } from '@/lib/ui-kit'
 import PaymentMethodSelect from '@/components/select/PaymentMethodSelect.vue'
 import api from '@/api/api-list.js'
 import http from '@/services/http.js'
@@ -17,7 +17,7 @@ const MIN_AMOUNT = 50
 const submitting = ref(false)
 const selectedPaymentMethod = ref(null)
 
-const { handleSubmit, meta } = useForm()
+const { handleSubmit, meta, resetField } = useForm()
 const {
   value: amount,
   errorMessage: amountError,
@@ -59,6 +59,8 @@ const submit = handleSubmit(async (values) => {
   submitting.value = true
   try {
     await http.post(api.withdraws, data)
+    message.success(t('withdraw.withdrawalSubmittedSuccessfully'))
+    resetField('amount')
     emit('done')
   } catch (e) {
     console.log(e?.error)

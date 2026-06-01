@@ -9,6 +9,7 @@
   "connectAnotherAccount": "Connect Another Account",
   "connectAnotherAccountText": "Link more broker accounts to increase your rebate earning.",
   "pendingAlert": "Verification usually takes 1-2 business days. we will notify you once approved.",
+  "actionNeededAlert": "Account ID not found under our IB",
   "hasNotAccount": "No I want to create a new account",
   "hasNotAccountText": "I don’t have any registered profile with {broker} yet.",
   "hasAccount": "Yes I already have an account",
@@ -22,5 +23,12 @@
   "enterTradingAccount": "Step 2: Enter trading account ID",
   "enterTradingAccountText": "Once you have completed Step 1 and received your MT4/MT5 account number, enter it below to verify.",
   "accountID": "Account ID",
-  "submitAccount": "Submit Account"
+  "submitAccount": "Submit Account",
+  "accountIdRequired": "Account ID is required",
+  "accountIdMin": "Account ID must be at least {min} characters",
+  "accountIdMax": "Account ID must be at most {max} characters",
+  "howToFixAccount": "See how to fix this",
+  "needHelp": "Need help?",
+  "watchTutorial": "Watch Tutorial",
+  "or": "Or"
 }

@@ -7,6 +7,7 @@ const { t } = useI18n()
 
 const props = defineProps({
   showSidebar: { type: Boolean, default: false },
+  zIndex: { type: Number, default: null },
 })
 
 const emit = defineEmits(['close'])
@@ -56,10 +57,12 @@ const sidebarClasses = computed(() => {
     props.showSidebar && 'sidebar--mobile-open',
   ]
 })
+
+const sidebarStyle = computed(() => props.zIndex ? { zIndex: props.zIndex } : null)
 </script>
 
 <template>
-  <aside :class="sidebarClasses">
+  <aside :class="sidebarClasses" :style="sidebarStyle">
     <button class="sidebar__expand-pill" @click="collapsed = false" title="Expand">
       <IrIcon name="right" class="icon-flip-rtl" />
     </button>

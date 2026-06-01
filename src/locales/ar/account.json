@@ -22,5 +22,12 @@
   "enterTradingAccount": "الخطوة 2: أدخل معرف حساب التداول",
   "enterTradingAccountText": "بمجرد إكمالك للخطوة 1 واستلام رقم حساب MT4/MT5 الخاص بك، أدخله أدناه للتحقق.",
   "accountID": "معرف الحساب",
-  "submitAccount": "إرسال الحساب"
+  "submitAccount": "إرسال الحساب",
+  "accountIdRequired": "معرف الحساب مطلوب",
+  "accountIdMin": "يجب أن يتكون معرف الحساب من {min} حرفًا على الأقل",
+  "accountIdMax": "يجب ألا يزيد معرف الحساب عن {max} حرفًا",
+  "howToFixAccount": "See how to fix this",
+  "needHelp": "Need help?",
+  "watchTutorial": "Watch Tutorial",
+  "or": "Or"
 }

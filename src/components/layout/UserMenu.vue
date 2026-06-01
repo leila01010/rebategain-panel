@@ -1,18 +1,21 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { IrIcon, IrDropdown, IrAvatar } from '@/lib/ui-kit'
 import UpdateProfileAvatar from '@/components/profile/UpdateProfileAvatar.vue'
 import { useUserStore } from '@/stores/user.js'
 import { useI18n } from 'vue-i18n'
-import { fullName } from '@/utils/helpers.js'
+import { fullName, maskMiddle } from '@/utils/helpers.js'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
-
-const emit = defineEmits(['edit-avatar', 'dashboard', 'sign-out'])
+import http from '@/services/http.js'
+import api from '@/api/api-list.js'
+import { storage } from '@/services/storage.service.js'
 
 const { t } = useI18n()
 const router = useRouter()
 const userStore = useUserStore()
+
+const signingOut = ref(false)
 
 const { user } = storeToRefs(userStore)
 
@@ -28,9 +31,21 @@ function onDashboard(close) {
   router.push({ name: 'profile' })
 }
 
-function onSignOut(close) {
-  close()
-  emit('sign-out')
+async function onSignOut(close) {
+  if (signingOut.value) return
+  signingOut.value = true
+  try {
+    const res = await http.post(api.logout)
+    storage.remove('token')
+    const logoutUrl = res?.data?.logoutUrl
+    if (logoutUrl) {
+      window.location.href = logoutUrl
+    } else {
+      close()
+    }
+  } finally {
+    signingOut.value = false
+  }
 }
 </script>
 
@@ -53,22 +68,30 @@ function onSignOut(close) {
         <div class="user-menu__header">
           <UpdateProfileAvatar class="user-menu__avatar" />
           <div class="user-menu__name">{{ name }}</div>
-          <div class="user-menu__email">{{ user?.email }}</div>
+          <div class="user-menu__email">{{ maskMiddle(user.email, { charStart: 12, charEnd: 2, mask: '***' }) }}</div>
         </div>
 
         <button type="button" class="user-menu__item" @click="onDashboard(close)">
           <span class="user-menu__item-label">
             {{ t('common.profile.myDashboard') }}
-            <span class="user-menu__item-dot" />
+            <!--<span class="user-menu__item-dot" />-->
           </span>
-          <IrIcon name="arrow-right" class="user-menu__item-chevron icon-flip-rtl" />
+          <IrIcon name="arrow-right" class="user-menu__item-icon icon-flip-rtl" />
         </button>
 
-        <button type="button" class="user-menu__item" @click="onSignOut(close)">
+        <button
+          type="button"
+          class="user-menu__item"
+          :disabled="signingOut"
+          @click="onSignOut(close)"
+        >
           <span class="user-menu__item-label">
             {{ t('common.profile.signOut') }}
           </span>
-          <IrIcon name="logout" class="user-menu__item-chevron icon-flip-rtl" />
+          <IrIcon
+            :name="signingOut ? 'spinner' : 'logout'"
+            class="user-menu__item-icon icon-flip-rtl"
+          />
         </button>
       </div>
     </template>
@@ -136,6 +159,7 @@ function onSignOut(close) {
   flex-direction: column;
   align-items: center;
   padding: 12px 12px 16px;
+  overflow: hidden;
 }
 
 .user-menu__avatar {
@@ -178,6 +202,9 @@ function onSignOut(close) {
 .user-menu__email {
   font-size: 12px;
   color: var(--color-dark-blue-300);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .user-menu__item {
@@ -198,6 +225,11 @@ function onSignOut(close) {
   background: var(--color-blue-20);
 }
 
+.user-menu__item:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
 .user-menu__item-label {
   display: inline-flex;
   align-items: center;
@@ -211,7 +243,7 @@ function onSignOut(close) {
   background: var(--color-danger);
 }
 
-.user-menu__item-chevron {
+.user-menu__item-icon {
   width: 14px !important;
   height: 14px !important;
   color: var(--color-dark-blue-300);

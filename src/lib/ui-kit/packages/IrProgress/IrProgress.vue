@@ -115,7 +115,6 @@ onMounted(() => updatePercents())
 
 <style lang="scss">
 .ir-progress-progress {
-  padding-bottom: 26px;
   &__total {
     color: #959499;
     margin-bottom: 4px;

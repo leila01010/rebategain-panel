@@ -1,10 +1,18 @@
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 
 export class PopupManager {
   constructor() {
     this.topElements = reactive([])
-    this.maxZIndex = 0
+    this.maxZIndexRef = ref(0)
     this.initilaized = false
+  }
+
+  get maxZIndex() {
+    return this.maxZIndexRef.value
+  }
+
+  set maxZIndex(value) {
+    this.maxZIndexRef.value = value
   }
 
   _init() {
@@ -27,7 +35,7 @@ export class PopupManager {
 
   getNewZIndex() {
     if (!this.initilaized) this._init()
-    return ++this.maxZIndex
+    return ++this.maxZIndexRef.value
   }
 
   setBodyOverflow() {
@@ -49,7 +57,8 @@ export class PopupManager {
   }
 
   removeFromTopElements(element) {
-    this.topElements = this.topElements.filter((el) => el !== element)
+    const idx = this.topElements.indexOf(element)
+    if (idx !== -1) this.topElements.splice(idx, 1)
   }
 
   destroyElement(element) {

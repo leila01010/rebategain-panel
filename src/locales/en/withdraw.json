@@ -17,12 +17,17 @@
   "estimatedArrival": "Estimated Arrival:",
   "within24Hours": "Within 24 Hours",
   "youWillReceive": "You Will Receive:",
-  "reqID": "Req. ID:",
+  "reqID": "Req. ID",
   "addNewWithdraw": "Add New Withdraw",
   "requestDetails": "Request Details",
   "date": "Date:",
   "amountLabel": "Amount:",
   "method": "Method:",
-  "walletAddress": "Wallet Address:",
-  "description": "Description:"
+  "methodTitle": "Method",
+  "walletAddress": "Wallet Address",
+  "description": "Description:",
+  "withdrawalSubmittedSuccessfully": "Withdrawal request submitted successfully.",
+  "viewFullHistory": "View Full History",
+  "fullHistory": "Full History",
+  "fullHistoryText": "A full record of requested payouts"
 }

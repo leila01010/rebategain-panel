@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, reactive, computed, watch } from 'vue'
 import { IrTable, IrCard, IrPagination, IrIcon, IrInfiniteLoading } from '@/lib/ui-kit'
+import DataTableFilter from './DataTableFilter.vue'
 import http from '@/services/http.js'
 import { useRouter } from 'vue-router'
 import { useDevice } from '@/composables/useDevice.js'
@@ -9,6 +10,7 @@ const props = defineProps({
   // unique id for this table
   id: { type: String, default: '' },
   title: { type: String, default: '' },
+  subtitle: { type: String, default: '' },
   headers: { type: Array, default: () => [] },
   filters: { type: Array, default: () => [] },
   // the main url to fetch data:
@@ -45,7 +47,7 @@ const loading = ref(false)
 const updateTimeout = ref(null)
 const items = ref([])
 const totalItems = ref('')
-const quickFilter = ref([])
+const activeFilters = ref({})
 const sort = ref([])
 const page = reactive({
   currentPage: 1,
@@ -62,13 +64,11 @@ const params = computed(() => {
   return {
     page: page.currentPage,
     per_page: page.perPage,
+    ...activeFilters.value,
   }
 })
 const paramsJson = computed(() => {
   return JSON.parse(JSON.stringify(params.value))
-})
-const hasFilters = computed(() => {
-  return quickFilter.value.length > 0
 })
 
 watch(() => props.defaultSort, (value) => {
@@ -81,7 +81,7 @@ watch(() => props.defaultSort, (value) => {
 
 watch(() => page.perPage, () => updateFromStart)
 
-watch(quickFilter, () => updateFromStart)
+watch(activeFilters, () => updateFromStart())
 
 watch(sort, () => {
   updateFromStart()
@@ -133,10 +133,6 @@ function sortChange(data) {
   sort.value = data
 }
 
-function cellValue(item, path) {
-  return String(path).split('.').reduce((o, key) => (o ? o[key] : ''), item)
-}
-
 function updateFromStart() {
   page.currentPage = 1
 }
@@ -161,6 +157,7 @@ onMounted(() => fetch())
       <div v-if="isPhone" class="data-table__list">
         <div class="data-table__list-header">
           <h4 class="data-table__list-title" v-text="title" />
+          <DataTableFilter v-if="filters.length" :filters="filters" v-model="activeFilters" />
         </div>
 
         <div
@@ -171,7 +168,7 @@ onMounted(() => fetch())
           <slot name="mobile-item" :item="item" :index="index" />
         </div>
 
-        <div v-if="loading" class="data-table__list-loading">
+        <div v-if="loading && !items.length" class="data-table__list-loading">
           <IrIcon name="loading" :size="16" />
           <span v-text="$t('common.loadingText')" />
         </div>
@@ -183,17 +180,16 @@ onMounted(() => fetch())
           v-if="showPagination"
           :is-loading="loading"
           :is-disabled="!hasMore"
-          wrapper-class="data-table__loader"
+          :loading-text="$t('common.loadingText')"
           @load-more="loadMore"
-        >
-          <template #loading>
-            <IrIcon v-if="loading" name="spinner" :size="24" class="data-table__spinner" />
-          </template>
-        </IrInfiniteLoading>
+        />
       </div>
 
       <!-- Desktop: table -->
-      <IrCard v-else :title flush header-class="!border-0">
+      <IrCard v-else :title :subtitle flush header-class="!border-0">
+        <template v-if="filters.length" #header-actions>
+          <DataTableFilter :filters="filters" v-model="activeFilters" />
+        </template>
         <IrTable
           :headers
           :items
@@ -215,6 +211,7 @@ onMounted(() => fetch())
             </div>
           </template>
         </IrTable>
+        <slot v-if="items.length" name="view-more" />
       </IrCard>
     </div>
   </div>
@@ -225,6 +222,10 @@ onMounted(() => fetch())
   margin: 0 -16px;
 
   &-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
     padding: 16px;
   }
 

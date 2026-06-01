@@ -24,13 +24,13 @@ const layout = computed(() => layouts[route.meta.layout] || DefaultLayout)
 
 const showOverlay = computed(() => loading.value && !isLoaded.value)
 
-watch(locale, (newLang) => {
+watch(locale, (newLang, oldLang) => {
   const isRTL = ['fa', 'ar', 'he'].includes(newLang)
 
   document.documentElement.dir = isRTL ? 'rtl' : 'ltr'
   document.documentElement.lang = newLang
   localize(newLang)
-  appIndex.value += 1
+  if (oldLang) appIndex.value += 1
 }, { immediate: true })
 </script>
 

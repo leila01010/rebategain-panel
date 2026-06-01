@@ -35,10 +35,9 @@
   }
 
   &__cell {
-    height: 56px;
     color: var(--color-dark-blue-600);
     font-weight: 400;
-    padding: 0 5px;
+    padding: 16px 5px;
 
     &:first-child {
       padding-inline-start: 16px;
@@ -56,12 +55,12 @@
   }
 
   &__cell--start .ir-table__cell-content {
-    text-align: right;
+    text-align: start;
     justify-content: flex-start;
   }
 
   &__cell--end .ir-table__cell-content {
-    text-align: left;
+    text-align: end;
     justify-content: flex-end;
   }
 

@@ -68,6 +68,8 @@ http.interceptors.response.use(
       message.error(errorMessage)
     } else if (status >= 400 && status < 500) {
       message.error(errorMessage)
+    } else if (status >= 500) {
+      message.error(i18n.global.t('common.serverError'))
     } else if (error) {
       console.log(error)
     }

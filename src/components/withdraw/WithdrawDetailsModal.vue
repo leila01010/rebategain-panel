@@ -13,6 +13,7 @@ const props = defineProps({
 const STATUS_CONFIG = {
   pending: { color: 'primary', icon: 'time' },
   accepted: { color: 'success', icon: 'check-circle' },
+  paid: { color: 'success', icon: 'check-circle' },
   rejected: { color: 'danger', icon: 'close-circle' },
   expired: { color: 'danger', icon: 'close-circle' },
 }
@@ -42,7 +43,7 @@ const walletAddress = computed(() => {
     <div v-if="item" class="withdraw-details">
       <div class="withdraw-details__row">
         <div class="text-dark-blue-300">
-          <span class="withdraw-details__label" v-text="$t('withdraw.reqID')" />
+          <span class="withdraw-details__label" v-text="`${$t('withdraw.reqID')}:`" />
           <span class="withdraw-details__value font-bold">{{ ` WD-${item.id}` }}</span>
         </div>
         <IrChip
@@ -61,14 +62,16 @@ const walletAddress = computed(() => {
 
       <div>
         <span class="withdraw-details__label" v-text="$t('withdraw.amountLabel')" />
-        <span class="withdraw-details__value font-bold">{{ ` ${formatCurrency(item.amount)}` }}</span>
+        <span class="withdraw-details__value font-bold">{{
+          ` ${formatCurrency(item.amount)}`
+        }}</span>
       </div>
       <div>
         <span class="withdraw-details__label" v-text="$t('withdraw.method')" />
         <span class="withdraw-details__value">{{ ` ${assetNetwork}` }}</span>
       </div>
       <div>
-        <span class="withdraw-details__label" v-text="$t('withdraw.walletAddress')" />
+        <span class="withdraw-details__label" v-text="`${$t('withdraw.walletAddress')}:`" />
         <span class="withdraw-details__value">{{ ` ${walletAddress}` }}</span>
       </div>
 

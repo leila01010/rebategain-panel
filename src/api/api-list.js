@@ -4,6 +4,7 @@ export default {
   user: 'auth/user',
   userAvatar: 'auth/user/avatar',
   ssoExchange: 'auth/sso/exchange-code',
+  logout: 'auth/logout',
   accounts: api + '/accounts',
   brokers: api + '/brokers',
   inquiries: api + '/inquiries',

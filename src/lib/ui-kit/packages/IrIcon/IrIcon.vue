@@ -17,15 +17,16 @@ const icons = Object.fromEntries(
   }),
 )
 
-const IconComponent = icons[props.name]
+const IconComponent = computed(() => icons[props.name])
 
 const size = computed(() => `${props.size}px`)
 </script>
 
 <template>
   <component
-    :is="IconComponent"
     v-if="IconComponent"
+    :key="name"
+    :is="IconComponent"
     class="ir-icon"
   />
 

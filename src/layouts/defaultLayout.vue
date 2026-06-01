@@ -1,10 +1,19 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import AppSidebar from '@/components/layout/AppSidebar.vue'
 import AppHeader from '@/components/layout/AppHeader.vue'
 import BottomNav from '@/components/layout/BottomNav.vue'
+import { popupManager } from '@/lib/ui-kit/src/utils/popup-manager.js'
 
 const showSidebar = ref(false)
+const overlayZIndex = ref(null)
+const sidebarZIndex = ref(null)
+
+watch(showSidebar, (open) => {
+  if (!open) return
+  overlayZIndex.value = popupManager.getNewZIndex()
+  sidebarZIndex.value = popupManager.getNewZIndex()
+})
 
 function toggleSidebar() {
   showSidebar.value = !showSidebar.value
@@ -21,11 +30,12 @@ function closeSidebar() {
       <div
         v-if="showSidebar"
         class="layout__overlay"
+        :style="overlayZIndex ? { zIndex: overlayZIndex } : null"
         @click="closeSidebar"
       />
     </Transition>
 
-    <AppSidebar :show-sidebar="showSidebar" @close="closeSidebar" />
+    <AppSidebar :show-sidebar="showSidebar" :z-index="sidebarZIndex" @close="closeSidebar" />
 
     <div class="layout__body">
       <AppHeader @toggle-sidebar="toggleSidebar" />

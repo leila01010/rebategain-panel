@@ -19,7 +19,9 @@ const { isPhone } = useDevice()
 const editing = ref(false)
 const submitting = ref(false)
 
-const { handleSubmit, setValues } = useForm()
+const { handleSubmit, resetForm, submitCount } = useForm()
+
+const showErrors = computed(() => submitCount.value > 0)
 
 const { value: firstName, errorMessage: firstNameError } = useField(
   'firstName',
@@ -54,7 +56,7 @@ const displayPhone = computed(() => {
 const displayCountry = computed(() => user.value.country?.name || '-')
 
 function startEdit() {
-  setValues({
+  resetForm({
     values: {
       firstName: user.value.firstName ?? '',
       lastName: user.value.lastName ?? '',
@@ -67,6 +69,7 @@ function startEdit() {
 }
 
 function cancel() {
+  resetForm()
   editing.value = false
 }
 
@@ -122,20 +125,20 @@ watch(
         <IrInput
           v-model="firstName"
           :label="$t('profile.fields.name')"
-          :error="firstNameError"
+          :error="showErrors ? firstNameError : ''"
           block
         />
         <IrInput
           v-model="lastName"
           :label="$t('profile.fields.lastName')"
-          :error="lastNameError"
+          :error="showErrors ? lastNameError : ''"
           block
         />
         <PhoneInput
           v-model="phone"
           v-model:country="callingCode"
           :label="$t('profile.fields.phoneNumber')"
-          :error="phoneError"
+          :error="showErrors ? phoneError : ''"
         />
         <CountrySelect
           v-model="countryId"

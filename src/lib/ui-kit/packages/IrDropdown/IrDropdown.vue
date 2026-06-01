@@ -7,6 +7,7 @@ import {
   onBeforeUnmount,
 } from 'vue'
 import { IrIcon } from '@/lib/ui-kit'
+import { popupManager } from '@/lib/ui-kit/src/utils/popup-manager.js'
 
 const props = defineProps({
   label: { type: String, default: '' },
@@ -25,6 +26,7 @@ const props = defineProps({
 })
 
 const isOpen = ref(false)
+const zIndex = ref(null)
 
 const triggerRef = ref(null)
 const menuRef = ref(null)
@@ -48,7 +50,7 @@ const menuStyles = computed(() => ({
   maxWidth: addUnit(props.maxWidth) || `${position.value.width}px`,
   minHeight: addUnit(props.minHeight),
   maxHeight: addUnit(props.maxHeight),
-  overflowY: 'auto',
+  zIndex: zIndex.value,
 }))
 
 const getDirection = () =>
@@ -84,6 +86,7 @@ const updatePosition = () => {
 }
 
 const open = async () => {
+  zIndex.value = popupManager.getNewZIndex()
   isOpen.value = true
 
   await nextTick()
