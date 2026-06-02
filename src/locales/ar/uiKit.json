@@ -1,0 +1,12 @@
+{
+  "select": {
+    "loading": "جاري التحميل...",
+    "select": "اختر",
+    "search": "بحث",
+    "noCategory": "بدون فئة",
+    "noItemText": "لا توجد عناصر",
+    "noResultText": "لم يتم العثور على عناصر",
+    "nItem": "{count} عنصر",
+    "andNItem": "و {count} عنصر آخر"
+  }
+}

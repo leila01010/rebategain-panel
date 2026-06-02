@@ -1,0 +1,35 @@
+{
+  "title": "Payment Methods",
+  "description": "Manage your connected brokers.",
+  "noMethods": "No Payment Methods Yet",
+  "noMethodsText": "Set up your first payment method to start gaining rebates. Link your preferred wallet address or bank account to enable seamless, instant withdrawals.",
+  "addMethod": "Add a payment method",
+  "connectAnother": "Add a Payment Method",
+  "connectAnotherText": "Add a new bank account or crypto wallet.",
+  "default": "Default",
+  "setAsDefault": "Set as default",
+  "soon": "Soon",
+  "tabs": {
+    "crypto": "Crypto",
+    "bank": "Bank Transfer",
+    "e-wallet": "E-Wallet"
+  },
+  "types": {
+    "crypto": "Crypto Wallet",
+    "bank": "Bank Transfer",
+    "e-wallet": "E-Wallet"
+  },
+  "currency": "Currency",
+  "network": "Network",
+  "walletAddress": "Wallet Address",
+  "walletAddressPlaceholder": "Paste your wallet address here",
+  "paste": "paste",
+  "accountHolder": "Account Holder",
+  "accountNumber": "Account Number",
+  "networkWarning": "Please make sure the network and wallet address are correct. Transactions sent to the wrong network or address cannot be recovered.",
+  "setDefaultWithdrawal": "Set as my default withdrawal method",
+  "save": "Save Payment Method",
+  "saveError": "Something went wrong. Please try again.",
+  "saved": "Payment method added successfully",
+  "defaultUpdated": "Default payment method updated"
+}

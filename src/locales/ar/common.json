@@ -1,0 +1,41 @@
+{
+  "next": "التالي",
+  "back": "رجوع",
+  "continue": "متابعة",
+  "cancel": "إلغاء",
+  "add": "إضافة",
+  "loading": "جاري التحميل",
+  "loadingText": "يرجى الانتظار...",
+  "selectBroker": "اختر وسيطًا",
+  "contactSupport": "تواصل مع الدعم",
+  "noData": "لا توجد عناصر",
+  "filter": "تصفية",
+  "apply": "تطبيق",
+  "reset": "إعادة تعيين",
+  "rebateRequest": "طلب عمولة",
+  "addAccount": "إضافة حساب",
+  "networkError": "لا يوجد اتصال بالإنترنت. يرجى التحقق من الشبكة والمحاولة مرة أخرى.",
+  "unauthorizedError": "غير مصرح. يرجى تسجيل الدخول مرة أخرى",
+  "serverError": "حدث خطأ في الخادم. يرجى المحاولة لاحقًا.",
+  "date": "التاريخ",
+  "broker": "الوسيط",
+  "amount": "المبلغ",
+  "status": "الحالة",
+  "statusPending": "قيد الانتظار",
+  "statusCompleted": "مكتمل",
+  "statusRejected": "مرفوض",
+  "details": "التفاصيل",
+  "you": "أنت",
+  "profile": {
+    "proAccount": "حساب احترافي",
+    "myDashboard": "لوحة التحكم",
+    "signOut": "تسجيل الخروج"
+  },
+  "routes": {
+    "overview": "نظرة عامة",
+    "paymentMethods": "طرق الدفع",
+    "accounts": "الحسابات",
+    "withdraws": "السحوبات",
+    "profile": "ملفي الشخصي"
+  }
+}

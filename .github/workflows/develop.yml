@@ -1,0 +1,43 @@
+name: Deploy Panel to Stage
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create .env
+        run: |
+          echo "
+          VITE_APP_API=https://${{ secrets.PANEL_STAGE_API_DOMAIN }}/api/v1
+          VITE_BASE_URL=${{ secrets.PANEL_STAGE_BASE_URL }}
+          VITE_APP_SSO_URL=${{ secrets.PANEL_STAGE_SSO_URL }}
+          " > ./.env
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.15.0'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate static site
+        run: npm run build
+
+      - name: Deploy via rsync
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: -avzr --delete
+          path: dist/
+          remote_path: /var/www/rgpanel/public_html/gain-panel/
+          remote_host: ${{ secrets.SFTP_PANEL_STAGE_SERVER }}
+          remote_user: ${{ secrets.SFTP_PANEL_STAGE_USERNAME }}
+          remote_key: ${{ secrets.SFTP_PANEL_STAGE_SSH_KEY }}

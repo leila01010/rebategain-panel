@@ -1,60 +1,81 @@
 @import "tailwindcss";
 
-@theme {
-  --color-primary: #0084FF;
-  --color-warning: #FFA704;
-  --color-success: #008E77;
-  --color-danger: #FF6565;
-  --color-secondary: #031a55;
-
-  --color-blue-0: #F5F9FD;
-  --color-blue-1: #ecf1ff;
-  --color-blue-2: #d1deff;
-  --color-blue-3: #acc3ff;
-  --color-blue-4: #85a7fe;
-  --color-blue-5: #618dfe;
-  --color-blue-7: #3563d8;
-  --color-blue-8: #2c52b4;
-  --color-blue-9: #234291;
-  --color-blue-10: #1c3472;
-
-  --color-dark-blue-1: #e9ebf1;
-  --color-dark-blue-2: #cbd0dd;
-  --color-dark-blue-3: #a1abc3;
-  --color-dark-blue-4: #7684a7;
-  --color-dark-blue-5: #4c5e8c;
-  --color-dark-blue-6: #253b73;
-  --color-dark-blue-7: #1f3262;
-  --color-dark-blue-8: #1A2A52;
-  --color-dark-blue-9: #152242;
-  --color-dark-blue-10: #111b34;
-
-  --default-font-family: "Yekan Bakh FaNum";
-}
-
 :root {
-  --section-gap: 160px;
+  --bg-base: #F6FAFD;
+  --bg-sidebar: #ffffff;
+  --sidebar-width: 240px;
+  --header-height: 68px;
+  --sidebar-collapsed-width: 64px;
+  --mobile-header-height: 64px;
+  --mobile-sidebar-width: 301px;
+  --bottom-nav-height: 64px;
+  --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+
+  --color-primary: #0084FF;
+  --color-secondary: #253B73;
+  --color-success: #059669;
+  --color-danger: #DC2626;
+  --color-warning: #F08811;
+
+  --color-blue-10: #FCFEFF;
+  --color-blue-20: #F6F8FE;
+  --color-blue-50: #e6f3ff;
+  --color-blue-100: #b0d9ff;
+  --color-blue-200: #8ac6ff;
+  --color-blue-300: #54adff;
+  --color-blue-400: #339dff;
+  --color-blue-500: #0084ff;
+  --color-blue-600: #0078e8;
+  --color-blue-700: #005eb5;
+
+  --color-dark-blue-50: #e9ebf1;
+  --color-dark-blue-100: #cbd0dd;
+  --color-dark-blue-200: #a1abc3;
+  --color-dark-blue-300: #7684a7;
+  --color-dark-blue-400: #4c5e8c;
+  --color-dark-blue-500: #253b73;
+  --color-dark-blue-600: #1f3262;
+  --color-dark-blue-700: #1A2A52;
+  --color-dark-blue-800: #152242;
+  --color-dark-blue-900: #111b34;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  font-weight: normal;
+@theme {
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-secondary);
+  --color-success: var(--color-success);
+  --color-danger: var(--color-danger);
+  --color-warning: var(--color-warning);
+
+  --color-blue-10: var(--color-blue-10);
+  --color-blue-20: var(--color-blue-20);
+  --color-blue-50: var(--color-blue-50);
+  --color-blue-100: var(--color-blue-100);
+  --color-blue-200: var(--color-blue-200);
+  --color-blue-300: var(--color-blue-300);
+  --color-blue-400: var(--color-blue-400);
+  --color-blue-500: var(--color-blue-500);
+  --color-blue-600: var(--color-blue-600);
+  --color-blue-700: var(--color-blue-700);
+
+  --color-dark-blue-50: var(--color-blue-50);
+  --color-dark-blue-100: var(--color-blue-100);
+  --color-dark-blue-200: var(--color-blue-200);
+  --color-dark-blue-300: var(--color-blue-300);
+  --color-dark-blue-400: var(--color-blue-400);
+  --color-dark-blue-500: var(--color-blue-500);
+  --color-dark-blue-600: var(--color-blue-600);
+  --color-dark-blue-700: var(--color-blue-700);
+  --color-dark-blue-800: var(--color-blue-800);
+  --color-dark-blue-900: var(--color-blue-900);
+
+  --default-font-family: "Inter";
 }
 
-body {
-  min-height: 100vh;
-  /*color: var(--color-text);*/
-  /*background: var(--color-background);*/
-  transition:
-    color 0.5s,
-    background-color 0.5s;
-  line-height: 1.6;
-  font-family: sans-serif;
-  font-size: 15px;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+:lang(ar) {
+  font-family: 'Vazirmatn', 'Inter', sans-serif;
+}
+
+[dir="rtl"] .icon-flip-rtl {
+  transform: scaleX(-1);
 }

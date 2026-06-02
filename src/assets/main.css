@@ -1,35 +1,27 @@
+@import './font.css';
 @import './base.css';
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  background-color: var(--bg-base);
   font-weight: normal;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
+body {
+  min-height: 100vh;
+  transition:
+    color 0.5s,
+    background-color 0.2s;
 }
 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
+.center-wrapper {
+  min-height: calc(100vh - var(--header-height) - var(--bottom-nav-height));
+  display: grid;
+  place-items: center;
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.3s ease-in-out;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
 }
