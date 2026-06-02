@@ -34,7 +34,7 @@ const PageTitle = computed(() => {
     <div class="topbar__title">{{ PageTitle }}</div>
     <div class="topbar__spacer" />
     <div class="topbar__actions">
-      <LanguageSelect v-if="!isPhone" />
+      <LanguageSelect />
       <IrDivider v-if="!isPhone && user" orientation="vertical" class="!h-9" />
       <UserMenu v-if="!isPhone && user" />
     </div>

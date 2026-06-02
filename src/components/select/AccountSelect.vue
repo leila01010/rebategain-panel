@@ -4,6 +4,8 @@ import http from '@/services/http.js'
 import api from '@/api/api-list.js'
 import { ref } from 'vue'
 
+const emit = defineEmits(['select'])
+
 const selfValue = defineModel({ type: [String, Number], default: null })
 
 const loading = ref(false)
@@ -25,6 +27,10 @@ async function fetch() {
     console.error(error)
   }
 }
+
+function onSelectedOptions(options) {
+  emit('select', options?.[0] ?? null)
+}
 </script>
 
 <template>
@@ -36,5 +42,6 @@ async function fetch() {
     :loading
     block
     @open="fetch"
+    @update:selected-options="onSelectedOptions"
   />
 </template>

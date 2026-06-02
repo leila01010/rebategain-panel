@@ -3,13 +3,17 @@ import { IrSelect } from '@/lib/ui-kit'
 import http from '@/services/http.js'
 import api from '@/api/api-list.js'
 import { ref } from 'vue'
+import { storeToRefs } from 'pinia'
+import { useReferenceStore } from '@/stores/reference.js'
 
 const emit = defineEmits(['select', 'add-broker'])
 
 const selfValue = defineModel({ type: [String, Number], default: null })
 
+const referenceStore = useReferenceStore()
+const { brokers } = storeToRefs(referenceStore)
+
 const loading = ref(false)
-const brokers = ref([])
 
 async function fetch() {
   if (brokers.value.length) return

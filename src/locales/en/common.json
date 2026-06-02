@@ -8,7 +8,7 @@
   "loadingText": "Please wait...",
   "selectBroker": "Select a broker",
   "contactSupport": "Contact Support",
-  "noData": "There is no Items",
+  "noData": "No items found",
   "filter": "Filter",
   "apply": "Apply",
   "reset": "Reset",
@@ -29,11 +29,6 @@
   "statusRejected": "Rejected",
   "details": "Details",
   "you": "You",
-  "profile": {
-    "proAccount": "Pro Account",
-    "myDashboard": "My Dashboard",
-    "signOut": "Sign out"
-  },
   "routes": {
     "overview": "Overview",
     "paymentMethods": "Payment Methods",

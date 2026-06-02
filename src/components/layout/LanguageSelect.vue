@@ -9,7 +9,7 @@ const { locale } = useI18n()
 
 const LANGS = [
   { code: 'en', flag: 'flag-us', country: 'US', label: 'EN' },
-  { code: 'ar', flag: 'flag-ir', country: 'AR', label: 'AR' },
+  { code: 'ar', flag: 'flag-ar', country: 'SA', label: 'AR' },
 ]
 
 const current = computed(() => LANGS.find(l => l.code === locale.value) ?? LANGS[0])

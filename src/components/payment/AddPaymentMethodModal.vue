@@ -109,7 +109,7 @@ function reset() {
 </script>
 
 <template>
-  <IrModal v-model:show="show" size="380px" :title="$t('payment.addNewMethod')">
+  <IrModal v-model:show="show" size="380px" :title="$t('payment.addMethod')">
     <template #header-prepend>
       <IrIcon name="wallet" :size="18" class="text-dark-blue-500" />
     </template>

@@ -30,5 +30,6 @@
     "phoneRequired": "Phone number is required"
   },
   "updateSuccess": "Profile updated successfully",
-  "updateError": "Could not update profile"
+  "updateError": "Could not update profile",
+  "signOut": "Sign out"
 }

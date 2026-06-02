@@ -78,10 +78,11 @@ function onSelectPaymentMethod(item) {
   <form @submit.prevent="submit">
     <IrInput
       v-model="amount"
-      type="number"
+      :min="0"
       :label="$t('withdraw.amount')"
       :helper-text="$t('withdraw.amountHint')"
       :error="amountError"
+      type="number"
       class="mb-4"
       block
     >

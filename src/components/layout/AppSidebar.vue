@@ -69,7 +69,7 @@ const sidebarStyle = computed(() => props.zIndex ? { zIndex: props.zIndex } : nu
 
     <div class="sidebar__header">
       <div class="sidebar__brand">
-        <img src="/logo-s.png" alt="logo" class="sidebar__logo" />
+        <img src="/logo-s.svg" alt="logo" class="sidebar__logo" />
         <div class="sidebar__brand-text">RebateGain</div>
       </div>
       <button class="sidebar__collapse-btn" @click="collapsed = true" title="Collapse">

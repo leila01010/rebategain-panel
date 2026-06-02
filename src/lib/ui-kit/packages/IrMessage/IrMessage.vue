@@ -1,7 +1,7 @@
 <template>
   <div
     class="ir-messages-holder"
-    :style="{ zIndex: zIndex }"
+    :style="holderStyle"
     role="region"
     aria-label="Notifications"
   >
@@ -31,7 +31,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { IrIcon } from '@/lib/ui-kit'
 import { popupManager } from '@/lib/ui-kit/src/utils/popup-manager.js'
 
@@ -42,6 +42,7 @@ const props = defineProps({
 defineEmits(['dismiss'])
 
 const zIndex = ref(null)
+const holderStyle = computed(() => zIndex.value != null ? { zIndex: zIndex.value } : null)
 
 function lift() {
   if (props.messages.length) zIndex.value = popupManager.getNewZIndex()

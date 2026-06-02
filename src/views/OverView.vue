@@ -48,6 +48,12 @@ const STATUS_CONFIG = {
   expired: { color: 'danger', icon: 'close-circle' },
 }
 
+const requestsInProcess = (data) => {
+  const requestInProcess = data?.withdraw?.requestInProcess || 0
+  return requestInProcess > 1
+    ? t('overview.requestsInProcess', { count: requestInProcess })
+    : t( 'overview.requestInProcess', { count: requestInProcess })
+}
 </script>
 
 <template>
@@ -86,8 +92,14 @@ const STATUS_CONFIG = {
               <IrIcon name="dollar" size="20" class="text-dark-blue-300" />
             </div>
             <h4 class="w-full text-lg md:text-2xl font-bold mb-4 md:mb-8">{{ formatCurrency(data?.rebateGained?.total) }}</h4>
-            <div class="flex items-center gap-1 text-success text-xs">
-              <IrIcon v-if="data.rebateGained?.monthlyChangePercent > 0" name="up-small" size="12" />
+            <div
+              class="flex items-center gap-1 text-xs"
+              :class="data.rebateGained?.monthlyChangePercent > 0 ? 'text-success' : 'text-danger'"
+            >
+              <IrIcon
+                :name="data.rebateGained?.monthlyChangePercent > 0 ? 'up-small' : 'down-small'"
+                :size="12"
+              />
               <span v-text="$t('overview.changeFromLastMonth', { value: `${data.rebateGained?.monthlyChangePercent}%` })" />
             </div>
           </IrCard>
@@ -101,7 +113,7 @@ const STATUS_CONFIG = {
               {{ formatCurrency(data?.withdraw?.totalWithdrawAmount) }}
             </h4>
             <p
-              v-text="$t('overview.requestsInProcess', { count: data?.withdraw?.requestInProcess || 0 })"
+              v-text="requestsInProcess(data)"
               class="text-dark-blue-300 text-xs"
             />
           </IrCard>

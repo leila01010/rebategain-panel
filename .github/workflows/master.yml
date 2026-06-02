@@ -1,0 +1,43 @@
+name: Deploy Panel to Production
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create .env
+        run: |
+          echo "
+          VITE_APP_API=https://${{ secrets.PANEL_PRODUCTION_API_DOMAIN }}/api/v1
+          VITE_BASE_URL=${{ secrets.PANEL_PRODUCTION_BASE_URL }}
+          VITE_APP_SSO_URL=${{ secrets.PANEL_PRODUCTION_SSO_URL }}
+          " > ./.env
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.15.0'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate static site
+        run: npm run build
+
+      - name: Deploy via rsync
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches: -avzr --delete
+          path: dist/
+          remote_path: /var/www/rgdashboard-frontend/
+          remote_host: ${{ secrets.PANEL_PRODUCTION_SFTP_SERVER }}
+          remote_user: ${{ secrets.PANEL_PRODUCTION_SFTP_USERNAME }}
+          remote_key: ${{ secrets.PANEL_PRODUCTION_SFTP_SSH_KEY }}

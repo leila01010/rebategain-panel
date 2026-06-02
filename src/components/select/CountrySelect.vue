@@ -1,13 +1,17 @@
 <script setup>
 import { ref, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import { IrSelect } from '@/lib/ui-kit'
 import http from '@/services/http.js'
 import api from '@/api/api-list.js'
+import { useReferenceStore } from '@/stores/reference.js'
 
 const selfValue = defineModel({ type: [String, Number], default: null })
 
+const referenceStore = useReferenceStore()
+const { countries } = storeToRefs(referenceStore)
+
 const loading = ref(false)
-const countries = ref([])
 
 watch(selfValue, (newValue) => {
   if (newValue) fetch()

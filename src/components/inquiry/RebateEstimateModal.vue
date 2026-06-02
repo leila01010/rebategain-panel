@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { IrModal, IrSelect, IrButton, IrIcon, message } from '@/lib/ui-kit'
+import { IrAlert, IrModal, IrSelect, IrButton, IrIcon } from '@/lib/ui-kit'
 import AccountSelect from '@/components/select/AccountSelect.vue'
 import { useI18n } from 'vue-i18n'
 import http from '@/services/http.js'
@@ -14,6 +14,7 @@ const emit = defineEmits(['done'])
 const { t } = useI18n()
 
 const accountId = ref(null)
+const selectedAccount = ref(null)
 const period = ref('7')
 const submitting = ref(false)
 const submitted = ref(false)
@@ -24,7 +25,9 @@ const periodOptions = [
   { id: '90', title: t('overview.last90Days') },
 ]
 
-const canSubmit = computed(() => !!accountId.value && !!period.value)
+const isAutomaticPayout = computed(() => !!selectedAccount.value?.broker?.automaticPayout)
+
+const canSubmit = computed(() => !!accountId.value && !!period.value && !isAutomaticPayout.value)
 
 const dateRange = computed(() => {
   const days = Number(period.value)
@@ -50,8 +53,6 @@ async function submit() {
     submitted.value = true
     emit('done')
     setTimeout(() => (show.value = false), 1800)
-  } catch (e) {
-    message.error(e?.error || t('overview.submitRebateError'))
   } finally {
     submitting.value = false
   }
@@ -59,6 +60,7 @@ async function submit() {
 
 function reset() {
   accountId.value = null
+  selectedAccount.value = null
   period.value = '7'
   submitted.value = false
   submitting.value = false
@@ -80,7 +82,12 @@ function reset() {
         {{ $t('overview.requestRebateEstimateText') }}
       </p>
 
-      <AccountSelect v-model="accountId" :disabled="submitted" class="mb-4" />
+      <AccountSelect
+        v-model="accountId"
+        :disabled="submitted"
+        class="mb-4"
+        @select="selectedAccount = $event"
+      />
 
       <IrSelect
         v-model="period"
@@ -88,14 +95,44 @@ function reset() {
         :label="$t('overview.timePeriod')"
         :disabled="submitted"
         block
-        class="mb-6"
       />
+
+      <IrAlert
+        v-if="isAutomaticPayout"
+        :title="$t('overview.automaticPayoutAlertTitle')"
+        size="lg"
+        icon="info"
+        color="info"
+        class="mt-4"
+      >
+        <i18n-t
+          keypath="overview.automaticPayoutAlertText"
+          tag="p"
+          class="text-xs text-dark-blue-500 leading-[18px]"
+        >
+          <template #nonDirect>
+            <strong>{{ $t('overview.nonDirectBrokers') }}</strong>
+          </template>
+        </i18n-t>
+        <div class="flex justify-end">
+          <IrButton
+            :text="$t('overview.myBrokerAccount')"
+            :url="selectedAccount?.broker?.link"
+            target="_blank"
+            prepend-icon="share"
+            variant="plain"
+            size="sm"
+            class="mt-2"
+          />
+        </div>
+      </IrAlert>
 
       <IrButton
         v-if="submitted"
         :text="$t('overview.successfullySubmitted')"
         color="success"
         prepend-icon="check"
+        class="mt-6"
         block
         disabled
       />
@@ -104,6 +141,7 @@ function reset() {
         :text="$t('overview.submitRebateRequest')"
         :loading="submitting"
         :disabled="!canSubmit"
+        class="mt-6"
         block
         @click="submit"
       />

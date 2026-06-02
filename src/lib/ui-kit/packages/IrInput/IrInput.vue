@@ -29,6 +29,7 @@ const props = defineProps({
   maxlength: { type: Number, default: null },
   hasSuccess: { type: Boolean, default: false },
   block: { type: Boolean, default: false },
+  number: { type: Boolean, default: false },
 })
 
 const emit = defineEmits(['focus', 'blur', 'input'])
@@ -67,6 +68,7 @@ const attrs = computed(() => {
     type: isPasswordShown.value ? 'text' : props.type,
   }
   if (props.type === 'textarea') delete attrs.type
+  if (props.number) attrs.inputmode = 'numeric'
   return attrs
 })
 const isEmpty = computed(() => {
@@ -102,6 +104,13 @@ watch(() => props.autoFocus, (val) => {
 }, { immediate: true })
 
 watch(selfValue, () => {
+  if (props.number && selfValue.value != null) {
+    const digits = String(selfValue.value).replace(/\D/g, '')
+    if (digits !== String(selfValue.value)) {
+      selfValue.value = digits
+      return
+    }
+  }
   emit('input', selfValue.value)
   setInputHeight()
 

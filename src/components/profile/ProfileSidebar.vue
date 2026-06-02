@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { IrCard, IrDivider } from '@/lib/ui-kit'
+import { IrCard, IrDivider, IrChip } from '@/lib/ui-kit'
 import UpdateProfileAvatar from '@/components/profile/UpdateProfileAvatar.vue'
 import { fullName, formatDate } from '@/utils/helpers.js'
 import { useDevice } from '@/composables/useDevice.js'
@@ -33,6 +33,7 @@ const name = computed(() => fullName(props.user))
       </div>
       <div class="profile-sidebar__row profile-sidebar__row--stack">
         <span class="profile-sidebar__label">{{ $t('profile.activeAccounts') }}</span>
+        <IrChip :text="`${user?.activeAccountCount || 0} ${$t('common.broker')}`" color="warning" />
       </div>
     </div>
   </IrCard>
@@ -54,12 +55,14 @@ const name = computed(() => fullName(props.user))
     font-size: 14px;
     font-weight: 700;
     color: var(--color-dark-blue-600);
+    text-align: center;
     margin-bottom: 4px;
   }
 
   &__email {
     font-size: 12px;
     color: var(--color-dark-blue-300);
+    text-align: center;
   }
 
   &__meta {

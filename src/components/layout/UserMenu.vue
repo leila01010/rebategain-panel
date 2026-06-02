@@ -58,7 +58,6 @@ async function onSignOut(close) {
         </div>
         <div class="user-menu__trigger-meta">
           <div class="user-menu__trigger-name">{{ name }}</div>
-          <div class="user-menu__trigger-plan" v-text="t('common.profile.proAccount')" />
         </div>
       </div>
     </template>
@@ -73,7 +72,7 @@ async function onSignOut(close) {
 
         <button type="button" class="user-menu__item" @click="onDashboard(close)">
           <span class="user-menu__item-label">
-            {{ t('common.profile.myDashboard') }}
+            {{ t('profile.myProfile') }}
             <!--<span class="user-menu__item-dot" />-->
           </span>
           <IrIcon name="arrow-right" class="user-menu__item-icon icon-flip-rtl" />
@@ -86,7 +85,7 @@ async function onSignOut(close) {
           @click="onSignOut(close)"
         >
           <span class="user-menu__item-label">
-            {{ t('common.profile.signOut') }}
+            {{ t('profile.signOut') }}
           </span>
           <IrIcon
             :name="signingOut ? 'spinner' : 'logout'"
@@ -140,12 +139,6 @@ async function onSignOut(close) {
   font-size: 14px;
   font-weight: 600;
   color: var(--color-dark-blue-600);
-  margin-bottom: 4px;
-}
-
-.user-menu__trigger-plan {
-  font-size: 12px;
-  color: var(--color-dark-blue-300);
 }
 
 .user-menu__panel {

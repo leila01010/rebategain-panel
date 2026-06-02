@@ -1,10 +1,10 @@
 <script setup>
+import { IrAlert, IrCard, IrChip, IrDivider, IrImg, IrModal } from '@/lib/ui-kit/index.js'
 import enums from '@/utils/enums.js'
 import { formatCurrency } from '@/utils/helpers.js'
-import { IrAlert, IrCard, IrChip, IrDivider, IrImg, IrModal } from '@/lib/ui-kit/index.js'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
-defineProps({
+const props = defineProps({
   account: { type: Object, default: null, required: true },
 })
 
@@ -24,17 +24,23 @@ const STATUS_CONFIG = {
 }
 
 const showAlert = ref(false)
+
+const brokerImg = computed(() => {
+  const media = props.account?.broker?.media ||  null
+  return media ? media[0]?.url : null
+})
 </script>
 
 <template>
   <IrCard class="min-h-[244px]">
     <div class="flex items-center gap-x-2">
       <IrImg
-        :src="account?.broker?.image"
+        :src="brokerImg"
         alt="broker"
         :min-width="40"
         :max-width="40"
         :height="40"
+        img-class="rounded-sm"
       />
       <div class="grow">
         <div class="flex items-center justify-between gap-1">

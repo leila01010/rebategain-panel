@@ -23,12 +23,13 @@ export class PopupManager {
 
   getMaxZIndex() {
     if ('UI_KIT_Z_INDEX' in window) return window.UI_KIT_Z_INDEX
+    const CEILING = 99999
     let maxZIndex = 80001
     const elements = document.querySelectorAll('body *')
     for (let i = 0, ii = elements.length; i < ii; i++) {
       const element = elements[i]
       let zIndex = parseFloat(window.getComputedStyle(element).zIndex || element.style.zIndex)
-      if (zIndex > maxZIndex) maxZIndex = zIndex
+      if (zIndex > maxZIndex && zIndex < CEILING) maxZIndex = zIndex
     }
     return maxZIndex
   }

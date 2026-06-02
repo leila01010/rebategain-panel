@@ -85,9 +85,12 @@ const updatePosition = () => {
   }
 }
 
+const emit = defineEmits(['open', 'close'])
+
 const open = async () => {
   zIndex.value = popupManager.getNewZIndex()
   isOpen.value = true
+  emit('open')
 
   await nextTick()
 
@@ -97,7 +100,9 @@ const open = async () => {
 }
 
 const close = () => {
+  if (!isOpen.value) return
   isOpen.value = false
+  emit('close')
 }
 
 const toggle = async () => {

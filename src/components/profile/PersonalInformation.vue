@@ -45,7 +45,7 @@ const { value: countryId } = useField('countryId', null, {
   initialValue: user.value?.countryId * 1 ?? '',
 })
 
-const callingCode = ref(user.value?.callingCode)
+const callingCode = ref('')
 
 const displayPhone = computed(() => {
   const code = user.value?.callingCode || ''
@@ -62,9 +62,9 @@ function startEdit() {
       lastName: user.value.lastName ?? '',
       phone: user.value.phone ?? '',
       countryId: user.value.countryId ?? '',
-      callingCode: user.value.callingCode ?? '',
     },
   })
+  callingCode.value = user.value.callingCode ?? ''
   editing.value = true
 }
 
@@ -88,8 +88,6 @@ const submit = handleSubmit(async (values) => {
     }
     message.success(t('profile.updateSuccess'))
     editing.value = false
-  } catch {
-    // http.js toasts the error
   } finally {
     submitting.value = false
   }
