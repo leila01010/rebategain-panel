@@ -104,7 +104,7 @@ const assetNetwork = (item) => {
         :filters
         :per-page="5"
         :show-pagination="isPhone"
-        class="grow lg:basis-2/3 mb-16 md:mb-0"
+        class="grow lg:basis-2/3"
       >
         <template #item-dateID="{ data }">
           <div>
@@ -175,7 +175,7 @@ const assetNetwork = (item) => {
       v-if="isPhone"
       :text="$t('withdraw.addNewWithdraw')"
       color="secondary"
-      class="withdraw-action absolute left-4 right-4 bottom-8"
+      class="withdraw-action"
       @click="showForm = true"
     />
 
@@ -187,8 +187,8 @@ const assetNetwork = (item) => {
 
 <style>
 .withdraw-action {
-  position: absolute;
-  bottom: calc(64px + 20px + env(safe-area-inset-bottom, 0px));
+  position: fixed;
+  bottom: calc(var(--bottom-nav-height) + 20px + env(safe-area-inset-bottom, 0px));
   left: 16px;
   right: 16px;
   z-index: 20;

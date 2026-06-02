@@ -57,8 +57,8 @@ const emit = defineEmits(['action'])
       font-size: 18px;
     }
     &__action {
-      position: absolute;
-      bottom: calc(64px + 20px + env(safe-area-inset-bottom, 0px));
+      position: fixed;
+      bottom: calc(var(--bottom-nav-height) + 20px + env(safe-area-inset-bottom, 0px));
       left: 16px;
       right: 16px;
       z-index: 20;

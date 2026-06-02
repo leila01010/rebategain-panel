@@ -113,7 +113,7 @@ const STATUS_CONFIG = {
           :url="api.inquiries"
           :headers
           :per-page="5"
-          class="mb-16 md:mb-8"
+          class="mb-8"
         >
           <template #item-status="{ data }">
             <IrChip

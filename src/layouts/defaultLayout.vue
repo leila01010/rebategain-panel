@@ -67,6 +67,7 @@ function closeSidebar() {
 
 .main {
   overflow: auto;
+  overscroll-behavior: contain;
   flex-grow: 1;
 }
 
@@ -79,7 +80,7 @@ function closeSidebar() {
 
 @media (max-width: 767px) {
   .main {
-    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0));
+    padding-bottom: calc(var(--bottom-nav-height) + 100px + env(safe-area-inset-bottom, 0));
   }
 }
 

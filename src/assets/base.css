@@ -8,6 +8,7 @@
   --sidebar-collapsed-width: 64px;
   --mobile-header-height: 64px;
   --mobile-sidebar-width: 301px;
+  --bottom-nav-height: 64px;
   --transition: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 
   --color-primary: #0084FF;

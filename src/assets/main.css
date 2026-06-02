@@ -14,7 +14,7 @@ body {
 }
 
 .center-wrapper {
-  min-height: calc(100vh - var(--header-height));
+  min-height: calc(100vh - var(--header-height) - var(--bottom-nav-height));
   display: grid;
   place-items: center;
 }

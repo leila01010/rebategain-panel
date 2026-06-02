@@ -149,7 +149,7 @@ function goAddAccount() {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   align-items: stretch;
-  height: 64px;
+  height: var(--mobile-bottom-nav-height);
   position: relative;
   background: var(--bg-sidebar);
 }
