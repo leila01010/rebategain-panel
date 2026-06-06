@@ -7,15 +7,15 @@ import AddItemCard from '@/components/AddItemCard.vue'
 import AddPaymentMethodModal from '@/components/payment/AddPaymentMethodModal.vue'
 
 const showForm = ref(false)
-const paymentMethods = ref(null)
+const paymentMethodsRef = ref(null)
 
 function updateData() {
-  paymentMethods.value?.getData()
+  paymentMethodsRef.value?.getData()
 }
 </script>
 
 <template>
-  <PaymentMethodProvider ref="paymentMethods">
+  <PaymentMethodProvider ref="paymentMethodsRef">
     <template #default="{ data }">
       <div>
         <PageHeader
@@ -24,7 +24,7 @@ function updateData() {
           :button-text="$t('payment.addMethod')"
           @action="showForm = true"
         />
-        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-12">
+        <div class="w-full grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
           <PaymentMethodCard
             v-for="method in data"
             :key="method.id"

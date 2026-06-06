@@ -24,7 +24,7 @@ function onAccountAdded() {
           :button-text="$t('account.addNewAccount')"
           @action="showForm = true"
         />
-        <div class="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8 mb-12">
+        <div class="w-full grid md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
           <AccountItem v-for="account in data" :key="account.id" :account />
           <AddItemCard
             :title="$t('account.connectAnotherAccount')"

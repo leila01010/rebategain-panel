@@ -54,7 +54,7 @@ function closeSidebar() {
 <style>
 .layout {
   display: flex;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
 }
 
@@ -80,7 +80,11 @@ function closeSidebar() {
 
 @media (max-width: 767px) {
   .main {
-    padding-bottom: calc(var(--bottom-nav-height) + 100px + env(safe-area-inset-bottom, 0));
+    margin-bottom: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0));
+  }
+
+  .main__content {
+    margin-bottom: 70px;
   }
 }
 

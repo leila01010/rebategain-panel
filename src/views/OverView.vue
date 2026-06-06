@@ -125,7 +125,6 @@ const requestsInProcess = (data) => {
           :url="api.inquiries"
           :headers
           :per-page="5"
-          class="mb-8"
         >
           <template #item-status="{ data }">
             <IrChip

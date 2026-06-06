@@ -138,6 +138,7 @@ const assetNetwork = (item) => {
             size="sm"
           />
         </template>
+
         <template #mobile-item="{ item }">
           <div class="cursor-pointer" @click="openDetails(item)">
             <div class="flex items-center gap-2 justify-between text-dark-blue-600 mb-4">
