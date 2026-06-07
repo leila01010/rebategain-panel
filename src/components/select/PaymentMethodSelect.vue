@@ -80,6 +80,10 @@ onMounted(() => fetch())
       @update:selected-options="onSelectedOptions"
     />
 
-    <AddPaymentMethodModal v-model:show="showAddModal" @done="onAdded" />
+    <AddPaymentMethodModal
+      v-model:show="showAddModal"
+      :has-methods="paymentMethods.length > 0"
+      @done="onAdded"
+    />
   </div>
 </template>

@@ -3,20 +3,13 @@ import { computed } from 'vue'
 import { IrModal, IrIcon, IrChip, IrDivider } from '@/lib/ui-kit'
 import { formatDate, formatCurrency } from '@/utils/helpers.js'
 import enums from '@/utils/enums.js'
+import { STATUSES } from '@/data/statuses.js'
 
 const show = defineModel('show', { type: Boolean, default: false })
 
 const props = defineProps({
   item: { type: Object, default: null },
 })
-
-const STATUS_CONFIG = {
-  pending: { color: 'primary', icon: 'time' },
-  accepted: { color: 'success', icon: 'check-circle' },
-  paid: { color: 'success', icon: 'check-circle' },
-  rejected: { color: 'danger', icon: 'close-circle' },
-  expired: { color: 'danger', icon: 'close-circle' },
-}
 
 const assetNetwork = computed(() => {
   const an = props.item?.userPaymentMethod?.assetNetwork
@@ -48,8 +41,8 @@ const walletAddress = computed(() => {
         </div>
         <IrChip
           :text="enums.getItem('WITHDRAWS_STATUS', item.status, 'title')"
-          :prepend-icon="STATUS_CONFIG[item.status].icon"
-          :color="STATUS_CONFIG[item.status].color"
+          :prepend-icon="STATUSES[item.status].icon"
+          :color="STATUSES[item.status].color"
           size="sm"
         />
       </div>

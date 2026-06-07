@@ -42,6 +42,10 @@ defineExpose({ getData })
       <slot v-else :data="data" />
     </Transition>
 
-    <AddPaymentMethodModal v-model:show="showForm" @done="getData" />
+    <AddPaymentMethodModal
+      v-model:show="showForm"
+      :has-methods="data.length > 0"
+      @done="getData"
+    />
   </div>
 </template>

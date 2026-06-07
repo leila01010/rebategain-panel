@@ -31,5 +31,10 @@
   "save": "Save Payment Method",
   "saveError": "Something went wrong. Please try again.",
   "saved": "Payment method added successfully",
-  "defaultUpdated": "Default payment method updated"
+  "defaultUpdated": "Default payment method updated",
+  "walletAddressRequired": "Wallet address is required",
+  "walletAddressMin": "Wallet address is too short",
+  "walletAddressMax": "Wallet address is too long",
+  "walletAddressNoSpace": "Wallet address must not contain spaces",
+  "clipboardDenied": "Clipboard access is blocked. Please paste the address manually."
 }

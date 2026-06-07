@@ -1,5 +1,6 @@
 <script setup>
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { useField, useForm } from 'vee-validate'
 import {
   IrModal,
   IrSelect,
@@ -15,6 +16,10 @@ import { useI18n } from 'vue-i18n'
 import http from '@/services/http.js'
 import api from '@/api/api-list.js'
 
+const props = defineProps({
+  hasMethods: { type: Boolean, default: true },
+})
+
 const emit = defineEmits(['done'])
 
 const show = defineModel('show', { type: Boolean, default: false })
@@ -27,19 +32,37 @@ const TABS = [
   { key: 'e-wallet', label: t('payment.tabs.e-wallet'), icon: 'financing', enabled: false },
 ]
 
+const WALLET_ADDRESS_MIN = 24
+const WALLET_ADDRESS_MAX = 128
+
 const activeTab = ref('crypto')
-const currencyId = ref('')
-const assetNetworkId = ref('')
-const address = reactive({
-  walletAddress: '',
-})
-const isDefault = ref(false)
+
 const loading = ref(false)
 const submitting = ref(false)
+
+const currencyId = ref('')
+const assetNetworkId = ref('')
+const isDefault = ref(false)
+
 const assets = ref([])
 
+const { handleSubmit, resetForm } = useForm()
+const {
+  value: walletAddress,
+  errorMessage: walletAddressError,
+} = useField('walletAddress', validateWalletAddress, { initialValue: '' })
+
+function validateWalletAddress(value) {
+  const v = String(value ?? '')
+  if (!v.trim()) return t('payment.walletAddressRequired')
+  if (/\s/.test(v)) return t('payment.walletAddressNoSpace')
+  if (v.length < WALLET_ADDRESS_MIN) return t('payment.walletAddressMin')
+  if (v.length > WALLET_ADDRESS_MAX) return t('payment.walletAddressMax')
+  return true
+}
+
 const canSubmit = computed(() => {
-  return !!currencyId.value && !!assetNetworkId.value && !!address.walletAddress.trim()
+  return !!currencyId.value && !!assetNetworkId.value && validateWalletAddress(walletAddress.value) === true
 })
 
 const selectedAsset = computed(() => {
@@ -51,25 +74,26 @@ const networks = computed(() => {
 })
 
 watch(show, (value) => {
-  if (!value) reset()
-})
+  if (value) isDefault.value = !props.hasMethods ? true : isDefault.value
+  else reset()
+}, { immediate: true })
 
 async function pasteAddress() {
   try {
-    address.walletAddress = await navigator.clipboard.readText()
-  } catch (e) {
-    console.log('clipboard not available:', e)
+    walletAddress.value = await navigator.clipboard.readText()
+  } catch {
+    message.error(t('payment.clipboardDenied'))
   }
 }
 
-async function submit() {
-  if (!canSubmit.value || submitting.value) return
+const submit = handleSubmit(async (values) => {
+  if (submitting.value) return
   submitting.value = true
   try {
     const { data } = await http.post(api.paymentMethods, {
       type: activeTab.value,
       assetNetworkId: assetNetworkId.value,
-      address: address,
+      address: { walletAddress: values.walletAddress },
       isDefault: isDefault.value,
     })
     message.success(t('payment.saved'))
@@ -80,7 +104,7 @@ async function submit() {
   } finally {
     submitting.value = false
   }
-}
+})
 
 async function getAssets() {
   if (assets.value.length) return
@@ -99,12 +123,12 @@ async function getAssets() {
 }
 
 function reset() {
-  activeTab.value = ''
+  activeTab.value = 'crypto'
   currencyId.value = ''
   assetNetworkId.value = ''
-  address.walletAddress = ''
-  isDefault.value = true
+  isDefault.value = false
   submitting.value = false
+  resetForm()
 }
 </script>
 
@@ -152,9 +176,10 @@ function reset() {
       />
 
       <IrInput
-        v-model="address.walletAddress"
+        v-model="walletAddress"
         :label="$t('payment.walletAddress')"
         :placeholder="$t('payment.walletAddressPlaceholder')"
+        :error="walletAddressError"
         block
         class="mb-6"
       >
@@ -172,6 +197,7 @@ function reset() {
       <IrCheckbox
         v-model="isDefault"
         :label-left="$t('payment.setDefaultWithdrawal')"
+        :disabled="!hasMethods"
         class="mb-6"
       />
 
@@ -241,10 +267,13 @@ function reset() {
 
 .payment-paste {
   font-size: 12px;
-  font-weight: 500;
-  color: var(--color-primary);
-  background: none;
+  font-weight: 700;
+  color: var(--color-dark-blue-400);
+  background: var(--color-blue-20);
   border: none;
+  padding: 6px 12px;
+  border-radius: 100px;
+  margin-inline-end: -8px;
   cursor: pointer;
 }
 </style>

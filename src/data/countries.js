@@ -197,6 +197,6 @@ export const countries = [
   { name: "Jamaica", isoCode: "JM", code: "+1876", },
 ]
 
-export function findCountryByCode(code) {
-  return countries.find(c => c.code === code) || null
+export function findCountryByIsoCode(isoCode) {
+  return countries.find(c => c.isoCode === isoCode) || null
 }

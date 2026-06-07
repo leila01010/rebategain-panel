@@ -14,5 +14,6 @@ export default {
   paymentMethodDefault: api + '/payment-methods/{id}/default',
   overview: api + '/dashboard/overview',
   withdraws: api + '/withdraws',
+  balances: api + '/balances',
   countries: 'public/countries',
 }

@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Inter';
-  src: url('./fonts/Inter-Regular.ttf') format('truetype');
+  src: url('fonts/Inter/Inter-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -8,7 +8,7 @@
 
 @font-face {
   font-family: 'Inter';
-  src: url('./fonts/Inter-Medium.ttf') format('truetype');
+  src: url('fonts/Inter/Inter-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: 'Inter';
-  src: url('./fonts/Inter-SemiBold.ttf') format('truetype');
+  src: url('fonts/Inter/Inter-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -24,39 +24,39 @@
 
 @font-face {
   font-family: 'Inter';
-  src: url('./fonts/Inter-Bold.ttf') format('truetype');
+  src: url('fonts/Inter/Inter-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Vazirmatn';
-  src: url('./fonts/vazirmatn/Vazirmatn-Regular.ttf') format('truetype');
+  font-family: 'IBM';
+  src: url('./fonts/IBM/IBMPlexSansArabic-Regular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Vazirmatn';
-  src: url('./fonts/vazirmatn/Vazirmatn-Medium.ttf') format('truetype');
+  font-family: 'IBM';
+  src: url('./fonts/IBM/IBMPlexSansArabic-Medium.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Vazirmatn';
-  src: url('./fonts/vazirmatn/Vazirmatn-SemiBold.ttf') format('truetype');
+  font-family: 'IBM';
+  src: url('./fonts/IBM/IBMPlexSansArabic-SemiBold.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 
 @font-face {
-  font-family: 'Vazirmatn';
-  src: url('./fonts/vazirmatn/Vazirmatn-Bold.ttf') format('truetype');
+  font-family: 'IBM';
+  src: url('./fonts/IBM/IBMPlexSansArabic-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
