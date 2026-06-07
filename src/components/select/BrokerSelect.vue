@@ -50,7 +50,7 @@ function selectBroker(option, select) {
     @open="fetch"
   >
     <template #options="{ items, select }">
-      <div class="h-[207px] pl-2 py-2 overflow-auto custom-scrollbar">
+      <div class="h-[207px] p-2 overflow-auto custom-scrollbar">
         <div v-for="group in items" :key="group.id" class="w-full">
           <div
             v-for="option in group.children"

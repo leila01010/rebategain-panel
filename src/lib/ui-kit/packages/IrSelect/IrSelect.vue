@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, computed, onMounted, onBeforeUnmount, getCurrentInstance, nextTick } from 'vue'
+import { ref, watch, computed, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { useI18n } from "vue-i18n"
 import { popupManager } from '@/lib/ui-kit/src/utils/popup-manager.js'
 import { IrIcon } from '@/lib/ui-kit'
@@ -244,6 +244,11 @@ function close() {
   isOpen.value = false
 }
 
+function toggle() {
+  if (props.disabled) return
+  isOpen.value ? close() : open()
+}
+
 function clear() {
   localValue.value = []
   emit('clear')
@@ -253,7 +258,6 @@ function clear() {
 function onInputFocus() {
   isFocused.value = true
   emit('focus')
-  open()
 }
 
 function onInputBlur() {
@@ -309,8 +313,9 @@ function setPopoverPosition(changeSide = false) {
   const popoverHeight = popoverEl.offsetHeight
   const top = rect.top + wrapper.offsetHeight + 4
 
-  let showOnTop = false
+  let showOnTop
   if (changeSide === true) {
+
     showOnTop = top + popoverHeight > window.innerHeight
   } else {
     showOnTop = !!+popoverEl.dataset.showOnTop
@@ -337,7 +342,7 @@ function setGlobalEvents() {
 }
 
 function onOpen(e) {
-  if (e.detail !== getCurrentInstance()) close()
+  if (e.detail !== selectWrapper.value) close()
 }
 
 function onClick(event) {
@@ -357,7 +362,7 @@ function scrollSelectedItemToCenter() {
 }
 
 function dispatchEventOnOpen() {
-  document.dispatchEvent(new CustomEvent('ir-select-open', { detail: getCurrentInstance() }))
+  document.dispatchEvent(new CustomEvent('ir-select-open', { detail: selectWrapper.value }))
 }
 
 function appendPopoverEl() {
@@ -446,7 +451,7 @@ async function performRemoteSearch(query) {
 </script>
 
 <template>
-  <div ref="selectWrapper" class="ir-select" :class="wrapperClass">
+  <div ref="selectWrapper" class="ir-select" :class="wrapperClass" @click="toggle">
     <label v-if="label" class="ir-select__label">
       <slot name="label">{{ label }}</slot>
     </label>
@@ -460,7 +465,6 @@ async function performRemoteSearch(query) {
     <div
       class="ir-select__control"
       :tabindex="disabled ? -1 : 0"
-      @click="open"
       @focus="onInputFocus"
       @blur="onInputBlur"
       @keydown="onKeyDown"
@@ -479,20 +483,21 @@ async function performRemoteSearch(query) {
           <input
             v-if="isOpen"
             :value="displayValue"
-            :placeholder="searchPlaceholder"
+            :placeholder="searchPlaceholder || texts.search"
             :disabled="disabled"
             :readonly="!isOpen"
             class="ir-select__input"
             type="text"
             autocomplete="off"
             @input="onInputChange"
-            @click.stop="open"
+            @click.stop
             @keydown.stop
           >
           <div
             v-else
             class="ir-select__display"
             :class="{ 'ir-select__display--placeholder': !hasSelected }"
+            @click.stop="toggle"
           >
             <span v-if="hasSelected" v-text="displayValue" />
             <span v-else v-text="placeholder || texts.select" />

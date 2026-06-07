@@ -10,6 +10,7 @@ import ViewWithdrawsModal from '@/components/withdraw/ViewWithdrawsModal.vue'
 import { formatDate, maskMiddle, formatCurrency } from '@/utils/helpers.js'
 import api from '@/api/api-list.js'
 import enums from '@/utils/enums.js'
+import { STATUSES } from '@/data/statuses.js'
 import { useI18n } from 'vue-i18n'
 import { useDevice } from '@/composables/useDevice.js'
 
@@ -63,14 +64,6 @@ const filters = computed(() => [
     ],
   },*/
 ])
-
-const STATUS_CONFIG = {
-  pending: { color: 'primary', icon: 'time' },
-  accepted: { color: 'success', icon: 'check-circle' },
-  paid: { color: 'success', icon: 'check-circle' },
-  rejected: { color: 'danger', icon: 'close-circle' },
-  expired: { color: 'danger', icon: 'close-circle' },
-}
 
 const TYPE_ICON = {
   crypto: 'finance',
@@ -133,8 +126,8 @@ const assetNetwork = (item) => {
         <template #item-status="{ data }">
           <IrChip
             :text="enums.getItem('WITHDRAWS_STATUS', data.status, 'title')"
-            :prepend-icon="STATUS_CONFIG[data.status].icon"
-            :color="STATUS_CONFIG[data.status].color"
+            :prepend-icon="STATUSES[data.status].icon"
+            :color="STATUSES[data.status].color"
             size="sm"
           />
         </template>
@@ -145,8 +138,8 @@ const assetNetwork = (item) => {
               <span class="text-lg font-bold" v-text="formatCurrency(item.amount)" />
               <IrChip
                 :text="enums.getItem('WITHDRAWS_STATUS', item.status, 'title')"
-                :prepend-icon="STATUS_CONFIG[item.status].icon"
-                :color="STATUS_CONFIG[item.status].color"
+                :prepend-icon="STATUSES[item.status].icon"
+                :color="STATUSES[item.status].color"
                 size="sm"
               />
             </div>

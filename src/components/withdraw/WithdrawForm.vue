@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
 import { IrButton, IrInput, IrCard, message } from '@/lib/ui-kit'
 import PaymentMethodSelect from '@/components/select/PaymentMethodSelect.vue'
@@ -16,6 +16,7 @@ const MIN_AMOUNT = 50
 
 const submitting = ref(false)
 const selectedPaymentMethod = ref(null)
+const rebateBalance = ref(0)
 
 const { handleSubmit, meta, resetField } = useForm()
 const {
@@ -72,6 +73,21 @@ const submit = handleSubmit(async (values) => {
 function onSelectPaymentMethod(item) {
   selectedPaymentMethod.value = item
 }
+
+async function fetchRebateBalance() {
+  try {
+    const res = await http.get(api.balances)
+    rebateBalance.value = Number(res?.data?.balance) || 0
+  } catch (e) {
+    console.log(e?.error)
+  }
+}
+
+function setMaxValue() {
+  amount.value = rebateBalance.value
+}
+
+onMounted(fetchRebateBalance)
 </script>
 
 <template>
@@ -79,20 +95,22 @@ function onSelectPaymentMethod(item) {
     <IrInput
       v-model="amount"
       :min="0"
+      number
+      block
       :label="$t('withdraw.amount')"
       :helper-text="$t('withdraw.amountHint')"
       :error="amountError"
-      type="number"
       class="mb-4"
-      block
     >
       <template #prefix>$</template>
-      <!--<template #suffix>
+      <template #suffix>
         <button
-          class="w-[53px] h-7 bg-blue-20 rounded-full flex items-center justify-center text-xs text-primary font-bold -me-2 cursor-pointer"
+          type="button"
+          :disabled="!rebateBalance"
+          class="w-[53px] h-7 bg-blue-20 rounded-full flex items-center justify-center text-xs text-primary font-bold -me-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
           @click="setMaxValue"
         >Max</button>
-      </template>-->
+      </template>
     </IrInput>
 
     <PaymentMethodSelect

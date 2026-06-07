@@ -1,7 +1,7 @@
 <script setup>
-import { computed, nextTick, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { IrDropdown } from '@/lib/ui-kit'
-import { countries, findCountryByCode } from '@/data/countries.js'
+import { countries, findCountryByIsoCode } from '@/data/countries.js'
 
 defineProps({
   disabled: { type: Boolean, default: false },
@@ -9,13 +9,19 @@ defineProps({
 
 const code = defineModel({ type: String, default: '' })
 
-const selectedCountry = computed(() => findCountryByCode(code.value) || countries[0])
+const isoCode = ref('')
+
+const selectedCountry = computed(() => findCountryByIsoCode(isoCode.value) || countries[0])
 
 const listRef = ref(null)
 const itemRefs = ref({})
 const highlightedIso = ref('')
 let typeBuffer = ''
 let typeTimer = null
+
+watch(selectedCountry, (newCountry) => {
+  if (newCountry) code.value = newCountry.code
+}, { immediate: true })
 
 function setItemRef(iso, el) {
   if (el) itemRefs.value[iso] = el
@@ -27,7 +33,7 @@ function scrollToIso(iso, block = 'nearest') {
 }
 
 function selectCountry(item, close) {
-  code.value = item.code
+  isoCode.value = item.isoCode
   close()
 }
 
@@ -88,7 +94,7 @@ function onTypeAhead(e) {
           :ref="(el) => setItemRef(item.isoCode, el)"
           class="phone-country__list-item"
           :class="{
-            'phone-country__list-item--active': item.code === code,
+            'phone-country__list-item--active': item.isoCode === isoCode,
             'phone-country__list-item--highlighted': item.isoCode === highlightedIso,
           }"
           @click="selectCountry(item, close)"

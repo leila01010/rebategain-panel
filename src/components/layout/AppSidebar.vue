@@ -68,10 +68,10 @@ const sidebarStyle = computed(() => props.zIndex ? { zIndex: props.zIndex } : nu
     </button>
 
     <div class="sidebar__header">
-      <div class="sidebar__brand">
+      <a href="https://rebategain.com" class="sidebar__brand">
         <img src="/logo-s.svg" alt="logo" class="sidebar__logo" />
         <div class="sidebar__brand-text">RebateGain</div>
-      </div>
+      </a>
       <button class="sidebar__collapse-btn" @click="collapsed = true" title="Collapse">
         <IrIcon name="go-start" class="icon-flip-rtl" />
       </button>

@@ -211,7 +211,7 @@ onMounted(() => fetch())
             </div>
           </template>
         </IrTable>
-        <slot v-if="items.length" name="view-more" />
+        <slot v-if="items.length && totalItems > perPage" name="view-more" />
       </IrCard>
     </div>
   </div>

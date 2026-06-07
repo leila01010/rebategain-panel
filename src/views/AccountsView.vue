@@ -1,16 +1,26 @@
 <script setup>
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import AccountProvider from '@/components/account/AccountProvider.vue'
 import PageHeader from '@/components/PageHeader.vue'
 import AddItemCard from '@/components/AddItemCard.vue'
 import AddAccountModal from '@/components/account/AddAccountModal.vue'
 import AccountItem from '@/components/account/AccountItem.vue'
 
+const route = useRoute()
+
 const showForm = ref(false)
 const accountProviderRef = ref(null)
 
 function onAccountAdded() {
   accountProviderRef.value?.getData()
+}
+
+if (route.query.action === 'add') {
+  showForm.value = true
+  const url = new URL(window.location.href)
+  url.searchParams.delete('action')
+  window.history.replaceState(window.history.state, '', url.pathname + url.search)
 }
 </script>
 

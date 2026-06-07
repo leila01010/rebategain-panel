@@ -2,7 +2,7 @@
   "select": {
     "loading": "Loading...",
     "select": "Select",
-    "search": "",
+    "search": "Search",
     "noCategory": "",
     "noItemText": "No Items",
     "noResultText": "No Items Found",

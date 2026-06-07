@@ -5,6 +5,11 @@ import WithdrawForm from '@/components/withdraw/WithdrawForm.vue'
 const show = defineModel('show', { type: Boolean, default: false })
 
 const emit = defineEmits(['done'])
+
+function done() {
+  emit('done')
+  show.value = false
+}
 </script>
 
 <template>
@@ -13,7 +18,7 @@ const emit = defineEmits(['done'])
     size="420px"
     :title="$t('withdraw.addNewWithdraw')"
   >
-    <WithdrawForm @done="emit('done')" />
+    <WithdrawForm @done="done" />
   </IrModal>
 </template>
 

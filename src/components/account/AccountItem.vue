@@ -2,26 +2,12 @@
 import { IrAlert, IrCard, IrChip, IrDivider, IrImg, IrModal } from '@/lib/ui-kit/index.js'
 import enums from '@/utils/enums.js'
 import { formatCurrency } from '@/utils/helpers.js'
+import { STATUSES } from '@/data/statuses.js'
 import { computed, ref } from 'vue'
 
 const props = defineProps({
   account: { type: Object, default: null, required: true },
 })
-
-const STATUS_CONFIG = {
-  active: {
-    color: 'success',
-    icon: 'check-circle'
-  },
-  pending: {
-    color: 'primary',
-    icon: 'time'
-  },
-  action_needed: {
-    color: 'warning',
-    icon: 'time'
-  },
-}
 
 const showAlert = ref(false)
 
@@ -47,8 +33,8 @@ const brokerImg = computed(() => {
           <h4 class="text-sm font-bold text-dark-blue-600 leading-5 truncate max-w-24">{{ account?.broker?.name }}</h4>
           <IrChip
             :text="enums.getItem('ACCOUNT_STATUS', account.status, 'title')"
-            :prepend-icon="STATUS_CONFIG[account.status].icon"
-            :color="STATUS_CONFIG[account.status].color"
+            :prepend-icon="STATUSES[account.status].icon"
+            :color="STATUSES[account.status].color"
             size="sm"
           />
         </div>
@@ -69,13 +55,7 @@ const brokerImg = computed(() => {
       icon="info"
       color="warning"
       :description="$t('account.actionNeededAlert')"
-    >
-      <button
-        v-text="$t('account.howToFixAccount')"
-        class="text-xs text-warning underline cursor-pointer mt-1"
-        @click="showAlert = true"
-      />
-    </IrAlert>
+    />
   </IrCard>
 
   <IrModal

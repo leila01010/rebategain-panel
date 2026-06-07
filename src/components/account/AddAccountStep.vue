@@ -17,7 +17,7 @@ const emit = defineEmits(['back', 'close', 'done'])
 const { t } = useI18n()
 
 const ACCOUNT_ID_MIN = 4
-const ACCOUNT_ID_MAX = 12
+const ACCOUNT_ID_MAX = 30
 
 const loading = ref(false)
 
@@ -30,8 +30,8 @@ const {
 function validateAccountNumber(value) {
   const v = String(value ?? '').trim()
   if (!v) return t('account.accountIdRequired')
-  if (v.length < ACCOUNT_ID_MIN) return t('account.accountIdMin', { min: ACCOUNT_ID_MIN })
-  if (v.length > ACCOUNT_ID_MAX) return t('account.accountIdMax', { max: ACCOUNT_ID_MAX })
+  if (v.length < ACCOUNT_ID_MIN) return t('account.accountIdMin')
+  if (v.length > ACCOUNT_ID_MAX) return t('account.accountIdMax')
   return true
 }
 

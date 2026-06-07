@@ -32,12 +32,12 @@ function closeMenu() {
 
 function goRebate() {
   closeMenu()
-  router.push({ path: '/' })
+  router.push({ path: '/', query: { action: 'rebate' } })
 }
 
 function goAddAccount() {
   closeMenu()
-  router.push({ path: '/accounts' })
+  router.push({ path: '/accounts', query: { action: 'add' } })
 }
 </script>
 

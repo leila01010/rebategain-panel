@@ -6,17 +6,27 @@ import PageHeader from '@/components/PageHeader.vue'
 import DataTable from '@/components/dataTable/DataTable.vue'
 import AddWithdrawModal from '@/components/withdraw/AddWithdrawModal.vue'
 import { computed, ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { formatCurrency, formatDate } from '@/utils/helpers.js'
 import api from '@/api/api-list.js'
 import { useI18n } from 'vue-i18n'
 import enums from '@/utils/enums.js'
+import { STATUSES } from '@/data/statuses.js'
 
 const { t } = useI18n()
+const route = useRoute()
 
 const tableRef = ref(null)
 const providerRef = ref(null)
 const showForm = ref(false)
 const showWithdrawForm = ref(false)
+
+if (route.query.action === 'rebate') {
+  showForm.value = true
+  const url = new URL(window.location.href)
+  url.searchParams.delete('action')
+  window.history.replaceState(window.history.state, '', url.pathname + url.search)
+}
 
 const headers = computed(() => [
   {
@@ -39,14 +49,6 @@ const headers = computed(() => [
     align: 'center',
   },
 ])
-
-const STATUS_CONFIG = {
-  pending: { color: 'primary', icon: 'time' },
-  accepted: { color: 'success', icon: 'check-circle' },
-  paid: { color: 'success', icon: 'check-circle' },
-  rejected: { color: 'danger', icon: 'close-circle' },
-  expired: { color: 'danger', icon: 'close-circle' },
-}
 
 const requestsInProcess = (data) => {
   const requestInProcess = data?.withdraw?.requestInProcess || 0
@@ -129,8 +131,8 @@ const requestsInProcess = (data) => {
           <template #item-status="{ data }">
             <IrChip
               :text="enums.getItem('INQUIRY_STATUS', data.status, 'title')"
-              :prepend-icon="STATUS_CONFIG[data.status].icon"
-              :color="STATUS_CONFIG[data.status].color"
+              :prepend-icon="STATUSES[data.status].icon"
+              :color="STATUSES[data.status].color"
               size="sm"
             />
           </template>
@@ -139,8 +141,8 @@ const requestsInProcess = (data) => {
               <span class="text-lg font-bold" v-text="item.amount || '-'" />
               <IrChip
                 :text="enums.getItem('INQUIRY_STATUS', item.status, 'title')"
-                :prepend-icon="STATUS_CONFIG[item.status].icon"
-                :color="STATUS_CONFIG[item.status].color"
+                :prepend-icon="STATUSES[item.status].icon"
+                :color="STATUSES[item.status].color"
                 size="sm"
               />
             </div>
