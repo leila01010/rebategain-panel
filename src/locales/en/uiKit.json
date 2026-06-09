@@ -8,5 +8,12 @@
     "noResultText": "No Items Found",
     "nItem": "",
     "andNItem": ""
+  },
+  "datePicker": {
+    "datePicker": "Date Picker",
+    "last7Days": "Last 7 days",
+    "last30Days": "Last 30 days",
+    "lastYear": "Last Year",
+    "allTime": "All Time"
   }
 }

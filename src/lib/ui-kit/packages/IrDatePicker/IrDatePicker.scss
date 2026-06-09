@@ -1,0 +1,70 @@
+.ir-date-picker {
+  &__panel {
+    display: flex;
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 0;
+    overflow-x: hidden;
+  }
+
+  &__sidebar {
+    width: 150px;
+    flex-shrink: 0;
+    border-inline-end: 1px solid var(--color-dark-blue-50);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  &__preset {
+    padding: 8px;
+    border: none;
+    background: transparent;
+    text-align: start;
+    font-size: 14px;
+    color: var(--color-dark-blue-600);
+    font-weight: 500;
+    line-height: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover { background: var(--color-blue-20); }
+    &--active {
+      background: rgba(0, 71, 255, 0.1);
+      color: var(--color-primary);
+    }
+  }
+
+  &__calendars {
+    flex: 1;
+    display: flex;
+    background-color: var(--bg-base);
+  }
+
+  &__month-panel {
+    padding: 24px;
+  }
+
+  @media (max-width: 1024px) {
+    &__calendars {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 767px) {
+    &__sidebar {
+      display: none;
+    }
+
+    &__month-panel {
+      padding: 16px;
+    }
+    .ir-divider {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+  }
+}
