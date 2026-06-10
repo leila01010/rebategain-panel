@@ -5,6 +5,8 @@ import RebateEstimateModal from '@/components/inquiry/RebateEstimateModal.vue'
 import PageHeader from '@/components/PageHeader.vue'
 import DataTable from '@/components/dataTable/DataTable.vue'
 import AddWithdrawModal from '@/components/withdraw/AddWithdrawModal.vue'
+import TimePeriodSelect from '@/components/select/TimePeriodSelect.vue'
+import AccountSelect from '@/components/select/AccountSelect.vue'
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { formatCurrency, formatDate } from '@/utils/helpers.js'
@@ -127,7 +129,19 @@ const requestsInProcess = (data) => {
           :url="api.inquiries"
           :headers
           :per-page="5"
+          :export-url="api.inquiriesExport"
+          :export-title="$t('overview.exportEarningsTitle')"
+          export-filename="rebate-history.csv"
         >
+          <template #export-fields="{ params }">
+            <TimePeriodSelect
+              :model-value="[params.fromDate, params.toDate].filter(Boolean)"
+              :label="$t('overview.timePeriod')"
+              block
+              @update:model-value="(v) => { params.fromDate = v?.[0]; params.toDate = v?.[1] }"
+            />
+            <AccountSelect v-model="params.accountId" multiple />
+          </template>
           <template #item-status="{ data }">
             <IrChip
               :text="enums.getItem('INQUIRY_STATUS', data.status, 'title')"

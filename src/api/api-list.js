@@ -8,6 +8,7 @@ export default {
   accounts: api + '/accounts',
   brokers: api + '/brokers',
   inquiries: api + '/inquiries',
+  inquiriesExport: api + '/inquiries/export',
   rebateEstimates: api + '/accounts/{account}/inquiries',
   assets: api + '/assets',
   paymentMethods: api + '/payment-methods',
