@@ -40,8 +40,6 @@
 
   &__dialog {
     background: #ffffff;
-    max-width: 500px;
-    flex-grow: 1;
     margin: auto;
     transition: transform 0.1s ease;
     border-radius: 20px;
@@ -131,7 +129,7 @@
     }
 
     .ir-modal__dialog {
-      max-width: 100% !important;
+      width: 100% !important;
       height: 100%;
       border-radius: 0;
 

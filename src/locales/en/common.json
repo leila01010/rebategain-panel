@@ -29,6 +29,7 @@
   "statusRejected": "Rejected",
   "details": "Details",
   "you": "You",
+  "submit": "Submit",
   "routes": {
     "overview": "Overview",
     "paymentMethods": "Payment Methods",

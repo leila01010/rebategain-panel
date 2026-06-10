@@ -18,6 +18,7 @@ import IrPagination from './packages/IrPagination/IrPagination.vue'
 import IrCheckbox from './packages/IrCheckbox/IrCheckbox.vue'
 import IrInfiniteLoading from './packages/IrInfiniteLoading/IrInfiniteLoading.vue'
 import IrAvatar from './packages/IrAvatar/IrAvatar.vue'
+import IrDatePicker from './packages/IrDatePicker/IrDatePicker.vue'
 import { message } from './packages/IrMessage'
 
 
@@ -42,5 +43,6 @@ export {
   IrCheckbox,
   IrInfiniteLoading,
   IrAvatar,
+  IrDatePicker,
   message,
 }
