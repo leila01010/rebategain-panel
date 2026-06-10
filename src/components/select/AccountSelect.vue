@@ -43,5 +43,12 @@ function onSelectedOptions(options) {
     block
     @open="fetch"
     @update:selected-options="onSelectedOptions"
-  />
+  >
+    <template #option="{ option }">
+      <div>
+        <span class="inline-block mb-1">{{ option.title }}</span>
+        <p class="text-xs text-dark-blue-400 leading-3">{{ `ID: ${option.accountNumber}` }}</p>
+      </div>
+    </template>
+  </IrSelect>
 </template>

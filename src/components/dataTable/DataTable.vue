@@ -2,6 +2,7 @@
 import { ref, onMounted, reactive, computed, watch } from 'vue'
 import { IrTable, IrCard, IrPagination, IrIcon, IrInfiniteLoading } from '@/lib/ui-kit'
 import DataTableFilter from './DataTableFilter.vue'
+import ExportModal from './ExportModal.vue'
 import http from '@/services/http.js'
 import { useRouter } from 'vue-router'
 import { useDevice } from '@/composables/useDevice.js'
@@ -17,6 +18,9 @@ const props = defineProps({
   // @example: http://example.com/admin/user
   url: { type: String, default: '' },
   exportUrl: { type: String, default: '' },
+  exportTitle: { type: String, default: '' },
+  exportFilename: { type: String, default: 'export.csv' },
+  exportExtraParams: { type: Object, default: () => ({}) },
   showIdColumn: { type: Boolean, default: true },
   defaultSort: { type: String, default: '' },
   defaultSortDir: { type: String, default: '' },
@@ -48,6 +52,12 @@ const updateTimeout = ref(null)
 const items = ref([])
 const totalItems = ref('')
 const activeFilters = ref({})
+const showExportModal = ref(false)
+const exportParams = ref({})
+
+watch(showExportModal, (open) => {
+  if (!open) exportParams.value = {}
+})
 const sort = ref([])
 const page = reactive({
   currentPage: 1,
@@ -157,7 +167,18 @@ onMounted(() => fetch())
       <div v-if="isPhone" class="data-table__list">
         <div class="data-table__list-header">
           <h4 class="data-table__list-title" v-text="title" />
-          <DataTableFilter v-if="filters.length" :filters="filters" v-model="activeFilters" />
+          <div class="flex items-center gap-2">
+            <button
+              v-if="exportUrl"
+              type="button"
+              class="data-table__icon-btn"
+              :aria-label="$t('common.export')"
+              @click="showExportModal = true"
+            >
+              <IrIcon name="download" :size="16" />
+            </button>
+            <DataTableFilter v-if="filters.length" :filters="filters" v-model="activeFilters" />
+          </div>
         </div>
 
         <div
@@ -187,8 +208,19 @@ onMounted(() => fetch())
 
       <!-- Desktop: table -->
       <IrCard v-else :title :subtitle flush header-class="!border-0">
-        <template v-if="filters.length" #header-actions>
-          <DataTableFilter :filters="filters" v-model="activeFilters" />
+        <template v-if="filters.length || exportUrl" #header-actions>
+          <div class="flex items-center gap-2">
+            <button
+              v-if="exportUrl"
+              type="button"
+              class="data-table__icon-btn"
+              :aria-label="$t('common.export')"
+              @click="showExportModal = true"
+            >
+              <IrIcon name="download" :size="16" />
+            </button>
+            <DataTableFilter v-if="filters.length" :filters="filters" v-model="activeFilters" />
+          </div>
         </template>
         <IrTable
           :headers
@@ -214,6 +246,17 @@ onMounted(() => fetch())
         <slot v-if="items.length && totalItems > perPage" name="view-more" />
       </IrCard>
     </div>
+
+    <ExportModal
+      v-if="exportUrl"
+      v-model:show="showExportModal"
+      :title="exportTitle"
+      :url="exportUrl"
+      :filename="exportFilename"
+      :params="{ ...activeFilters, ...exportExtraParams, ...exportParams }"
+    >
+      <slot name="export-fields" :params="exportParams" />
+    </ExportModal>
   </div>
 </template>
 
@@ -245,6 +288,22 @@ onMounted(() => fetch())
     font-size: 14px;
     color: var(--color-dark-blue-600);
   }
+}
+
+.data-table__icon-btn {
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-dark-blue-50);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--color-dark-blue-500);
+  cursor: pointer;
+  transition: background 0.15s;
+
+  &:hover { background: var(--color-blue-20); }
 }
 
 .data-table__spinner {

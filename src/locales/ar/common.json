@@ -31,6 +31,9 @@
     "myDashboard": "لوحة التحكم",
     "signOut": "تسجيل الخروج"
   },
+  "export": "تصدير",
+  "downloadCsv": "تنزيل CSV",
+  "exportEarningsDescription": "حدد معايير تصدير بياناتك. سيتم إنشاء ملف CSV وتنزيله إلى جهازك.",
   "routes": {
     "overview": "نظرة عامة",
     "paymentMethods": "طرق الدفع",

@@ -36,6 +36,8 @@ http.interceptors.response.use(
   response => {
     let data = response.data
 
+    if (data instanceof Blob || data instanceof ArrayBuffer) return data
+
     try {
       return camelKeys(data)
     } catch {

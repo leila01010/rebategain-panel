@@ -1,41 +1,24 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { IrAlert, IrModal, IrSelect, IrButton, IrIcon } from '@/lib/ui-kit'
+import { IrAlert, IrModal, IrButton, IrIcon } from '@/lib/ui-kit'
 import AccountSelect from '@/components/select/AccountSelect.vue'
-import { useI18n } from 'vue-i18n'
+import TimePeriodSelect from '@/components/select/TimePeriodSelect.vue'
 import http from '@/services/http.js'
 import api from '@/api/api-list.js'
-import moment from '@/lib/moment'
 
 const show = defineModel('show', { type: Boolean, default: false })
 
 const emit = defineEmits(['done'])
 
-const { t } = useI18n()
-
 const accountId = ref(null)
 const selectedAccount = ref(null)
-const period = ref('7')
 const submitting = ref(false)
 const submitted = ref(false)
-
-const periodOptions = [
-  { id: '7', title: t('overview.last7Days') },
-  { id: '30', title: t('overview.last30Days') },
-  { id: '90', title: t('overview.last90Days') },
-]
+const period = ref([])
 
 const isAutomaticPayout = computed(() => !!selectedAccount.value?.broker?.automaticPayout)
 
-const canSubmit = computed(() => !!accountId.value && !!period.value && !isAutomaticPayout.value)
-
-const dateRange = computed(() => {
-  const days = Number(period.value)
-  return {
-    fromDate: moment().subtract(days, 'days').format('YYYY-MM-DD'),
-    toDate: moment().format('YYYY-MM-DD'),
-  }
-})
+const canSubmit = computed(() => !!accountId.value && !!period.value.length && !isAutomaticPayout.value)
 
 watch(show, (value) => {
   if (!value) reset()
@@ -47,8 +30,8 @@ async function submit() {
   submitting.value = true
   try {
     await http.post(url, {
-      fromDate: dateRange.value.fromDate,
-      toDate: dateRange.value.toDate,
+      fromDate: period.value[0],
+      toDate: period.value[1],
     })
     submitted.value = true
     emit('done')
@@ -89,9 +72,8 @@ function reset() {
         @select="selectedAccount = $event"
       />
 
-      <IrSelect
+      <TimePeriodSelect
         v-model="period"
-        :options="periodOptions"
         :label="$t('overview.timePeriod')"
         :disabled="submitted"
         block

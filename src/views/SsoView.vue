@@ -10,6 +10,8 @@ import { redirectToSso, consumeReturnTo } from '@/services/auth.service.js'
 const route = useRoute()
 const router = useRouter()
 
+let exchanging = false
+
 onMounted(async () => {
   const code = route.query.otc
 
@@ -18,13 +20,22 @@ onMounted(async () => {
     return
   }
 
+  if (storage.get('token')) {
+    await router.replace(consumeReturnTo())
+    return
+  }
+
+  if (exchanging) return
+  exchanging = true
+
   try {
     const res = await http.post(api.ssoExchange, { code })
-    console.log(res)
     storage.set('token', res.data.token)
     await router.replace(consumeReturnTo())
   } catch {
     // redirectToSso()
+  } finally {
+    exchanging = false
   }
 })
 </script>
