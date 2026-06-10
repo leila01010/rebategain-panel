@@ -77,7 +77,7 @@ function onSelectPaymentMethod(item) {
 async function fetchRebateBalance() {
   try {
     const res = await http.get(api.balances)
-    rebateBalance.value = Number(res?.data?.balance) || 0
+    rebateBalance.value = Number(res?.data?.availableBalance) || 0
   } catch (e) {
     console.log(e?.error)
   }
