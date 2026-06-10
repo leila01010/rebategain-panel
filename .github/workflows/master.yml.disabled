@@ -32,12 +32,12 @@ jobs:
       - name: Generate static site
         run: npm run build
 
-      - name: Deploy via FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy via rsync
+        uses: burnett01/rsync-deployments@7.0.1
         with:
-          server: ${{ secrets.PANEL_PRODUCTION_FTP_SERVER }}
-          username: ${{ secrets.PANEL_PRODUCTION_FTP_USERNAME }}
-          password: ${{ secrets.PANEL_PRODUCTION_FTP_PASSWORD }}
-          protocol: ftps
-          local-dir: ./dist/
-          server-dir: ./
+          switches: -avzr --delete
+          path: dist/
+          remote_path: /var/www/rgdashboard-frontend/
+          remote_host: ${{ secrets.PANEL_PRODUCTION_SFTP_SERVER }}
+          remote_user: ${{ secrets.PANEL_PRODUCTION_SFTP_USERNAME }}
+          remote_key: ${{ secrets.PANEL_PRODUCTION_SFTP_SSH_KEY }}
