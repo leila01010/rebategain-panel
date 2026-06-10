@@ -54,13 +54,9 @@ watch(value, parseFromModel, { immediate: true })
 
 function parseFromModel(v) {
   if (isRange.value) {
-    if (v?.from) {
-      rangeStart.value = moment(v.from)
-      rangeEnd.value = v.to ? moment(v.to) : null
-    } else {
-      rangeStart.value = null
-      rangeEnd.value = null
-    }
+    const [from, to] = Array.isArray(v) ? v : []
+    rangeStart.value = from ? moment(from) : null
+    rangeEnd.value = to ? moment(to) : null
   } else {
     singleDate.value = v ? moment(v) : null
   }
@@ -99,10 +95,10 @@ function onSelectDay(date) {
 
 function commit() {
   if (isRange.value && rangeStart.value && rangeEnd.value) {
-    value.value = {
-      from: rangeStart.value.xFormat(props.format),
-      to: rangeEnd.value.xFormat(props.format),
-    }
+    value.value = [
+      rangeStart.value.xFormat(props.format),
+      rangeEnd.value.xFormat(props.format),
+    ]
   }
 }
 

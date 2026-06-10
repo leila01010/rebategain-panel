@@ -53,7 +53,7 @@ const dialogSizeAttr = computed(() => {
   if (['xs', 'sm', 'md', 'lg', 'xl'].includes(props.size)) {
     return { class: `ir-modal__dialog--size-${props.size}` }
   }
-  return { style: { maxWidth: props.size } }
+  return { style: { maxWidth: props.size, width: props.size ? '100%' : 'auto' } }
 })
 
 const hasHeader = computed(() => {

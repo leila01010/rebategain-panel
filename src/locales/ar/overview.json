@@ -23,5 +23,6 @@
   "successfullySubmitted": "تم الإرسال بنجاح",
   "submitRebateError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
   "automaticPayoutAlertTitle": "وسيط بدفع تلقائي",
-  "automaticPayoutAlertText": "يقوم هذا الوسيط بإرسال العمولات مباشرة إلى حساب التداول الخاص بك. لا حاجة لطلب تقدير."
+  "automaticPayoutAlertText": "يقوم هذا الوسيط بإرسال العمولات مباشرة إلى حساب التداول الخاص بك. لا حاجة لطلب تقدير.",
+  "datePicker": "منتقي التاريخ"
 }
