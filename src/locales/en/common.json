@@ -30,6 +30,9 @@
   "details": "Details",
   "you": "You",
   "submit": "Submit",
+  "export": "Export",
+  "downloadCsv": "Download CSV",
+  "exportEarningsDescription": "Select the parameters for your data export. A CSV file will be generated and downloaded to your device.",
   "routes": {
     "overview": "Overview",
     "paymentMethods": "Payment Methods",
