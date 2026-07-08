@@ -28,11 +28,11 @@ const NAV = computed(() => [
       to: '/accounts',
     },
     {
-      key: 'withdraws',
-      label: t('common.routes.withdraws'),
+      key: 'withdrawals',
+      label: t('common.routes.withdrawals'),
       icon: 'upload',
       badge: null,
-      to: '/withdraws',
+      to: '/withdrawals',
     },
     {
       key: 'payment-methods',

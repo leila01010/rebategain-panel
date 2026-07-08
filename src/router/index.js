@@ -6,7 +6,7 @@ const routes = [
   { path: '/', name: 'overview', component: () => import('../views/OverView.vue'), },
   { path: '/accounts', name: 'accounts', component: () => import('../views/AccountsView.vue'), },
   { path: '/payment-methods', name: 'paymentMethods', component: () => import('../views/PaymentMethodsView.vue'), },
-  { path: '/withdraws', name: 'withdraws', component: () => import('../views/WithdrawsView.vue'), },
+  { path: '/withdrawals', name: 'withdrawals', component: () => import('../views/WithdrawalsView.vue'), },
   { path: '/profile', name: 'profile', component: () => import('../views/ProfileView.vue'), },
   { path: '/sso', name: 'sso', meta: { layout: 'blank' }, component: () => import('../views/SsoView.vue'), },
 ]
