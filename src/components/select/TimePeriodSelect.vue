@@ -40,7 +40,6 @@ const displayRange = computed(() => {
 })
 
 watch(selfValue, (v) => {
-  console.log(v)
   if (v?.length === 2 && !irSelectValue.value) irSelectValue.value = 'custom'
   else if (!v?.length) irSelectValue.value = null
 }, { immediate: true })

@@ -44,7 +44,7 @@ async function submit() {
 function reset() {
   accountId.value = null
   selectedAccount.value = null
-  period.value = '7'
+  period.value = []
   submitted.value = false
   submitting.value = false
 }

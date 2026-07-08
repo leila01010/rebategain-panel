@@ -20,7 +20,6 @@ router.beforeEach(async (to) => {
   if (to.name === 'sso') return true
 
   if (!getToken()) {
-    console.log(to.fullPath)
     saveReturnTo(to.fullPath)
     redirectToSso()
     return false
