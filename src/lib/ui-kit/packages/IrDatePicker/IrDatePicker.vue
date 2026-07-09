@@ -11,6 +11,8 @@ const props = defineProps({
   label: { type: String, default: '' },
   placeholder: { type: String, default: '' },
   format: { type: String, default: 'YYYY-MM-DD' },
+  min: { type: String, default: null },
+  max: { type: String, default: null },
   disabled: { type: Boolean, default: false },
   error: { type: String, default: '' },
   block: { type: Boolean, default: false },
@@ -162,6 +164,7 @@ function submit() {
     :title="$t('uiKit.datePicker.datePicker')"
     :plain="!isPhone"
     body-class="ir-date-picker__panel"
+    :close-on-backdrop="true"
     @close="reset"
   >
     <template #header-prepend>
@@ -191,6 +194,8 @@ function submit() {
             show-prev
             :show-next="!isRange"
             :mode
+            :min
+            :max
             @prev="prev"
             @next="next"
             @update:cursor="(c) => leftCursor = c"
@@ -207,6 +212,8 @@ function submit() {
             :hover-date="hoverDate"
             show-next
             :mode
+            :min
+            :max
             @next="next"
             @update:cursor="(c) => leftCursor = c.clone().xAdd(-1, 'month')"
             @select-day="onSelectDay"

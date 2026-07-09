@@ -76,6 +76,7 @@ function reset() {
         v-model="period"
         :label="$t('overview.timePeriod')"
         :disabled="submitted"
+        :latest-inquiry-date="selectedAccount?.latestInquiryDate"
         block
       />
 

@@ -11,6 +11,7 @@ defineProps({
   disabled: { type: Boolean, default: false },
   block: { type: Boolean, default: false },
   error: { type: String, default: '' },
+  latestInquiryDate: { type: String, default: null },
 })
 
 defineOptions({ inheritAttrs: false })
@@ -39,7 +40,7 @@ const displayRange = computed(() => {
   return `${formatDate(selfValue.value[0])} → ${formatDate(selfValue.value[1])}`
 })
 
-watch(selfValue, (v) => {
+const date = computed(() => moment().format('YYYY-MM-DD'))
 
 function selectItem(option, select) {
   const to = moment()
@@ -95,6 +96,8 @@ function openDatePicker(select) {
     v-model="selfValue"
     v-model:show="showDatePicker"
     mode="range"
+    :max="date"
+    :min="latestInquiryDate"
     :trigger="false"
   />
 </template>
