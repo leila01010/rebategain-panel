@@ -263,7 +263,7 @@ function onBodyScroll(e) {
           <div
             v-if="isVisible && !isFullScreen"
             class="ir-modal__backdrop"
-            @click="close"
+            @click="close('backdrop')"
           />
         </Transition>
       </div>
