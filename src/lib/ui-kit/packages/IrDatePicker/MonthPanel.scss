@@ -109,8 +109,20 @@
     transition: background 0.12s;
     overflow: hidden;
 
-    &:hover:not(.ir-dp-panel__day--start, .ir-dp-panel__day--end, .ir-dp-panel__day--in-range, .ir-dp-panel__day--today) {
+    &:hover:not(
+    .ir-dp-panel__day--start,
+    .ir-dp-panel__day--end,
+    .ir-dp-panel__day--in-range,
+    .ir-dp-panel__day--today,
+    .ir-dp-panel__day--disabled
+    ) {
       background-color: var(--color-blue-50);
+    }
+
+    &--disabled {
+      opacity: 0.4;
+      cursor: auto;
+      user-select: none;
     }
 
     &--out {

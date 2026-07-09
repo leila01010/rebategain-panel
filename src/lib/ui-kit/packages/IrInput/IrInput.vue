@@ -105,15 +105,23 @@ watch(() => props.autoFocus, (val) => {
 
 watch(selfValue, () => {
   if (props.number && selfValue.value != null) {
-    const digits = String(selfValue.value).replace(/\D/g, '')
-    if (digits !== String(selfValue.value)) {
-      selfValue.value = digits
+    let str = String(selfValue.value)
+
+    let cleaned = str.replace(/[^\d.]/g, '')
+
+    const firstDotIndex = cleaned.indexOf('.')
+    if (firstDotIndex !== -1) {
+      cleaned = cleaned.slice(0, firstDotIndex + 1) +
+        cleaned.slice(firstDotIndex + 1).replace(/\./g, '')
+    }
+
+    if (cleaned !== str) {
+      selfValue.value = cleaned
       return
     }
   }
   emit('input', selfValue.value)
   setInputHeight()
-
 }, { immediate: true })
 
 function onFocus(e) {

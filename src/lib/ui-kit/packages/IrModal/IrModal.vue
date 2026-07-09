@@ -50,6 +50,7 @@ const uid = computed(() => {
 })
 
 const dialogSizeAttr = computed(() => {
+  if (isFullScreen.value) return
   if (['xs', 'sm', 'md', 'lg', 'xl'].includes(props.size)) {
     return { class: `ir-modal__dialog--size-${props.size}` }
   }
@@ -262,7 +263,7 @@ function onBodyScroll(e) {
           <div
             v-if="isVisible && !isFullScreen"
             class="ir-modal__backdrop"
-            @click="close"
+            @click="close('backdrop')"
           />
         </Transition>
       </div>

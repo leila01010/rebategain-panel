@@ -28,11 +28,11 @@ const NAV = computed(() => [
       to: '/accounts',
     },
     {
-      key: 'withdraws',
-      label: t('common.routes.withdraws'),
+      key: 'withdrawals',
+      label: t('common.routes.withdrawals'),
       icon: 'upload',
       badge: null,
-      to: '/withdraws',
+      to: '/withdrawals',
     },
     {
       key: 'payment-methods',
@@ -103,6 +103,8 @@ const sidebarStyle = computed(() => props.zIndex ? { zIndex: props.zIndex } : nu
         size="lg"
         prepend-icon="mail"
         block
+        tag="a"
+        url="mailto:Support@rebategain.com"
         class="!border-dark-blue-50 !text-dark-blue-500"
       />
     </div>

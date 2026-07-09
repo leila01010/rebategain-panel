@@ -11,6 +11,8 @@ const props = defineProps({
   showPrev: { type: Boolean, default: false },
   showNext: { type: Boolean, default: false },
   mode: { type: String, default: 'single', validator: v => ['single', 'range'].includes(v) },
+  min: { type: String, default: null },
+  max: { type: String, default: null },
 })
 
 const emit = defineEmits(['prev', 'next', 'update:cursor', 'hover-day', 'select-day'])
@@ -33,12 +35,16 @@ const days = computed(() => {
   for (let i = 0; i < 42; i++) {
     const d = startOfGrid.clone().add(i, 'day')
     const isInMonth = d.xMonth() === first.xMonth() && d.xYear() === first.xYear()
+    const isBeforeMin = props.min ? d.isBefore(props.min, 'day') : false
+    const isAfterMax = props.max ? d.isAfter(props.max, 'day') : false
+    const isDisabled = isBeforeMin || isAfterMax
     grid.push({
       date: d,
       key: d.format('YYYY-MM-DD'),
       label: d.xFormat('jD'),
-      isInMonth,
       isToday: d.isSame(moment(), 'day'),
+      isInMonth,
+      isDisabled
     })
   }
 
@@ -84,6 +90,7 @@ const years = computed(() => {
 })
 
 function openMonths() { viewMode.value = viewMode.value === 'months' ? 'days' : 'months' }
+
 function openYears() {
   yearPageStart.value = props.cursor.xYear() - (props.cursor.xYear() % 12)
   viewMode.value = viewMode.value === 'years' ? 'days' : 'years'
@@ -100,7 +107,16 @@ function pickYear(year) {
 }
 
 function yearPagePrev() { yearPageStart.value -= 12 }
+
 function yearPageNext() { yearPageStart.value += 12 }
+
+function onSelectDate(day) {
+  if (!day.isDisabled) emit('select-day', day.date)
+}
+
+function onMouseEnter(day) {
+  if(!day.isDisabled && day.isInMonth) emit('hover-day', day.date)
+}
 </script>
 
 <template>
@@ -137,16 +153,16 @@ function yearPageNext() { yearPageStart.value += 12 }
           :key="cell.key"
           type="button"
           class="ir-dp-panel__day"
-          :disabled="!cell.isInMonth"
           :class="{
             'ir-dp-panel__day--out': !cell.isInMonth,
             'ir-dp-panel__day--today': cell.isToday,
+            'ir-dp-panel__day--disabled': cell.isDisabled,
             'ir-dp-panel__day--in-range': cell.isInMonth && dayState(cell).inRange && !dayState(cell).isStart && !dayState(cell).isEnd,
             'ir-dp-panel__day--start': cell.isInMonth && dayState(cell).isStart,
             'ir-dp-panel__day--end': cell.isInMonth && dayState(cell).isEnd,
           }"
-          @click="emit('select-day', cell.date)"
-          @mouseenter="cell.isInMonth && emit('hover-day', cell.date)"
+          @click="onSelectDate(cell)"
+          @mouseenter="onMouseEnter(cell)"
         >
           {{ cell.label }}
         </button>
