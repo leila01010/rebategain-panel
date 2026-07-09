@@ -121,7 +121,7 @@ function reset() {
       />
       <IrButton
         v-else
-        :text="$t('overview.submitRebateRequest')"
+        :text="$t('overview.submitRequest')"
         :loading="submitting"
         :disabled="!canSubmit"
         class="mt-6"

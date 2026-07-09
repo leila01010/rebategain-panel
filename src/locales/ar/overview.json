@@ -19,7 +19,7 @@
   "last7Days": "آخر 7 أيام",
   "last30Days": "آخر 30 يومًا",
   "last90Days": "آخر 90 يومًا",
-  "submitRebateRequest": "إرسال طلب العمولة",
+  "submitRequest": "إرسال طلب العمولة",
   "successfullySubmitted": "تم الإرسال بنجاح",
   "submitRebateError": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
   "automaticPayoutAlertTitle": "وسيط بدفع تلقائي",
