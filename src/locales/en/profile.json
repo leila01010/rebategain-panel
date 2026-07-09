@@ -31,5 +31,6 @@
   },
   "updateSuccess": "Profile updated successfully",
   "updateError": "Could not update profile",
-  "signOut": "Sign out"
+  "signOut": "Sign out",
+  "maxSizeError": "File is too large. Maximum allowed size is 1MG"
 }

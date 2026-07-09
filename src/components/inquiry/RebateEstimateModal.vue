@@ -44,7 +44,7 @@ async function submit() {
 function reset() {
   accountId.value = null
   selectedAccount.value = null
-  period.value = '7'
+  period.value = []
   submitted.value = false
   submitting.value = false
 }
@@ -76,6 +76,7 @@ function reset() {
         v-model="period"
         :label="$t('overview.timePeriod')"
         :disabled="submitted"
+        :latest-inquiry-date="selectedAccount?.latestInquiryDate"
         block
       />
 
@@ -120,7 +121,7 @@ function reset() {
       />
       <IrButton
         v-else
-        :text="$t('overview.submitRebateRequest')"
+        :text="$t('overview.submitRequest')"
         :loading="submitting"
         :disabled="!canSubmit"
         class="mt-6"

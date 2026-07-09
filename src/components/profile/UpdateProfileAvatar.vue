@@ -1,11 +1,12 @@
 <script setup>
 import { ref } from 'vue'
-import { IrAvatar, IrIcon } from '@/lib/ui-kit'
-import Dropzone from '@/components/Dropzone.vue'
+import { IrAvatar, IrIcon, message } from '@/lib/ui-kit'
+import DropZone from '@/components/DropZone.vue'
 import { useUserStore } from '@/stores/user.js'
 import { storeToRefs } from 'pinia'
 import api from '@/api/api-list.js'
 import http from '@/services/http.js'
+import { useI18n } from 'vue-i18n'
 
 defineProps({
   size: {
@@ -15,6 +16,7 @@ defineProps({
   },
 })
 
+const { t } = useI18n()
 const store = useUserStore()
 const { user } = storeToRefs(store)
 
@@ -36,15 +38,23 @@ async function handleFileChange(file) {
     loading.value = false
   }
 }
+
+function handleUploadError({ reason }) {
+  if (reason === 'size') {
+    message.error(t('profile.maxSizeError'))
+  }
+}
 </script>
 
 <template>
   <div>
-    <Dropzone
+    <DropZone
       :multiple="false"
       accept=".jpg,.jpeg,.png"
       :disabled="loading"
+      :max-size="1024 * 1024"
       @change="handleFileChange"
+      @error="handleUploadError"
     >
       <IrAvatar :src="user?.avatar" :size />
       <button
@@ -54,6 +64,6 @@ async function handleFileChange(file) {
         <IrIcon name="edit" :size="14" />
       </button>
       <IrIcon v-if="loading" name="spinner" class="absolute left-1/2 top-1/2 -translate-1/2" />
-    </Dropzone>
+    </DropZone>
   </div>
 </template>

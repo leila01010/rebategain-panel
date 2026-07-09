@@ -5,7 +5,8 @@ const props = defineProps({
   multiple: { type: Boolean, default: true },
   accept: { type: String, default: '.jpg,.jpeg,.png,.gif,.mp4' },
   disabled: { type: Boolean, default: false },
-  zoneClass: { type: String, default: '' }
+  zoneClass: { type: String, default: '' },
+  maxSize: { type: Number, default: 0 }, // bytes, 0 = no limit
 })
 
 const emit = defineEmits(['change'])
@@ -28,10 +29,15 @@ function onFileChange(event) {
   checkFiles(event.target.files)
   event.target.value = ''
 }
-function checkFiles(files, eventType = 'input') {
+function checkFiles(files) {
   if (!files.length) return
   files = props.multiple ? files : [files[0]]
+
   Array.prototype.forEach.call(files, file => {
+    if (props.maxSize && file.size > props.maxSize) {
+      emit('error', { file, reason: 'size', maxSize: props.maxSize })
+      return
+    }
     emit('change', file)
   })
 }

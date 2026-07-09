@@ -89,8 +89,12 @@ const tag = computed(() => {
 })
 
 const isInternalLink = computed(() => {
-  if (!props.url || (typeof props.url === 'string' && /^(http?s|www)/.test(props.url)))
+  if (!props.url) return false
+
+  if (typeof props.url === 'string' && /^[a-z][a-z\d+.-]*:/i.test(props.url)) {
     return false
+  }
+
   const route = router.resolve(props.url)
   return route && route.name !== '404'
 })

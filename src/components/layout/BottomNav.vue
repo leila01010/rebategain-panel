@@ -17,7 +17,7 @@ const avatar = computed(() => {
 
 const items = computed(() => [
   { key: 'overview', label: t('common.routes.overview'), icon: 'dashboard', to: '/' },
-  { key: 'withdraws', label: t('common.routes.withdraws'), icon: 'upload', to: '/withdraws' },
+  { key: 'withdraws', label: t('common.routes.withdrawals'), icon: 'upload', to: '/withdrawals' },
   { key: 'accounts', label: t('common.routes.accounts'), icon: 'wallet', to: '/accounts' },
   { key: 'you', label: t('common.you'), icon: 'menu', to: '/profile' },
 ])

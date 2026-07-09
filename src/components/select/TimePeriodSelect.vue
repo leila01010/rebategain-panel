@@ -1,7 +1,7 @@
 <script setup>
 import { IrSelect, IrIcon, IrDatePicker } from '@/lib/ui-kit'
 import { useI18n } from 'vue-i18n'
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import moment from '@/lib/moment.js'
 import { formatDate } from '@/utils/helpers.js'
 
@@ -11,6 +11,7 @@ defineProps({
   disabled: { type: Boolean, default: false },
   block: { type: Boolean, default: false },
   error: { type: String, default: '' },
+  latestInquiryDate: { type: String, default: null },
 })
 
 defineOptions({ inheritAttrs: false })
@@ -24,7 +25,7 @@ const FORMAT = 'YYYY-MM-DD'
 const periodOptions = [
   { id: '7', title: t('overview.last7Days'), days: 7 },
   { id: '30', title: t('overview.last30Days'), days: 30 },
-  { id: 'custom', title: '' }, // synthetic; not rendered, only used so IrSelect treats date-picker selection as "selected"
+  { id: 'custom', title: '' },
 ]
 
 const showDatePicker = ref(false)
@@ -39,11 +40,7 @@ const displayRange = computed(() => {
   return `${formatDate(selfValue.value[0])} → ${formatDate(selfValue.value[1])}`
 })
 
-watch(selfValue, (v) => {
-  console.log(v)
-  if (v?.length === 2 && !irSelectValue.value) irSelectValue.value = 'custom'
-  else if (!v?.length) irSelectValue.value = null
-}, { immediate: true })
+const date = computed(() => moment().format('YYYY-MM-DD'))
 
 function selectItem(option, select) {
   const to = moment()
@@ -53,9 +50,8 @@ function selectItem(option, select) {
 }
 
 function openDatePicker(select) {
-  selfValue.value = []
   showDatePicker.value = true
-  select({ disabled: false })
+  select({ disabled: false, id: 'custom' })
 }
 </script>
 
@@ -100,6 +96,8 @@ function openDatePicker(select) {
     v-model="selfValue"
     v-model:show="showDatePicker"
     mode="range"
+    :max="date"
+    :min="latestInquiryDate"
     :trigger="false"
   />
 </template>

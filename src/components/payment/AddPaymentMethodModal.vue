@@ -47,6 +47,7 @@ const isDefault = ref(false)
 const assets = ref([])
 
 const { handleSubmit, resetForm } = useForm()
+
 const {
   value: walletAddress,
   errorMessage: walletAddressError,
@@ -185,7 +186,7 @@ function reset() {
       >
         <template #suffix>
           <button type="button" class="payment-paste" @click="pasteAddress">
-            {{ $t('payment.paste') }}
+            <IrIcon name="clipboard" :size="16" />
           </button>
         </template>
       </IrInput>

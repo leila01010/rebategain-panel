@@ -54,7 +54,7 @@ const amountReceived = computed(() => {
 const submit = handleSubmit(async (values) => {
   if (submitting.value) return
   const data = {
-    amount: amountReceived.value,
+    amount: amount.value,
     userPaymentMethodId: values.userPaymentMethodId,
   }
   submitting.value = true

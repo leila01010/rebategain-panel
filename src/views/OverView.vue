@@ -7,7 +7,7 @@ import DataTable from '@/components/dataTable/DataTable.vue'
 import AddWithdrawModal from '@/components/withdraw/AddWithdrawModal.vue'
 import TimePeriodSelect from '@/components/select/TimePeriodSelect.vue'
 import AccountSelect from '@/components/select/AccountSelect.vue'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { formatCurrency, formatDate } from '@/utils/helpers.js'
 import api from '@/api/api-list.js'
@@ -23,12 +23,14 @@ const providerRef = ref(null)
 const showForm = ref(false)
 const showWithdrawForm = ref(false)
 
-if (route.query.action === 'rebate') {
-  showForm.value = true
-  const url = new URL(window.location.href)
-  url.searchParams.delete('action')
-  window.history.replaceState(window.history.state, '', url.pathname + url.search)
-}
+watch(() => route.query.action, (value) => {
+  if (value && value === 'rebate') {
+    showForm.value = true
+    const url = new URL(window.location.href)
+    url.searchParams.delete('action')
+    window.history.replaceState(window.history.state, '', url.pathname + url.search)
+  }
+}, { immediate: true })
 
 const headers = computed(() => [
   {

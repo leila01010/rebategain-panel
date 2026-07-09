@@ -11,12 +11,16 @@ const props = defineProps({
   label: { type: String, default: '' },
   placeholder: { type: String, default: '' },
   format: { type: String, default: 'YYYY-MM-DD' },
+  min: { type: String, default: null },
+  max: { type: String, default: null },
   disabled: { type: Boolean, default: false },
   error: { type: String, default: '' },
   block: { type: Boolean, default: false },
   presets: { type: Array, default: null }, // [{ key, label, days }] | null => use defaults
   trigger: { type: Boolean, default: true },
 })
+
+const emit = defineEmits(['update'])
 
 const { isPhone } = useDevice()
 
@@ -30,18 +34,17 @@ const DEFAULT_PRESETS = [
   { key: 'lastYear', label: t('uiKit.datePicker.lastYear'), days: 365 },
   { key: 'allTime', label: t('uiKit.datePicker.allTime'), days: null },
 ]
+
+const selfValue = ref(null)
+
 const activePresets = computed(() => props.presets ?? DEFAULT_PRESETS)
 
 const isRange = computed(() => props.mode === 'range')
 
 const show = defineModel('show', { type: Boolean, default: false })
 
-function openPicker() {
-  if (props.disabled) return
-  show.value = true
-}
-
 const leftCursor = ref(moment().xStartOf('month'))
+
 const rightCursor = computed(() => leftCursor.value.clone().xAdd(1, 'month'))
 
 const rangeStart = ref(null)
@@ -49,18 +52,6 @@ const rangeEnd = ref(null)
 const singleDate = ref(null)
 const hoverDate = ref(null)
 const activePresetKey = ref(null)
-
-watch(value, parseFromModel, { immediate: true })
-
-function parseFromModel(v) {
-  if (isRange.value) {
-    const [from, to] = Array.isArray(v) ? v : []
-    rangeStart.value = from ? moment(from) : null
-    rangeEnd.value = to ? moment(to) : null
-  } else {
-    singleDate.value = v ? moment(v) : null
-  }
-}
 
 const displayText = computed(() => {
   if (isRange.value) {
@@ -71,6 +62,23 @@ const displayText = computed(() => {
   }
   return singleDate.value ? singleDate.value.xFormat(props.format) : ''
 })
+
+watch(value, parseFromModel, { immediate: true })
+
+function openPicker() {
+  if (props.disabled) return
+  show.value = true
+}
+
+function parseFromModel(v) {
+  if (isRange.value) {
+    const [from, to] = Array.isArray(v) ? v : []
+    rangeStart.value = from ? moment(from) : null
+    rangeEnd.value = to ? moment(to) : null
+  } else {
+    singleDate.value = v ? moment(v) : null
+  }
+}
 
 function onSelectDay(date) {
   if (isRange.value) {
@@ -89,13 +97,13 @@ function onSelectDay(date) {
     }
   } else {
     singleDate.value = date.clone()
-    value.value = date.xFormat(props.format)
+    selfValue.value = date.xFormat(props.format)
   }
 }
 
 function commit() {
   if (isRange.value && rangeStart.value && rangeEnd.value) {
-    value.value = [
+    selfValue.value = [
       rangeStart.value.xFormat(props.format),
       rangeEnd.value.xFormat(props.format),
     ]
@@ -116,8 +124,24 @@ function applyPreset(p) {
 }
 
 function prev() { leftCursor.value = leftCursor.value.clone().xAdd(-1, 'month') }
+
 function next() { leftCursor.value = leftCursor.value.clone().xAdd(1, 'month') }
+
 function onHover(date) { hoverDate.value = date }
+
+function reset() {
+  if (isRange.value && !value.value.length) {
+    value.value = []
+  }
+  parseFromModel(value.value)
+  selfValue.value = value.value
+}
+
+function submit() {
+  show.value = false
+  value.value = selfValue.value
+  emit('update', selfValue.value)
+}
 </script>
 
 <template>
@@ -140,6 +164,8 @@ function onHover(date) { hoverDate.value = date }
     :title="$t('uiKit.datePicker.datePicker')"
     :plain="!isPhone"
     body-class="ir-date-picker__panel"
+    :close-on-backdrop="true"
+    @close="reset"
   >
     <template #header-prepend>
       <IrIcon name="calculator" size="16" />
@@ -158,39 +184,49 @@ function onHover(date) { hoverDate.value = date }
     </aside>
 
     <div class="ir-date-picker__calendars">
-      <div class="ir-date-picker__month-panel">
-        <MonthPanel
-          :cursor="leftCursor"
-          :selected-start="isRange ? rangeStart : singleDate"
-          :selected-end="isRange ? rangeEnd : null"
-          :hover-date="hoverDate"
-          show-prev
-          :show-next="!isRange"
-          :mode
-          @prev="prev"
-          @next="next"
-          @update:cursor="(c) => leftCursor = c"
-          @select-day="(d) => { onSelectDay(d); if (!isRange) show = false }"
-          @hover-day="onHover"
-        />
+      <div class="flex flex-col md:flex-row">
+        <div class="ir-date-picker__month-panel">
+          <MonthPanel
+            :cursor="leftCursor"
+            :selected-start="isRange ? rangeStart : singleDate"
+            :selected-end="isRange ? rangeEnd : null"
+            :hover-date="hoverDate"
+            show-prev
+            :show-next="!isRange"
+            :mode
+            :min
+            :max
+            @prev="prev"
+            @next="next"
+            @update:cursor="(c) => leftCursor = c"
+            @select-day="(d) => { onSelectDay(d); if (!isRange) show = false }"
+            @hover-day="onHover"
+          />
+        </div>
+        <IrDivider v-if="isRange" orientation="vertical" />
+        <div v-if="isRange" class="ir-date-picker__month-panel">
+          <MonthPanel
+            :cursor="rightCursor"
+            :selected-start="rangeStart"
+            :selected-end="rangeEnd"
+            :hover-date="hoverDate"
+            show-next
+            :mode
+            :min
+            :max
+            @next="next"
+            @update:cursor="(c) => leftCursor = c.clone().xAdd(-1, 'month')"
+            @select-day="onSelectDay"
+            @hover-day="onHover"
+          />
+        </div>
       </div>
-      <IrDivider v-if="isRange" orientation="vertical" />
-      <div v-if="isRange" class="ir-date-picker__month-panel">
-        <MonthPanel
-          :cursor="rightCursor"
-          :selected-start="rangeStart"
-          :selected-end="rangeEnd"
-          :hover-date="hoverDate"
-          show-next
-          :mode
-          @next="next"
-          @update:cursor="(c) => leftCursor = c.clone().xAdd(-1, 'month')"
-          @select-day="onSelectDay"
-          @hover-day="onHover"
+      <div class="flex justify-end px-4 py-8 md:pt-3 md:pb-6 md:px-6">
+        <IrButton
+          :text="$t('common.apply')"
+          class="w-full md:w-40"
+          @click="submit"
         />
-      </div>
-      <div v-if="isPhone" class="px-4 py-8">
-        <IrButton :text="$t('common.submit')" block @click="show = false" />
       </div>
     </div>
   </IrModal>
