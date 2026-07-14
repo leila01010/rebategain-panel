@@ -26,8 +26,9 @@
   "accountIdRequired": "معرف الحساب مطلوب",
   "accountIdMin": "معرف الحساب قصير جدًا",
   "accountIdMax": "معرف الحساب طويل جدًا",
-  "howToFixAccount": "See how to fix this",
-  "needHelp": "Need help?",
-  "watchTutorial": "Watch Tutorial",
-  "or": "Or"
+  "howToFixAccount": "تعرف على كيفية إصلاح هذا",
+  "needHelp": "هل تحتاج إلى مساعدة؟",
+  "watchTutorial": "شاهد البرنامج التعليمي",
+  "or": "أو",
+  "copyEmailText": "انسخ نص البريد الإلكتروني"
 }

@@ -48,8 +48,8 @@ const classes = computed(() => [
     </template>
 
     <template v-else>
-      <div class="ir-alert__header">
-        <IrIcon :name="icon" class="ir-alert__icon" />
+      <div v-if="title || icon" class="ir-alert__header">
+        <IrIcon v-if="icon" :name="icon" class="ir-alert__icon" />
         <h4 class="ir-alert__title">{{ title }}</h4>
       </div>
 
