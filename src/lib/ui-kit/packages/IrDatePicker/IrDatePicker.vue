@@ -17,10 +17,10 @@ const props = defineProps({
   error: { type: String, default: '' },
   block: { type: Boolean, default: false },
   presets: { type: Array, default: null }, // [{ key, label, days }] | null => use defaults
-  trigger: { type: Boolean, default: true },
+  trigger: { type: Boolean, default: false },
 })
 
-const emit = defineEmits(['update'])
+const emit = defineEmits(['update', 'close'])
 
 const { isPhone } = useDevice()
 
@@ -114,7 +114,7 @@ function applyPreset(p) {
   activePresetKey.value = p.key
   const end = moment()
   if (p.days === null) {
-    rangeStart.value = moment('1970-01-01')
+    rangeStart.value = props.min ? moment(props.min) : moment('1970-01-01')
   } else {
     rangeStart.value = end.clone().subtract(p.days - 1, 'day')
   }
@@ -135,6 +135,7 @@ function reset() {
   }
   parseFromModel(value.value)
   selfValue.value = value.value
+  emit('close')
 }
 
 function submit() {

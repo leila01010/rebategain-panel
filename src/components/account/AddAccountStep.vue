@@ -1,5 +1,5 @@
 <script setup>
-import { IrAlert, IrButton, IrDivider, IrInput } from '@/lib/ui-kit'
+import { IrAlert, IrButton, IrInput } from '@/lib/ui-kit'
 import BrokerVideoTutorial from '@/components/account/BrokerVideoTutorial.vue'
 import { computed, ref } from 'vue'
 import { useField, useForm } from 'vee-validate'
@@ -80,30 +80,28 @@ const submit = handleSubmit(async (values) => {
     />
     <IrAlert
       v-if="hasAccount"
-      :title="$t('account.openAccountByLink')"
-      :description="selectedBroker?.changeIbTutorial"
       size="lg"
-      icon="info"
       color="primary"
+      class="mb-6"
     >
+      <div class="[&_a]:text-primary" v-html="selectedBroker?.changeIbTutorial" />
       <IrButton
+        v-if="selectedBroker?.brokerEmailTemplate"
+        v-copy="selectedBroker?.brokerEmailTemplate"
         block
-        :text="$t('account.openBrokerAccount', { broker: selectedBroker?.title })"
-        :url="selectedBroker?.link"
-        target="_blank"
-        append-icon="share"
+        :text="$t('account.copyEmailText')"
+        append-icon="copy"
         size="sm"
         class="mt-4"
       />
     </IrAlert>
     <IrAlert
       v-else
-      :title="$t('account.linkAccountWithIB')"
-      :description="selectedBroker?.addingAccountTutorial"
       size="lg"
-      icon="info"
       color="primary"
+      class="mb-6"
     >
+      <div class="[&_a]:text-primary" v-html="selectedBroker?.addingAccountTutorial" />
       <IrButton
         block
         :text="$t('account.openBrokerAccount', { broker: selectedBroker?.title })"
@@ -114,11 +112,8 @@ const submit = handleSubmit(async (values) => {
         class="mt-4"
       />
     </IrAlert>
-    <BrokerVideoTutorial v-if="videoTutorialLink" :video-src="videoTutorialLink" class="mt-4" />
-    <IrDivider class="!my-6" />
+    <BrokerVideoTutorial v-if="videoTutorialLink" :video-src="videoTutorialLink" class="mb-4" />
     <form @submit.prevent="submit">
-      <h4 v-text="$t('account.enterTradingAccount')" class="text-xs text-dark-blue-500 font-bold mb-1" />
-      <p v-text="$t('account.enterTradingAccountText')" class="text-xs text-dark-blue-500 mb-4" />
       <IrInput
         v-model="accountNumber"
         :label="$t('account.accountID')"
