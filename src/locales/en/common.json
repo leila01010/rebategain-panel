@@ -33,6 +33,7 @@
   "export": "Export",
   "downloadCsv": "Download CSV",
   "exportEarningsDescription": "Select the parameters for your data export. A CSV file will be generated and downloaded to your device.",
+  "copied": "Copied!",
   "routes": {
     "overview": "Overview",
     "paymentMethods": "Payment Methods",

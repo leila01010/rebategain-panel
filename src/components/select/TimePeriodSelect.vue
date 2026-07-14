@@ -36,7 +36,7 @@ const displayRange = computed(() => {
     const opt = periodOptions.find(o => o.id === irSelectValue.value)
     return opt?.title ?? ''
   }
-  if (selfValue.value?.length !== 2) return ''
+  if (selfValue.value?.length !== 2) return null
   return `${formatDate(selfValue.value[0])} → ${formatDate(selfValue.value[1])}`
 })
 
@@ -52,6 +52,10 @@ function selectItem(option, select) {
 function openDatePicker(select) {
   showDatePicker.value = true
   select({ disabled: false, id: 'custom' })
+}
+
+function onCloseDatePicker() {
+  if (!selfValue.value.length) irSelectValue.value = null
 }
 </script>
 
@@ -98,6 +102,6 @@ function openDatePicker(select) {
     mode="range"
     :max="date"
     :min="latestInquiryDate"
-    :trigger="false"
+    @close="onCloseDatePicker"
   />
 </template>

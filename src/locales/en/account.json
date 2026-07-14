@@ -16,12 +16,8 @@
   "hasAccountText": "I already trade with them but I want to link my account with RebateGain.",
   "doYouHaveAccount": "Do you already have an account?",
   "doYouHaveAccountText": "Tell us your current status with {broker} to continue.",
-  "openAccountByLink": "Step 1: Open account via our link.",
-  "linkAccountWithIB": "Step 1: Link your account with our IB",
   "openAccountByLinkText": "Please click the button below to register a new profile with IC Markets. Our referral code is automatically applied.",
   "openBrokerAccount": "Open {broker} Account",
-  "enterTradingAccount": "Step 2: Enter trading account ID",
-  "enterTradingAccountText": "Once you have completed Step 1 and received your MT4/MT5 account number, enter it below to verify.",
   "accountID": "Account ID",
   "submitAccount": "Submit Account",
   "accountIdRequired": "Account ID is required",
@@ -30,5 +26,6 @@
   "howToFixAccount": "See how to fix this",
   "needHelp": "Need help?",
   "watchTutorial": "Watch Tutorial",
-  "or": "Or"
+  "or": "Or",
+  "copyEmailText": "Copy Email Text"
 }

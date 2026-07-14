@@ -8,27 +8,32 @@ import { useReferenceStore } from '@/stores/reference.js'
 
 const emit = defineEmits(['select', 'add-broker'])
 
+const PER_PAGE = 50
+
 const selfValue = defineModel({ type: [String, Number], default: null })
 
 const referenceStore = useReferenceStore()
+
 const { brokers } = storeToRefs(referenceStore)
 
 const loading = ref(false)
 
 async function fetch() {
   if (brokers.value.length) return
+
   loading.value = true
+
   try {
-    const { data } = await http.get(api.brokers)
-    loading.value = false
-    brokers.value = (data || []).map((item) => ({
+    const data = await http.get(api.brokers, { params: { perPage: PER_PAGE } })
+    brokers.value = (data?.data || []).map((item) => ({
       title: item.name,
       id: item.id,
       ...item,
     }))
   } catch (error) {
-    loading.value = false
     console.error(error)
+  } finally {
+    loading.value = false
   }
 }
 
@@ -50,7 +55,7 @@ function selectBroker(option, select) {
     @open="fetch"
   >
     <template #options="{ items, select }">
-      <div class="h-[207px] p-2 overflow-auto custom-scrollbar">
+      <div class="max-h-[207px] p-2 overflow-auto custom-scrollbar">
         <div v-for="group in items" :key="group.id" class="w-full">
           <div
             v-for="option in group.children"
