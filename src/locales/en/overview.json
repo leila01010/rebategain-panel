@@ -23,7 +23,7 @@
   "submitRequest": "Submit Request",
   "successfullySubmitted": "Successfully Submitted",
   "automaticPayoutAlertTitle": "Notice on Broker Types",
-  "automaticPayoutAlertText": "You can only request for {nonDirect}. Direct brokers (like IC Markets, Lite Finance & etc.) send rebate directly to your trading account automatically.",
+  "automaticPayoutAlertText": "You can only request for {nonDirect}. Direct brokers (like {broker}) automatically send rebate directly to your trading account",
   "nonDirectBrokers": "non‑direct brokers",
   "myBrokerAccount": "My broker account",
   "datePicker": "Date Picker",

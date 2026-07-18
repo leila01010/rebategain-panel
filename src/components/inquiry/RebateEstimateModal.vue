@@ -115,6 +115,9 @@ function reset() {
           <template #nonDirect>
             <strong>{{ $t('overview.nonDirectBrokers') }}</strong>
           </template>
+          <template #broker>
+            <strong>{{ selectedAccount?.broker?.name }}</strong>
+          </template>
         </i18n-t>
         <div class="flex justify-end">
           <IrButton
