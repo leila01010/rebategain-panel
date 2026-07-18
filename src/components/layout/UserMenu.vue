@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { IrIcon, IrDropdown, IrAvatar } from '@/lib/ui-kit'
 import UpdateProfileAvatar from '@/components/profile/UpdateProfileAvatar.vue'
 import { useUserStore } from '@/stores/user.js'
@@ -7,17 +7,12 @@ import { useI18n } from 'vue-i18n'
 import { fullName, maskMiddle } from '@/utils/helpers.js'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
-import http from '@/services/http.js'
-import api from '@/api/api-list.js'
-import { storage } from '@/services/storage.service.js'
 
 const { t } = useI18n()
 const router = useRouter()
 const userStore = useUserStore()
 
-const signingOut = ref(false)
-
-const { user } = storeToRefs(userStore)
+const { user, loading } = storeToRefs(userStore)
 
 const name = computed(() => fullName(user.value) || t('profile.user'))
 
@@ -32,20 +27,8 @@ function onDashboard(close) {
 }
 
 async function onSignOut(close) {
-  if (signingOut.value) return
-  signingOut.value = true
-  try {
-    const res = await http.post(api.logout)
-    storage.remove('token')
-    const logoutUrl = res?.data?.logoutUrl
-    if (logoutUrl) {
-      window.location.href = logoutUrl
-    } else {
-      close()
-    }
-  } finally {
-    signingOut.value = false
-  }
+  await userStore.logOut()
+  close()
 }
 </script>
 
@@ -81,14 +64,14 @@ async function onSignOut(close) {
         <button
           type="button"
           class="user-menu__item"
-          :disabled="signingOut"
+          :disabled="loading"
           @click="onSignOut(close)"
         >
           <span class="user-menu__item-label">
             {{ t('profile.signOut') }}
           </span>
           <IrIcon
-            :name="signingOut ? 'spinner' : 'logout'"
+            :name="loading ? 'spinner' : 'logout'"
             class="user-menu__item-icon icon-flip-rtl"
           />
         </button>
