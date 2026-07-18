@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import http from '@/services/http.js'
 import api from '@/api/api-list.js'
+import { storage } from '@/services/storage.service.js'
 
 export const useUserStore = defineStore('user', () => {
   const user = ref(null)
@@ -34,10 +35,27 @@ export const useUserStore = defineStore('user', () => {
     return inflight
   }
 
+  async function logOut(close) {
+    if (loading.value) return
+    loading.value = true
+    try {
+      const res = await http.post(api.logout)
+      storage.remove('token')
+      const logoutUrl = res?.data?.logoutUrl
+      if (logoutUrl) {
+        window.location.href = logoutUrl
+      } else {
+        close()
+      }
+    } finally {
+      loading.value = false
+    }
+  }
+
   function clear() {
     user.value = null
     error.value = null
   }
 
-  return { user, loading, error, isLoaded, fetch, clear }
+  return { user, loading, error, isLoaded, fetch, logOut, clear }
 })

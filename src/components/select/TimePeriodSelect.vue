@@ -1,7 +1,7 @@
 <script setup>
 import { IrSelect, IrIcon, IrDatePicker } from '@/lib/ui-kit'
 import { useI18n } from 'vue-i18n'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import moment from '@/lib/moment.js'
 import { formatDate } from '@/utils/helpers.js'
 
@@ -32,15 +32,19 @@ const showDatePicker = ref(false)
 const irSelectValue = ref(null)
 
 const displayRange = computed(() => {
+  if (selfValue.value?.length !== 2) return null
   if (irSelectValue.value !== 'custom') {
     const opt = periodOptions.find(o => o.id === irSelectValue.value)
     return opt?.title ?? ''
   }
-  if (selfValue.value?.length !== 2) return null
   return `${formatDate(selfValue.value[0])} → ${formatDate(selfValue.value[1])}`
 })
 
 const date = computed(() => moment().format('YYYY-MM-DD'))
+
+watch(selfValue, (value) => {
+  if (!value || !value.length) irSelectValue.value = null
+})
 
 function selectItem(option, select) {
   const to = moment()
@@ -62,6 +66,7 @@ function onCloseDatePicker() {
 <template>
   <IrSelect
     v-model="irSelectValue"
+    v-bind="$attrs"
     :options="periodOptions"
     :label="label"
     :placeholder="placeholder"

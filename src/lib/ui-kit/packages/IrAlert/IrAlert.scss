@@ -36,18 +36,18 @@
 
   &--primary {
     background-color: var(--color-blue-50);
-    border: 1px solid var(--color-dark-blue-50);
+    border: 1px solid var(--color-blue-100);
 
     .ir-alert__icon {
-      color: var(--color-dark-blue-300);
+      color: var(--color-blue-700);
     }
 
     .ir-alert__title {
-      color: var(--color-dark-blue-500);
+      color: var(--color-blue-700);
     }
 
     .ir-alert__text {
-      color: var(--color-dark-blue-500);
+      color: var(--color-blue-700);
     }
   }
 
@@ -85,13 +85,49 @@
     }
   }
 
+  &--danger {
+    background-color: #f1d0d0;
+    border: 1px solid var(--color-danger);
+
+    .ir-alert__icon {
+      color: var(--color-danger);
+    }
+
+    .ir-alert__title {
+      color: var(--color-danger);
+    }
+
+    .ir-alert__text {
+      color: var(--color-danger);
+    }
+  }
+
   &--lg {
     padding: 16px;
     border-radius: 16px;
   }
 
+  &--md {
+    padding: 12px;
+    border-radius: 8px;
+    .ir-alert__text {
+      font-size: 14px;
+    }
+
+    .ir-alert__icon {
+      width: 20px !important;
+      height: 20px !important;
+    }
+  }
+
   &--sm {
     padding: 12px;
     border-radius: 8px;
+  }
+
+  &--plain {
+    background-color: transparent;
+    border: none;
+    padding: 0;
   }
 }

@@ -2,6 +2,9 @@
 import { computed, ref, watch } from 'vue'
 import { IrIcon, IrButton } from '@/lib/ui-kit'
 import { useI18n } from 'vue-i18n'
+import { useUserStore } from '@/stores/user.js'
+import { storeToRefs } from 'pinia'
+import { useDevice } from '@/composables/useDevice.js'
 
 const { t } = useI18n()
 
@@ -11,6 +14,12 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['close'])
+
+const userStore = useUserStore()
+
+const { loading } = storeToRefs(userStore)
+
+const { isPhone } = useDevice()
 
 const NAV = computed(() => [
     {
@@ -37,7 +46,7 @@ const NAV = computed(() => [
     {
       key: 'payment-methods',
       label: t('common.routes.paymentMethods'),
-      icon: 'dollar',
+      icon: 'money-swipe',
       badge: null,
       to: '/payment-methods',
     },
@@ -106,6 +115,18 @@ const sidebarStyle = computed(() => props.zIndex ? { zIndex: props.zIndex } : nu
         tag="a"
         url="mailto:Support@rebategain.com"
         class="!border-dark-blue-50 !text-dark-blue-500"
+      />
+      <IrButton
+        v-if="isPhone"
+        :text="$t('common.signOut')"
+        :loading="loading"
+        variant="plain"
+        size="lg"
+        color="danger"
+        append-icon="logout"
+        class="mt-4"
+        block
+        @click="userStore.logOut()"
       />
     </div>
   </aside>
@@ -303,7 +324,6 @@ const sidebarStyle = computed(() => props.zIndex ? { zIndex: props.zIndex } : nu
 }
 
 .sidebar__footer {
-  height: 80px;
   padding: 16px;
   border-top: 1px solid var(--color-blue-20);
   overflow: hidden;
