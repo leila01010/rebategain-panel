@@ -37,7 +37,7 @@ const NAV = computed(() => [
     {
       key: 'payment-methods',
       label: t('common.routes.paymentMethods'),
-      icon: 'dollar',
+      icon: 'money-swipe',
       badge: null,
       to: '/payment-methods',
     },
