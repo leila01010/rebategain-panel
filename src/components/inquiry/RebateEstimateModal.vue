@@ -5,6 +5,7 @@ import AccountSelect from '@/components/select/AccountSelect.vue'
 import TimePeriodSelect from '@/components/select/TimePeriodSelect.vue'
 import http from '@/services/http.js'
 import api from '@/api/api-list.js'
+import moment from '@/lib/moment.js'
 
 const show = defineModel('show', { type: Boolean, default: false })
 
@@ -18,10 +19,26 @@ const period = ref([])
 
 const isAutomaticPayout = computed(() => !!selectedAccount.value?.broker?.automaticPayout)
 
-const canSubmit = computed(() => !!accountId.value && !!period.value.length && !isAutomaticPayout.value)
+const latestInquiryDate = computed(() => selectedAccount.value?.latestInquiryDate || null)
+
+const isExceedLatestInquiryDate = computed(() =>
+  moment(period.value[0]).isBefore(moment(latestInquiryDate.value).format('YYYY-MM-DD'))
+)
+
+const canSelectDate = computed(() =>
+  accountId.value && !isAutomaticPayout.value && !submitted.value
+)
+
+const canSubmit = computed(() =>
+  !!accountId.value && !!period.value.length && !isAutomaticPayout.value && !isExceedLatestInquiryDate.value
+)
 
 watch(show, (value) => {
   if (!value) reset()
+})
+
+watch(accountId, () => {
+  period.value = []
 })
 
 async function submit() {
@@ -61,6 +78,7 @@ function reset() {
     </template>
 
     <form>
+
       <p class="text-dark-blue-300 text-xs mb-6">
         {{ $t('overview.requestRebateEstimateText') }}
       </p>
@@ -75,9 +93,10 @@ function reset() {
       <TimePeriodSelect
         v-model="period"
         :label="$t('overview.timePeriod')"
-        :disabled="!accountId || submitted"
-        :latest-inquiry-date="selectedAccount?.latestInquiryDate"
+        :disabled="!canSelectDate"
+        :latest-inquiry-date="latestInquiryDate"
         block
+        class="mb-6"
       />
 
       <IrAlert
@@ -85,13 +104,13 @@ function reset() {
         :title="$t('overview.automaticPayoutAlertTitle')"
         size="lg"
         icon="info"
-        color="info"
-        class="mt-4"
+        color="primary"
+        class="mb-6"
       >
         <i18n-t
           keypath="overview.automaticPayoutAlertText"
           tag="p"
-          class="text-xs text-dark-blue-500 leading-[18px]"
+          class="text-xs text-blue-700 leading-[18px]"
         >
           <template #nonDirect>
             <strong>{{ $t('overview.nonDirectBrokers') }}</strong>
@@ -110,12 +129,21 @@ function reset() {
         </div>
       </IrAlert>
 
+      <IrAlert
+        v-if="isExceedLatestInquiryDate"
+        :description="$t('overview.requestedDateExceedAccountAgeAlert')"
+        color="danger"
+        icon="info"
+        size="md"
+        plain
+        class="mb-3"
+      />
+
       <IrButton
         v-if="submitted"
         :text="$t('overview.successfullySubmitted')"
         color="success"
         prepend-icon="check"
-        class="mt-6"
         block
         disabled
       />
@@ -124,7 +152,6 @@ function reset() {
         :text="$t('overview.submitRequest')"
         :loading="submitting"
         :disabled="!canSubmit"
-        class="mt-6"
         block
         @click="submit"
       />

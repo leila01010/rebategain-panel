@@ -1,6 +1,6 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
-import { IrInput, IrModal, IrDivider, IrIcon, IrButton } from '@/lib/ui-kit'
+import { IrInput, IrModal, IrDivider, IrIcon, IrButton, IrAlert } from '@/lib/ui-kit'
 import MonthPanel from './MonthPanel.vue'
 import moment from '@/lib/moment.js'
 import { useI18n } from 'vue-i18n'
@@ -63,6 +63,8 @@ const displayText = computed(() => {
   return singleDate.value ? singleDate.value.xFormat(props.format) : ''
 })
 
+const isExceedMinDate = ref(false)
+
 watch(value, parseFromModel, { immediate: true })
 
 function openPicker() {
@@ -70,11 +72,24 @@ function openPicker() {
   show.value = true
 }
 
+function checkExceedMinDate(fromDate) {
+  isExceedMinDate.value = moment(fromDate).isBefore(moment(props.min).format('YYYY-MM-DD'))
+}
+
 function parseFromModel(v) {
   if (isRange.value) {
     const [from, to] = Array.isArray(v) ? v : []
-    rangeStart.value = from ? moment(from) : null
+    rangeStart.value =
+      from
+        ? props.min
+          ? moment(from).isBefore(props.min)
+            ? moment(props.min)
+            : moment(from)
+          : moment(from)
+        : null
     rangeEnd.value = to ? moment(to) : null
+    commit()
+    checkExceedMinDate(from)
   } else {
     singleDate.value = v ? moment(v) : null
   }
@@ -113,19 +128,25 @@ function commit() {
 function applyPreset(p) {
   activePresetKey.value = p.key
   const end = moment()
+  const start = end.clone().subtract(p.days - 1, 'day')
   if (p.days === null) {
     rangeStart.value = props.min ? moment(props.min) : moment('1970-01-01')
   } else {
-    rangeStart.value = end.clone().subtract(p.days - 1, 'day')
+    rangeStart.value = props.min && moment(start).isBefore(props.min) ? moment(props.min) : start
   }
   rangeEnd.value = end
   leftCursor.value = rangeStart.value.clone().xStartOf('month')
   commit()
+  checkExceedMinDate(start)
 }
 
-function prev() { leftCursor.value = leftCursor.value.clone().xAdd(-1, 'month') }
+function prev() {
+  leftCursor.value = leftCursor.value.clone().xAdd(-1, 'month')
+}
 
-function next() { leftCursor.value = leftCursor.value.clone().xAdd(1, 'month') }
+function next() {
+  leftCursor.value = leftCursor.value.clone().xAdd(1, 'month')
+}
 
 function onHover(date) { hoverDate.value = date }
 
@@ -135,6 +156,8 @@ function reset() {
   }
   parseFromModel(value.value)
   selfValue.value = value.value
+  isExceedMinDate.value = false
+  activePresetKey.value = null
   emit('close')
 }
 
@@ -222,10 +245,21 @@ function submit() {
           />
         </div>
       </div>
-      <div class="flex justify-end px-4 py-8 md:pt-3 md:pb-6 md:px-6">
+      <div
+        class="flex items-center px-4 py-8 md:pt-3 md:pb-6 md:px-6"
+        :class="isExceedMinDate ? 'justify-between' : 'justify-end'"
+      >
+        <IrAlert
+          v-if="isExceedMinDate"
+          :description="$t('overview.requestedDateExceedAccountAgeAlert')"
+          color="danger"
+          icon="info"
+          size="md"
+          plain
+        />
         <IrButton
           :text="$t('common.apply')"
-          class="w-full md:w-40"
+          class="shrink-0 w-full md:w-40"
           @click="submit"
         />
       </div>

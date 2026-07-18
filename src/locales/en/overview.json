@@ -27,5 +27,6 @@
   "nonDirectBrokers": "non‑direct brokers",
   "myBrokerAccount": "My broker account",
   "datePicker": "Date Picker",
-  "exportEarningsTitle": "Export Earnings Data"
+  "exportEarningsTitle": "Export Earnings Data",
+  "requestedDateExceedAccountAgeAlert": "The requested date range exceeds your account age."
 }
